@@ -35,6 +35,12 @@ namespace NoteFly
         /// </summary>
         public const string GPGSIGNATUREEXTENSION = ".asc";
 
+        private const string OPENPGPNOTEFLYLONGKEYID = "C42F9FC093304722";
+        private const string OPENPGPNOTEFLYFINGERPRINT = "A656130C5FAF88FA2B089080C42F9FC093304722";
+        private const string OPENPGPNOTEFLYNAME = "NoteFly";
+        private const string OPENPGPNOTEFLYEMAIL = "releases@notefly.org";
+        //private const int OPENPGPNOTEFLYSTRENGTH = 4096;
+
         /// <summary>
         /// GnuPG process reference.
         /// </summary>
@@ -59,16 +65,32 @@ namespace NoteFly
         public bool VerifyDownload(string file, string sigfile)
         {
             bool allowlaunch = false;
+            bool publickeyadded = false;
+            System.Diagnostics.ProcessStartInfo procStartInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --fingerprint --with-colons --list-keys " + OPENPGPNOTEFLYLONGKEYID);
+            procStartInfo.CreateNoWindow = true;
+            procStartInfo.UseShellExecute = false;
+            procStartInfo.RedirectStandardInput = true;
+            procStartInfo.RedirectStandardOutput = true;
+            procStartInfo.RedirectStandardError = true;
+            this.gpgproc = System.Diagnostics.Process.Start(procStartInfo);
+            int gpgprocexitcode = this.StartGPGReadingThreads();
+            if (gpgprocexitcode == 0 && string.IsNullOrEmpty(this.gpgerror))
+            {
+                int gpgresult = this.IsKeyInKeyring(OPENPGPNOTEFLYLONGKEYID, OPENPGPNOTEFLYFINGERPRINT, OPENPGPNOTEFLYNAME, OPENPGPNOTEFLYEMAIL);
+                if (gpgresult > 0) 
+                {
+                    publickeyadded = true;
+                }
+            }
 
-            // import NoteFly public key if needed.
-            bool publickeyadded = this.HasOpenPGPNoteFly();
             if (!publickeyadded)
             {
-                Log.Write(LogType.error, "NoteFly OpenPGP public key missing. Trying to import now.");
-                this.GetGPGNoteFlyPublicKey();
+                // import NoteFly public key if needed.
+                Log.Write(LogType.error, "NoteFly OpenPGP public key missing. Trying to import now from keyserver with GPG.");
+                this.DownloadPublicKey(OPENPGPNOTEFLYLONGKEYID);
                 if (!string.IsNullOrEmpty(this.gpgerror))
                 {
-                    if (this.gpgerror.StartsWith("gpg: no keyserver known"))
+                    if (this.gpgerror.StartsWith("gpg: no keyserver known."))
                     {
                         Log.Write(LogType.error, "Cannot import NoteFly OpenPGP public key no keyserver in UpdatecheckGPGKeyserver in settings.xml specified.");
                     }
@@ -82,29 +104,26 @@ namespace NoteFly
             try
             {
                 System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --verify-files " + sigfile);
-                //procInfo.CreateNoWindow = true;
                 procInfo.UseShellExecute = false;
                 procInfo.RedirectStandardInput = true;
                 procInfo.RedirectStandardOutput = true;
                 procInfo.RedirectStandardError = true;
                 this.gpgproc = System.Diagnostics.Process.Start(procInfo);
-                int gpgprocexitcode = this.StartGPGReadingThreads();
-                if (gpgprocexitcode == 0)
-                {
-                    // Currently display GPG result via messagebox, and user required to press yes to launch install.
-                    StringBuilder sbmsg = new StringBuilder(this.gpgoutput);
-                    sbmsg.AppendLine(this.gpgerror);
-                    sbmsg.AppendLine(Strings.T("Do you want to install the update?"));
-                    string msgtitle = Strings.T("GnuPG signature check result");
-                    System.Windows.Forms.DialogResult dlgsigres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), msgtitle, System.Windows.Forms.MessageBoxButtons.YesNo);
-                    if (dlgsigres == System.Windows.Forms.DialogResult.Yes)
-                    {
-                        allowlaunch = true;
-                    }
-                }
-                else
+                int gpgprocexitcodeverifyfile = this.StartGPGReadingThreads();
+                if (gpgprocexitcodeverifyfile != 0)
                 {
                     throw new ApplicationException("GnuPG did not return exitcode 0.");
+                }
+
+                // Currently display GPG result via messagebox, and user required to press yes to launch install.
+                StringBuilder sbmsg = new StringBuilder(this.gpgoutput);
+                sbmsg.AppendLine(this.gpgerror);
+                sbmsg.AppendLine(Strings.T("Do you want to install the update?"));
+                string msgtitle = Strings.T("GnuPG signature check result");
+                System.Windows.Forms.DialogResult dlgsigres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), msgtitle, System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (dlgsigres == System.Windows.Forms.DialogResult.Yes)
+                {
+                    allowlaunch = true;
                 }
             }
             catch (Exception exc)
@@ -122,7 +141,8 @@ namespace NoteFly
         public string GetGPGPath()
         {
             string gpgpath = string.Empty;
-            if (Program.CurrentOS == Program.OS.WINDOWS) {
+            if (Program.CurrentOS == Program.OS.WINDOWS)
+            {
                 Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("HKEY_LOCAL_MACHINE\\SOFTWARE\\GNU\\GnuPG", false);
                 if (key != null)
                 {
@@ -150,18 +170,34 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Find the gpg executable in the installation directory.
+        /// Try to find the gpg binary in a dirctory.
         /// </summary>
         /// <param name="gpginstallpath">The installation directory</param>
-        /// <returns>The full path to the gpg executable, empty string if gpg executable not found.</returns>
+        /// <returns>The full path to the gpg executable or a empty string if gpg binary is not found.</returns>
         private string FindGPGexecutables(string gpginstallpath)
         {
-            string[] gpgfilenames = new string[] { "gpg.exe", "gpg2.exe", "gpg" };
-            for (int i = 0; i < gpgfilenames.Length; i++)
+            string[] gpgfilenames = null;
+            switch (Program.CurrentOS)
             {
-                if (File.Exists(Path.Combine(gpginstallpath, gpgfilenames[i])))
+                case Program.OS.LINUX:
+                    gpgfilenames = new string[] { "gpg" };
+                    break;
+                case Program.OS.WINDOWS:
+                    gpgfilenames = new string[] { "gpg.exe", "gpg2.exe" };
+                    break;
+                case Program.OS.MACOS:
+                    gpgfilenames = new string[] { "gpg" };
+                    break;
+            }
+
+            if (gpgfilenames != null)
+            {
+                for (int i = 0; i < gpgfilenames.Length; i++)
                 {
-                    return Path.Combine(gpginstallpath, gpgfilenames[i]);
+                    if (File.Exists(Path.Combine(gpginstallpath, gpgfilenames[i])))
+                    {
+                        return Path.Combine(gpginstallpath, gpgfilenames[i]);
+                    }
                 }
             }
 
@@ -207,167 +243,110 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Check if the NoteFly public key is added to the GPG keyring.
+        /// Check the GNU Privay Guard keyring if it contains a OpenPGP key.
         /// </summary>
-        /// <returns>True if notefly public key is added.</returns>
-        private bool HasOpenPGPNoteFly()
+        /// <param name="keyid">The OpenPGP long key-id.</param>
+        /// <param name="keyfingerprint">The key fingerprint.</param>
+        /// <param name="keyname">The name of the key.</param>
+        /// <param name="keyemail">The e-mail address of the key.</param>
+        /// <returns>Returns 0 if key not in keyring, returns 1 if in keyring and no errors, returns 2 if key in keyring but untrusted (never or unknown trust set), return 3 if key in keyring but expired. return 4 if key in keyring but used before valid time.</returns>
+        public int IsKeyInKeyring(string longkeyid, string keyfingerprint, string keyname, string keyemail)
         {
-            System.Diagnostics.ProcessStartInfo procStartInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --list-public-keys --with-colons");
-            procStartInfo.CreateNoWindow = true;
-            procStartInfo.UseShellExecute = false;
-            procStartInfo.RedirectStandardInput = true;
-            procStartInfo.RedirectStandardOutput = true;
-            procStartInfo.RedirectStandardError = true;
-            this.gpgproc = System.Diagnostics.Process.Start(procStartInfo);
-            int gpgprocexitcode = this.StartGPGReadingThreads();
-            if (gpgprocexitcode == 0 && string.IsNullOrEmpty(this.gpgerror))
-            {
-
-
-                /*
-                int column = 0;
-                int line = 0;
-                int posstartlinerecord = int.MaxValue;
-                bool ispubrecord = false;
-                int posfingerprinthalfstart = int.MaxValue;
-                ////bool fingerprintmatch = false;
-                ////int posstartpubdesc = int.MaxValue;
-                const string PUBKEYRECORD = "pub";
-                const string FINGERPRINTPUBNOTEFLY = "C42F9FC093304722";
-                // new: const string FINGERPRINTPUBNOTEFLY = "45FAF81DFACC22362AC3EEBB7D3041C8899AC368";
-
-                ////const string PUBKEYNOTEFLYDESCRIPTION = "NoteFly <releases@notefly.org>";
-                // parser the output
-                for (int i = 0; i < this.gpgoutput.Length; i++)
-                {
-                    if (this.gpgoutput[i] == '\r')
-                    {
-                        // new line
-                        line++;
-                        column = 0;
-                        posstartlinerecord = i + 2; // +2 for \r and \n
-                    }
-
-                    if (this.gpgoutput[i] == ':')
-                    {
-                        // new column
-                        column++;
-                        if (column == 2 && line != 0)
-                        {
-                            int lenrecline = i - posstartlinerecord - 2;
-                            if (lenrecline > 0)
-                            {
-                                string recordline = this.gpgoutput.Substring(posstartlinerecord, lenrecline);
-                                if (recordline == PUBKEYRECORD)
-                                {
-                                    ispubrecord = true;
-                                }
-                                else
-                                {
-                                    ispubrecord = false;
-                                }
-                            }
-                        }
-
-                        if (ispubrecord)
-                        {
-                            if (column == 4)
-                            {
-                                posfingerprinthalfstart = i + 1; // without colon
-                            }
-                            else if (column == 5)
-                            {
-                                int lenfingerprinthalf = i - posfingerprinthalfstart;
-                                if (lenfingerprinthalf > 0)
-                                {
-                                    string fingerprinthalf = this.gpgoutput.Substring(posfingerprinthalfstart, lenfingerprinthalf);
-                                    if (fingerprinthalf == FINGERPRINTPUBNOTEFLY)
-                                    {
-                                        ////fingerprintmatch = true;
-                                        return true; // except it's added then, FIXME: collision possible, but small change
-                                    }
-                                    ////else
-                                    ////{
-                                    ////    fingerprintmatch = false;
-                                    ////}
-                                }
-                            }
-
-                            ////else if (column == 9)
-                            ////{
-                            ////    posstartpubdesc = i;
-                            ////}
-                            ////else if (column == 10 && fingerprintmatch)
-                            ////{
-                            ////    string pubkeydesc = gpgoutput.Substring(posstartpubdesc, i - posstartpubdesc -1 );
-                            ////    if (pubkeydesc.Contains("PUBKEYNOTEFLYDESCRIPTION"))
-                            ////    {
-                            ////        return true;
-                            ////    }
-                            ////}
-                        }
-                    }
-                }
-                 */
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Check the GNU Privay Guard keyring if it contains a openpgp key.
-        /// </summary>
-        /// <param name="gpgoutput"></param>
-        /// <param name="keyid"></param>
-        /// <param name="keyfingerprint"></param>
-        /// <param name="keyname"></param>
-        /// <param name="keyemail"></param>
-        /// <returns></returns>
-        private bool CheckKeyringKey(string gpgoutput, string keyid, string keyfingerprint, string keyname, string keyemail)
-        {
-            StringReader reader = new StringReader(gpgoutput);
-            string line = reader.ReadLine();
+            StringReader reader = new StringReader(this.gpgoutput);
             char[] splitdelimiterchars = { ':' };
-            while (!String.IsNullOrEmpty(line))
+            bool foundpub = false;
+            bool foundfpr = false;
+            bool founduid = false;
+            //int currentkeystrength = 0;
+            string currentkeyid;
+            int currentkeyvalidfrom = 0;
+            int currentkeyvalidtill = 0;
+            char currentkeyownertrust = 'q'; // f (full trust), m (marginal trust), n (never trust), q (unknown trust), - (unset)
+            string currentkeyfingerprint;
+            //int currentkeycreationtime;
+            string currentkeynameandemail;
+            string line;
+            while (!String.IsNullOrEmpty(line = reader.ReadLine()))
             {
-                if (line.StartsWith("pub:", StringComparison.Ordinal))
+                if (line.Length < 4)
                 {
-                    string[] lineparts = line.Split(splitdelimiterchars, StringSplitOptions.None);
-                    string currentkeystatus = lineparts[1];
-                    string currentkeystrength = lineparts[2];
-                    string currentkeyid = lineparts[4];
-                    string currentkeyvalidfrom = lineparts[5];
-                    string currentkeyvalidtill = lineparts[6];
-
-                    // todo
-                }
-                else if (line.StartsWith("uid:", StringComparison.Ordinal))
-                {
-                    string[] lineparts = line.Split(splitdelimiterchars, StringSplitOptions.None);
-                    string currentkeystatus = lineparts[1];
-                    string currentkeycreationtime = lineparts[5];
-                    string currentkeyfingerprint = lineparts[7];
-                    string currentkeynameandemail = lineparts[9];
-
-                    // todo
+                    continue;
                 }
 
-                // Get next line
-                line = reader.ReadLine(); 
+                string linestart = line.Substring(0, 4);
+                string[] lineparts = line.Split(splitdelimiterchars, StringSplitOptions.None);
+                switch (linestart)
+                {
+                    case "pub:":
+                        //Int32.TryParse(lineparts[2], out currentkeystrength);
+                        currentkeyid = lineparts[4];
+                        if (!currentkeyid.Equals(longkeyid, StringComparison.Ordinal))
+                        {
+                            foundpub = true;
+                        }
+
+                        if (!Int32.TryParse(lineparts[5], out currentkeyvalidfrom))
+                        {
+                            Log.Write(LogType.error, "Cannot parse key validfrom.");
+                        }
+
+                        if (!Int32.TryParse(lineparts[6], out currentkeyvalidtill))
+                        {
+                            Log.Write(LogType.error, "Cannot parse key validtill.");
+                        }
+
+  
+
+                        break;
+                    case "fpr:":
+                        currentkeyfingerprint = lineparts[9];
+                        if (currentkeyfingerprint.Equals(keyfingerprint, StringComparison.Ordinal))
+                        {
+                            foundfpr = true;
+                        }
+
+                        break;
+                    case "uid:":
+                        //Int32.TryParse(lineparts[5], out currentkeycreationtime);
+                        currentkeynameandemail = lineparts[9];
+                        if (currentkeynameandemail.Equals(String.Format("{0} <{1}>", keyname, keyemail), StringComparison.Ordinal))
+                        {
+                            founduid = true;
+                        }
+
+                        break;
+                }
+
+                if (foundpub && foundfpr && founduid)
+                {
+                    reader.Close();
+                    if (currentkeyownertrust == 'n' || currentkeyownertrust == 'q')
+                    {
+                        return 2;
+                    }
+
+                    int currentts = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                    if (currentts > currentkeyvalidtill || currentts < currentkeyvalidfrom)
+                    {
+                        return 3;
+                    }
+
+                    return 1;
+                }
             }
 
             reader.Close();
-            return false;
+            return 0;
         }
 
         /// <summary>
-        /// Get the NoteFly OpenPGP Public Key from a key server
-        /// Current key 93304722 valid till 2018-01-01(yyyy-mm-dd).
+        /// Get a OpenPGP Public Key from a key server.
         /// </summary>
-        private void GetGPGNoteFlyPublicKey()
+        /// <param name="longkeyid">The OpenPGP long key-id.</param>
+        private void DownloadPublicKey(string longkeyid)
         {
             StringBuilder gpgrecvkeycommandarg = new StringBuilder();
-            gpgrecvkeycommandarg.Append(" --recv-keys 93304722");
+            gpgrecvkeycommandarg.Append(" --recv-keys " + longkeyid);
             if (!string.IsNullOrEmpty(Settings.UpdatecheckGPGKeyserver.Trim()))
             {
                 gpgrecvkeycommandarg.Append(" --keyserver ");
@@ -381,7 +360,6 @@ namespace NoteFly
             procInfo.RedirectStandardOutput = true;
             procInfo.RedirectStandardError = true;
             this.gpgproc = System.Diagnostics.Process.Start(procInfo);
-
             this.StartGPGReadingThreads();
         }
 

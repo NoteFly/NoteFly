@@ -28,8 +28,6 @@ namespace NoteFly
     /// if the file or data is really coming from the developer who owns the NoteFly private key.
     /// <remarks>
     /// No RSA encryption is being used, only RSA signature checking is used.
-    /// Patent on RSA is waived after 6, 2000.
-    /// source: http://www.rsa.com/rsalabs/node.asp?id=2322
     /// </remarks>
     /// </summary>
     public class RSAVerify
