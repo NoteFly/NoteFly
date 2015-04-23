@@ -192,8 +192,8 @@ namespace NoteFly
                 this.tooltip.SetToolTip(this.btnTextBold, Strings.T("Bold text (Ctrl+B)"));
                 this.tooltip.SetToolTip(this.btnTextItalic, Strings.T("Italic text (Ctrl+I)"));
                 this.tooltip.SetToolTip(this.btnTextUnderline, Strings.T("Underline text (Ctrl+U)"));
-                this.tooltip.SetToolTip(this.btnTextStriketrough, Strings.T("Striketrough text (Ctrl+T)"));
-                this.tooltip.SetToolTip(this.btnTextBulletlist, Strings.T("Bullit list (Ctrl+shift+L)"));
+                this.tooltip.SetToolTip(this.btnTextStriketrough, Strings.T("Strike-through text (Ctrl+T)"));
+                this.tooltip.SetToolTip(this.btnTextBulletlist, Strings.T("Bullet list (Ctrl+shift+L)"));
                 this.tooltip.SetToolTip(this.btnFontBigger, Strings.T("Bigger text (Ctrl+shift+>)"));
                 this.tooltip.SetToolTip(this.btnFontSmaller, Strings.T("Smaller text (Ctrl+shift+<)"));
             }
