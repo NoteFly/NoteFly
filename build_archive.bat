@@ -1,6 +1,6 @@
 @echo off
 REM  NoteFly a note application.
-REM  Copyright (C) 2010-2013  Tom
+REM  Copyright (C) 2010-2015  Tom
 REM
 REM  This program is free software: you can redistribute it and/or modify
 REM  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@ REM  You should have received a copy of the GNU General Public License
 REM  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set path7z="C:\Program Files\7-Zip\7z.exe"
-set VERSION="3.0.7"
+set VERSION="3.0.8"
 REM versionstatus: alpha, beta, rc1, rc2 or nothing for final.
 set VERSIONSTATUS=""
 
@@ -33,5 +33,6 @@ pause
 exit
 
 :NO7ZDIR
-echo Cannot find 7-zip (7z.exe). Please change the path7z variable in this script.
+echo Cannot find 7-zip (7z.exe).
+echo Please change the path7z variable in this script to where 7-zip is installed.
 pause

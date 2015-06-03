@@ -1,0 +1,3 @@
+[submodule "gettext-cs-utils"]
+	path = gettext-cs-utils
+	url = https://github.com/fsateler/gettext-cs-utils.git

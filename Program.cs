@@ -372,7 +372,7 @@ namespace NoteFly
                     }
                 }
             }
-            
+
             SyntaxHighlight.InitHighlighter();
             Program.notes = new Notes(resetpositions);
             if (Settings.ProgramPluginsAllEnabled)

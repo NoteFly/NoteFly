@@ -1030,7 +1030,7 @@ namespace NoteFly
                 }
             }
 
-            for (int i = 0; i < numnotes; i++)
+            for (int i = 0; i < numnotes; ++i)
             {
                 xmlread = new XmlTextReader(filepath);
                 xmlread.ProhibitDtd = true;
@@ -1434,7 +1434,7 @@ namespace NoteFly
                         bool stopread = false;
                         while ((countchr = xmlread.ReadChars(buf, 0, BUFFERSIZE)) > 0 && !stopread)
                         {
-                            for (int i = 0; i < buf.Length; i++)
+                            for (int i = 0; i < buf.Length; ++i)
                             {
                                 if (buf[i] == '\\')
                                 {

@@ -16,6 +16,7 @@ REM  You should have received a copy of the GNU General Public License
 REM  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 echo Extracting translations of sourcecode.
+REM xgettext needs to be in PATH environment variables.
 xgettext --from-code=UTF-8 *.cs -k --add-location --keyword=T --language=C# -o .\bin\Strings.pot --copyright-holder="NoteFly"
 
 echo finished
