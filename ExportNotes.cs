@@ -61,7 +61,7 @@ namespace NoteFly
                 xmlwrite.WriteStartDocument(true); // standalone xml file.
                 xmlwrite.WriteStartElement("backupnotes");
                 xmlwrite.WriteAttributeString("number", this.notes.CountNotes.ToString());
-                for (int i = 0; i < this.notes.CountNotes; i++)
+                for (int i = 0; i < this.notes.CountNotes; ++i)
                 {
                     string skinname = this.notes.GetSkinName(this.notes.GetNote(i).SkinNr);
                     string content = this.notes.GetNote(i).GetContent();
@@ -222,7 +222,7 @@ namespace NoteFly
                     pnotesfilenames[i] = pnotesfilenamenote.ToString();
                 }
 
-                for (int i = 0; i < this.notes.CountNotes; i++)
+                for (int i = 0; i < this.notes.CountNotes; ++i)
                 {
                     writer.Write(chrstartnotefilename);
                     writer.Write(pnotesfilenames[i] + PNOTESEXTENSION);

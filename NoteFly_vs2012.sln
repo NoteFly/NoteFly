@@ -16,39 +16,48 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteFlyTests", "NoteFlyTests\NoteFlyTests.csproj", "{4B37B2B2-F376-429F-90F1-E2B65A8B0693}"
 EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = NoteFly.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{144B401F-3586-46C2-AD47-8E136E967B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{144B401F-3586-46C2-AD47-8E136E967B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{144B401F-3586-46C2-AD47-8E136E967B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{144B401F-3586-46C2-AD47-8E136E967B01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B37B2B2-F376-429F-90F1-E2B65A8B0693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B37B2B2-F376-429F-90F1-E2B65A8B0693}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B37B2B2-F376-429F-90F1-E2B65A8B0693}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B37B2B2-F376-429F-90F1-E2B65A8B0693}.Release|Any CPU.Build.0 = Release|Any CPU
-		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DB56AA86-AD18-4F54-9087-939317F5E9F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DB56AA86-AD18-4F54-9087-939317F5E9F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB56AA86-AD18-4F54-9087-939317F5E9F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB56AA86-AD18-4F54-9087-939317F5E9F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B37B2B2-F376-429F-90F1-E2B65A8B0693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B37B2B2-F376-429F-90F1-E2B65A8B0693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B37B2B2-F376-429F-90F1-E2B65A8B0693}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B37B2B2-F376-429F-90F1-E2B65A8B0693}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		AMDCaProjectFile = M:\Public\sourcecode\Projects_Csharp\notefly\CodeAnalyst\NoteFly.caw
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -64,17 +73,5 @@ Global
 		$3.inheritsSet = VisualStudio
 		$3.inheritsScope = text/plain
 		version = 1.0
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = NoteFly.vsmdi
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaProjectFile = M:\Public\sourcecode\Projects_Csharp\notefly\CodeAnalyst\NoteFly.caw
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

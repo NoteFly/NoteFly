@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmException.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2013  Tom
+//  Copyright (C) 2010-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -28,27 +28,40 @@ namespace NoteFly
     /// </summary>
     public sealed partial class FrmException : Form
     {
+        private const string URLBASEREPORTISSUE = "https://www.notefly.org/bugs/bug_report_page.php";
+
+        private const int URLMAXLEN = 2083;
+
+        private const string URISTACKTRACEPARAM = "?st=";
+
+        private string urlEncodedStackTrace = "";
+
         /// <summary>
         /// Initializes a new instance of the FrmException class.
         /// </summary>
         /// <param name="excmgs">Exception message</param>
-        /// <param name="excstrace">Exception stacktrace</param>
-        public FrmException(string excmgs, string excstrace)
+        /// <param name="excstacktrace">Exception stacktrace</param>
+        public FrmException(string excmgs, string excstacktrace)
         {
             this.InitializeComponent();
-            string exception_formtitle = Strings.T("oh no.. {0} crashed.", Program.AssemblyTitle);
-            this.Text = exception_formtitle;
+            this.Text = Strings.T("Oh no.. {0} crashed.", Program.AssemblyTitle);
+            const string SEPERATORTEXTANDCONTENT = ": ";
             StringBuilder sbexc = new StringBuilder(excmgs);
             sbexc.AppendLine();
+            sbexc.AppendLine("Stacktrace" + SEPERATORTEXTANDCONTENT);
+            sbexc.AppendLine(excstacktrace);
             sbexc.AppendLine();
-            sbexc.AppendLine("Stacktrace:");
-            sbexc.AppendLine(excstrace);
-            sbexc.AppendLine();
-            sbexc.Append("version: ").Append(Program.AssemblyVersionAsString).Append(" ").AppendFormat(Program.AssemblyVersionQuality);
+            sbexc.Append(Strings.T("{0} version" + SEPERATORTEXTANDCONTENT, Program.AssemblyTitle)).Append(Program.AssemblyVersionAsString).Append(" ").AppendLine(Program.AssemblyVersionQuality);
+            sbexc.Append(Strings.T("OS" + SEPERATORTEXTANDCONTENT) + Enum.GetName(typeof(Program.OS), Program.CurrentOS));
             this.tbExceptionMessage.Text = sbexc.ToString();
             if (!Settings.ProgramLogException)
             {
                 this.lblTextStacktrace.Visible = false;
+            }
+
+            if (URLBASEREPORTISSUE.Length + URISTACKTRACEPARAM.Length + excstacktrace.Length < URLMAXLEN) 
+            {
+                this.urlEncodedStackTrace = System.Web.HttpUtility.UrlEncodeUnicode(excstacktrace);
             }
         }
 
@@ -79,7 +92,7 @@ namespace NoteFly
         /// <param name="e">LinkLabelLink Clicked event arguments</param>
         private void linklblCreateBugReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Program.LoadLink("http://www.notefly.org/bugs/bug_report_page.php", false);
+            Program.LoadLink(URLBASEREPORTISSUE + URISTACKTRACEPARAM + this.urlEncodedStackTrace, false);
         }
     }
 }

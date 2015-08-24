@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmAbout.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2013  Tom
+//  Copyright (C) 2010-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ namespace NoteFly
         /// <summary>
         /// Constant project website uri.
         /// </summary>
-        private const string NOTEFLYWEBSITEURI = "http://www.notefly.org/";
+        private const string PROJECTWEBSITEURL = "https://www.notefly.org/";
 
         /// <summary>
         /// All the moving authors labels.
@@ -92,7 +92,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Program.LoadLink(NOTEFLYWEBSITEURI, false);
+            Program.LoadLink(PROJECTWEBSITEURL, false);
             this.Close();
         }
 
@@ -196,27 +196,29 @@ namespace NoteFly
             {
                 int dpx = e.Location.X - this.oldp.X;
                 int dpy = e.Location.Y - this.oldp.Y;
-#if linux
-                // limit the moving of this note under mono/linux so this note cannot move uncontrolled a lot.
-                const int movelimit = 8;
-                if (dpx > movelimit)
-                {
-                    dpx = movelimit;
-                }
-                else if (dpx < -movelimit)
-                {
-                    dpx = -movelimit;
+
+                if (Program.CurrentOS == Program.OS.LINUX) { 
+                    // workround limit the moving of this window under mono/linux so this window cannot move uncontrolled a lot.
+                    const int movelimit = 8;
+                    if (dpx > movelimit)
+                    {
+                        dpx = movelimit;
+                    }
+                    else if (dpx < -movelimit)
+                    {
+                        dpx = -movelimit;
+                    }
+
+                    if (dpy > movelimit)
+                    {
+                        dpy = movelimit;
+                    }
+                    else if (dpy < -movelimit)
+                    {
+                        dpy = -movelimit;
+                    }
                 }
 
-                if (dpy > movelimit)
-                {
-                    dpy = movelimit;
-                }
-                else if (dpy < -movelimit)
-                {
-                    dpy = -movelimit;
-                }
-#endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
             }
         }

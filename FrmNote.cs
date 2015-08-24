@@ -731,24 +731,26 @@ namespace NoteFly
             {
                 int dpx = e.Location.X - this.oldp.X;
                 int dpy = e.Location.Y - this.oldp.Y;
-#if linux
-                if (dpx > 8)
-                {
-                    dpx = 8;
+                if (Program.CurrentOS == Program.OS.LINUX) {
+                    // workround limit the moving of this window under mono/linux so this window cannot move uncontrolled a lot.
+                    if (dpx > 8)
+                    {
+                        dpx = 8;
+                    }
+                    else if (dpx < -8)
+                    {
+                        dpx = -8;
+                    }
+                    if (dpy > 8)
+                    {
+                        dpy = 8;
+                    }
+                    else if (dpy < -8)
+                    {
+                        dpy = -8;
+                    }
                 }
-                else if (dpx < -8)
-                {
-                    dpx = -8;
-                }
-                if (dpy > 8)
-                {
-                    dpy = 8;
-                }
-                else if (dpy < -8)
-                {
-                    dpy = -8;
-                }
-#endif
+
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
             }
         }
