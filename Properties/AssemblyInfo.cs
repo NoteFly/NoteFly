@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NoteFly")]
 [assembly: AssemblyProduct("NoteFly")]
-[assembly: AssemblyCopyright("Copyright ©  2009-2013")]
+[assembly: AssemblyCopyright("Copyright ©  2009-2015")]
 [assembly: AssemblyTrademark("NoteFly")]
 [assembly: AssemblyCulture("")]
 

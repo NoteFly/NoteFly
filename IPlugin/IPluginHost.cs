@@ -214,9 +214,9 @@ namespace IPlugin
         string GetInstallFolder();
 
         /// <summary>
-        /// Get the operating system where this program is running on.
+        /// Get the operating system where this program is running on as string.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>"WINDOWS", "MACOS", "LINUX" or "UNKNOWN"</returns>
         string GetOS();
     }
 }

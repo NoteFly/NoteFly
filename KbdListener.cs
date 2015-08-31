@@ -347,10 +347,10 @@ namespace NoteFly
                                 int res = GetRawInputData(m.LParam.ToPointer(), RID_INPUT, null, &dwSize, sizeof_RAWINPUTHEADER);
                                 if (res == 0)
                                 {
-                                    // Allocate a buffer and ...
+                                    // Allocate a buffer
                                     byte* lpb = stackalloc byte[(int)dwSize];
 
-                                    // ... get the data
+                                    // Get the data
                                     receivedBytes = (uint)GetRawInputData((RAWINPUTHKEYBOARD*)m.LParam.ToPointer(), RID_INPUT, lpb, &dwSize, sizeof_RAWINPUTHEADER);
                                     if (receivedBytes == dwSize)
                                     {
@@ -386,7 +386,6 @@ namespace NoteFly
                     break;
                 }
 
-                // In case you forget this you will run into problems
                 base.WndProc(ref m);
             }
 
