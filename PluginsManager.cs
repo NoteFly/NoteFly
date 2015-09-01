@@ -80,17 +80,19 @@ namespace NoteFly
                 string[] dllfiles = GetDllFilesFolder(Settings.ProgramPluginsFolder);
                 excludedplugindlls = Settings.ProgramPluginsDllexclude.Split('|');
 
-                for (int i = 0; i < dllfiles.Length; i++)
+                for (int i = 0; i < dllfiles.Length; ++i)
                 {
-                    if (!IsPluginFileExcluded(dllfiles[i]))
+                    if (IsPluginFileExcluded(dllfiles[i]))
                     {
-                        installedplugins.Add(dllfiles[i]);
-                        foreach (string enabledpluginfilename in enabledpluginsfilenames)
+                        continue;
+                    }
+
+                    installedplugins.Add(dllfiles[i]);
+                    foreach (string enabledpluginfilename in enabledpluginsfilenames)
+                    {
+                        if (enabledpluginfilename.Equals(dllfiles[i], StringComparison.Ordinal))
                         {
-                            if (enabledpluginfilename.Equals(dllfiles[i], StringComparison.Ordinal))
-                            {
-                                EnablePlugin(dllfiles[i]);
-                            }
+                            EnablePlugin(dllfiles[i]);
                         }
                     }
                 }
@@ -112,23 +114,27 @@ namespace NoteFly
             {
                 System.Reflection.Assembly pluginassembly = null;
                 pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, dllfilename));
+                
                 if (pluginassembly != null)
                 {
                     foreach (Type curplugintype in pluginassembly.GetTypes())
                     {
                         if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
                         {
-                            if (curplugintype.FullName.Equals(curplugintype.Namespace + "." + curplugintype.Namespace))
+                            if (!curplugintype.FullName.Equals(curplugintype.Namespace + "." + curplugintype.Namespace))
                             {
-                                // Load this plugin class only.
-                                Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
-                                if (plugintype != null)
-                                {
-                                    IPlugin.IPlugin plugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
-                                    plugin.Register(dllfilename, NoteFly.Program.Notes);
-                                    enabledplugins.Add(plugin);
-                                }
+                                continue;
                             }
+
+                            Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
+                            if (plugintype == null)
+                            {
+                                continue;
+                            }
+                            
+                            IPlugin.IPlugin plugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                            plugin.Register(dllfilename, NoteFly.Program.Notes);
+                            enabledplugins.Add(plugin);
                         }
                     }
                 }

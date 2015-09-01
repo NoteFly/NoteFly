@@ -27,7 +27,7 @@
     <ManifestCertificateThumbprint>0D643EC59EE87769268282270379D157E223C9BF</ManifestCertificateThumbprint>
     <ManifestKeyFile>NoteFly_TemporaryKey.pfx</ManifestKeyFile>
     <ReleaseVersion>1.0</ReleaseVersion>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -247,7 +247,6 @@
     <None Include="build_translationfile.bat" />
     <None Include="clean_settings.bat" />
     <None Include="icons.res" />
-    <None Include="NoteFly_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <Compile Include="SyntaxHighlight.cs" />
     <Compile Include="HttpUtil.cs" />
