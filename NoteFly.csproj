@@ -76,10 +76,11 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>strongkey_notefly.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Gettext.Cs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7bb3c35bef6eedd9, processorArchitecture=MSIL">
@@ -276,7 +277,6 @@
     <EmbeddedResource Include="SearchTextBox.resx">
       <DependentUpon>SearchTextBox.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="strongkey_notefly.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\icon_big.ico" />
@@ -308,6 +308,9 @@
     <VisualStudio />
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>copy "$(SolutionDir)gettext-cs-utils\Gettext.CsUtils\Core\Gettext.Cs\bin\Release\Gettext.Cs.dll" "$(TargetDir)Gettext.Cs.dll"</PreBuildEvent>
+    <PreBuildEvent>echo "Copy Gettext.Cs.dll to build folder."
+copy "$(ProjectDir)gettext-cs-utils\Gettext.CsUtils\Core\Gettext.Cs\bin\$(ConfigurationName)\Gettext.Cs.dll" "$(TargetDir)Gettext.Cs.dll"
+echo "Copy IPlugin.dll to build folder."
+copy "$(ProjectDir)IPlugin\bin\$(ConfigurationName)\IPlugin.dll" "$(TargetDir)IPlugin.dll"</PreBuildEvent>
   </PropertyGroup>
 </Project>
