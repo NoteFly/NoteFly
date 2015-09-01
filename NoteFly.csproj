@@ -307,4 +307,7 @@
     </MonoDevelop>
     <VisualStudio />
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>copy "$(SolutionDir)gettext-cs-utils\Gettext.CsUtils\Core\Gettext.Cs\bin\Release\Gettext.Cs.dll" "$(TargetDir)Gettext.Cs.dll"</PreBuildEvent>
+  </PropertyGroup>
 </Project>
