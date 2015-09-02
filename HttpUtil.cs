@@ -131,44 +131,35 @@ namespace NoteFly
         private void httpthread_DoWork(object sender, DoWorkEventArgs e)
         {
             HttpWebRequest request = this.CreateHttpWebRequest(this.url, this.cachesettings);
-
-            if (request != null)
+            if (request == null)
             {
-                WebResponse webresponse = null;
-                try
+                return;
+            }
+
+            WebResponse webresponse = null;
+            string response = null;
+            try
+            {
+                webresponse = request.GetResponse();
+                using (BufferedStream bufferedstream = new BufferedStream(webresponse.GetResponseStream()))
                 {
-                    webresponse = request.GetResponse();
-                    StreamReader streamreader = new StreamReader(webresponse.GetResponseStream(), System.Text.Encoding.UTF8);
-                    string response = streamreader.ReadToEnd();
-                    /*
-                    using (Stream responsestream = webresponse.GetResponseStream())
+                    using (StreamReader streamreader = new StreamReader(bufferedstream, System.Text.Encoding.UTF8))
                     {
-                        using (StreamReader streamreader = new StreamReader(responsestream, System.Text.Encoding.UTF8))
-                        {
-                            try
-                            {
-                                response = (string)streamreader.ReadToEnd(); // fixme possible memory issue.
-                            }
-                            catch (OutOfMemoryException memexc)
-                            {
-                                Log.Write(LogType.exception, memexc.Message);
-                            }
-                        }
+                        response = streamreader.ReadToEnd();
                     }
-                    */
-                    e.Result = response;
-                    streamreader.Close();
                 }
-                catch (WebException webexc)
+
+                e.Result = response;
+            }
+            catch (WebException webexc)
+            {
+                Log.Write(LogType.exception, webexc.Message);
+            }
+            finally
+            {
+                if (webresponse != null)
                 {
-                    Log.Write(LogType.exception, webexc.Message);
-                }
-                finally
-                {
-                    if (webresponse != null)
-                    {
-                        webresponse.Close();
-                    }
+                    webresponse.Close();
                 }
             }
         }
