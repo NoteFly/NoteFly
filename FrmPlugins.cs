@@ -60,7 +60,7 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        private const string PLUGINMOREINFOURL = "http://www.notefly.org/plugindetails?name=";
+        private const string PLUGINMOREINFOURL = "//www.notefly.org/plugindetails?name=";
 
         /// <summary>
         /// Are plugin updates checkd by default

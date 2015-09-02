@@ -33,7 +33,7 @@ namespace NoteFly
         /// <summary>
         /// Constant project website uri.
         /// </summary>
-        private const string PROJECTWEBSITEURL = "https://www.notefly.org/";
+        private const string PROJECTWEBSITEURL = "//www.notefly.org/";
 
         /// <summary>
         /// All the moving authors labels.
@@ -66,7 +66,7 @@ namespace NoteFly
                  new MovingAuthorLabel("May your notes,\ncome in handy..", 300)
             };
 
-            for (int i = 0; i < this.movinglabels.Length; i++)
+            for (int i = 0; i < this.movinglabels.Length; ++i)
             {
                 this.pnlAuthors.Controls.Add(this.movinglabels[i]);
             }           
@@ -166,7 +166,7 @@ namespace NoteFly
                 return;
             }
 
-            for (int i = 0; i < this.movinglabels.Length; i++)
+            for (int i = 0; i < this.movinglabels.Length; ++i)
             {
                 this.movinglabels[i].MoveUp();
             }

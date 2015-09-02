@@ -490,6 +490,11 @@ namespace NoteFly
         public static bool ProgramFirstrunned = false;
 
         /// <summary>
+        /// Use https protocol handler for all links.
+        /// </summary>
+        public static bool ProgramHttpsLinks = true;
+
+        /// <summary>
         /// Are all windows double buffered.
         /// If on redrawn does not cause blanking windows.
         /// But currenlt false because it has serious issues under windows8 beta.

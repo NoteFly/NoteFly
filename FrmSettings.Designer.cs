@@ -525,29 +525,14 @@ namespace NoteFly
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
 
         /// <summary>
-        /// TableLayoutPanel tableLayoutPanel7
-        /// </summary>
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-
-        /// <summary>
         /// TableLayoutPanel tableLayoutPanel8
         /// </summary>
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelUpdates;
 
         /// <summary>
         /// TabPage tabPageGPG
         /// </summary>
         private System.Windows.Forms.TabPage tabPageGPG;
-
-        /// <summary>
-        /// Button btnGPGPathBrowse
-        /// </summary>
-        private System.Windows.Forms.Button btnGPGPathBrowse;
-
-        /// <summary>
-        /// Label lblTextGPGPath
-        /// </summary>
-        private System.Windows.Forms.Label lblTextGPGPath;
 
         /// <summary>
         /// CheckBox chxCheckUpdatesSignature
@@ -573,11 +558,6 @@ namespace NoteFly
         /// Label lblTextPort
         /// </summary>
         private System.Windows.Forms.Label lblTextPort;
-
-        /// <summary>
-        /// IOTextBox tbGPGPath
-        /// </summary>
-        private IOTextBox tbGPGPath;
 
         /// <summary>
         /// EmailTextBox tbDefaultEmail
@@ -783,12 +763,9 @@ namespace NoteFly
             this.cbxActionLeftclick = new System.Windows.Forms.ComboBox();
             this.tabHotkeys = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelShortcuts = new System.Windows.Forms.TableLayoutPanel();
-            this.shortcutTextBoxNotesToFront = new NoteFly.ShortcutTextBox();
             this.lblTextHotkeyNotesToFront = new System.Windows.Forms.Label();
-            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
             this.lblTextHotkeyNewNote = new System.Windows.Forms.Label();
             this.lblTextHotkeyManageNotes = new System.Windows.Forms.Label();
-            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
             this.chxHotkeyNewNoteEnabled = new System.Windows.Forms.CheckBox();
             this.chxHotkeyManageNotesEnabled = new System.Windows.Forms.CheckBox();
             this.chxHotkeyNotesFrontEnabled = new System.Windows.Forms.CheckBox();
@@ -858,13 +835,12 @@ namespace NoteFly
             this.tabSharing = new System.Windows.Forms.TabPage();
             this.tabControlSharing = new System.Windows.Forms.TabControl();
             this.tabEmail = new System.Windows.Forms.TabPage();
-            this.tbDefaultEmail = new NoteFly.EmailTextBox();
             this.chxActionsEmailEnabled = new System.Windows.Forms.CheckBox();
             this.chxActionsEmailDefaultaddressSet = new System.Windows.Forms.CheckBox();
             this.tabNetwork = new System.Windows.Forms.TabPage();
             this.tabControlNetwork = new System.Windows.Forms.TabControl();
             this.tabUpdates = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelUpdates = new System.Windows.Forms.TableLayoutPanel();
             this.lblTextDaysPlugins = new System.Windows.Forms.Label();
             this.numUpdateCheckPluginsDays = new System.Windows.Forms.NumericUpDown();
             this.lblTextCheckpluginsupdatesevery = new System.Windows.Forms.Label();
@@ -872,7 +848,6 @@ namespace NoteFly
             this.lblTextDayAtStartup = new System.Windows.Forms.Label();
             this.lblTextCheckforupdatesevery = new System.Windows.Forms.Label();
             this.chxCheckUpdates = new System.Windows.Forms.CheckBox();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTextLatestUpdateCheck = new System.Windows.Forms.Label();
             this.lblLatestUpdateCheck = new System.Windows.Forms.Label();
             this.chxUpdateSilentInstall = new System.Windows.Forms.CheckBox();
@@ -882,7 +857,6 @@ namespace NoteFly
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
             this.numProxyPort = new System.Windows.Forms.NumericUpDown();
             this.lblTextAddress = new System.Windows.Forms.Label();
-            this.iptbProxy = new NoteFly.IPTextBox();
             this.lblTextPort = new System.Windows.Forms.Label();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
@@ -891,9 +865,6 @@ namespace NoteFly
             this.lblTextPreferedIPversion = new System.Windows.Forms.Label();
             this.cbxNetworkIPversion = new System.Windows.Forms.ComboBox();
             this.tabPageGPG = new System.Windows.Forms.TabPage();
-            this.tbGPGPath = new NoteFly.IOTextBox();
-            this.btnGPGPathBrowse = new System.Windows.Forms.Button();
-            this.lblTextGPGPath = new System.Windows.Forms.Label();
             this.chxCheckUpdatesSignature = new System.Windows.Forms.CheckBox();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
@@ -911,10 +882,19 @@ namespace NoteFly
             this.lblTextLogging = new System.Windows.Forms.Label();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
-            this.tbNotesSavePath = new NoteFly.IOTextBox();
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
+            this.shortcutTextBoxNotesToFront = new NoteFly.ShortcutTextBox();
+            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
+            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
+            this.tbDefaultEmail = new NoteFly.EmailTextBox();
+            this.iptbProxy = new NoteFly.IPTextBox();
+            this.tbNotesSavePath = new NoteFly.IOTextBox();
+            this.tableLayoutPanelLocationGPG = new System.Windows.Forms.TableLayoutPanel();
+            this.btnGPGPathBrowse = new System.Windows.Forms.Button();
+            this.tbGPGPath = new NoteFly.IOTextBox();
+            this.lblTextGPGPath = new System.Windows.Forms.Label();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -947,10 +927,9 @@ namespace NoteFly
             this.tabNetwork.SuspendLayout();
             this.tabControlNetwork.SuspendLayout();
             this.tabUpdates.SuspendLayout();
-            this.tableLayoutPanel8.SuspendLayout();
+            this.tableLayoutPanelUpdates.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckPluginsDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckDays)).BeginInit();
-            this.tableLayoutPanel7.SuspendLayout();
             this.tabProxy.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numProxyPort)).BeginInit();
@@ -962,6 +941,7 @@ namespace NoteFly
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).BeginInit();
+            this.tableLayoutPanelLocationGPG.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
@@ -1217,20 +1197,6 @@ namespace NoteFly
             this.tableLayoutPanelShortcuts.Size = new System.Drawing.Size(440, 88);
             this.tableLayoutPanelShortcuts.TabIndex = 16;
             // 
-            // shortcutTextBoxNotesToFront
-            // 
-            this.shortcutTextBoxNotesToFront.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxNotesToFront.Location = new System.Drawing.Point(152, 61);
-            this.shortcutTextBoxNotesToFront.Name = "shortcutTextBoxNotesToFront";
-            this.shortcutTextBoxNotesToFront.ShortcutKeyposition = 112;
-            this.shortcutTextBoxNotesToFront.Size = new System.Drawing.Size(202, 22);
-            this.shortcutTextBoxNotesToFront.TabIndex = 14;
-            this.shortcutTextBoxNotesToFront.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxNotesToFront.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = false;
-            this.shortcutTextBoxNotesToFront.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxNotesToFront.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
-            // 
             // lblTextHotkeyNotesToFront
             // 
             this.lblTextHotkeyNotesToFront.AutoSize = true;
@@ -1240,20 +1206,6 @@ namespace NoteFly
             this.lblTextHotkeyNotesToFront.Size = new System.Drawing.Size(132, 16);
             this.lblTextHotkeyNotesToFront.TabIndex = 13;
             this.lblTextHotkeyNotesToFront.Text = "Hotkey notes to front:";
-            // 
-            // shortcutTextBoxManageNotes
-            // 
-            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 32);
-            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
-            this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
-            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(202, 22);
-            this.shortcutTextBoxManageNotes.TabIndex = 12;
-            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
-            this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
             // 
             // lblTextHotkeyNewNote
             // 
@@ -1274,20 +1226,6 @@ namespace NoteFly
             this.lblTextHotkeyManageNotes.Size = new System.Drawing.Size(143, 16);
             this.lblTextHotkeyManageNotes.TabIndex = 10;
             this.lblTextHotkeyManageNotes.Text = "Hotkey manage notes:";
-            // 
-            // shortcutTextBoxNewNote
-            // 
-            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(152, 3);
-            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
-            this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
-            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(202, 22);
-            this.shortcutTextBoxNewNote.TabIndex = 11;
-            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
-            this.shortcutTextBoxNewNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
             // 
             // chxHotkeyNewNoteEnabled
             // 
@@ -2322,15 +2260,6 @@ namespace NoteFly
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
             // 
-            // tbDefaultEmail
-            // 
-            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
-            this.tbDefaultEmail.Enabled = false;
-            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
-            this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
-            this.tbDefaultEmail.TabIndex = 26;
-            // 
             // chxActionsEmailEnabled
             // 
             this.chxActionsEmailEnabled.AutoSize = true;
@@ -2384,9 +2313,7 @@ namespace NoteFly
             // 
             // tabUpdates
             // 
-            this.tabUpdates.Controls.Add(this.tableLayoutPanel8);
-            this.tabUpdates.Controls.Add(this.tableLayoutPanel7);
-            this.tabUpdates.Controls.Add(this.chxUpdateSilentInstall);
+            this.tabUpdates.Controls.Add(this.tableLayoutPanelUpdates);
             this.tabUpdates.Controls.Add(this.btnCheckUpdates);
             this.tabUpdates.Location = new System.Drawing.Point(4, 25);
             this.tabUpdates.Name = "tabUpdates";
@@ -2396,34 +2323,40 @@ namespace NoteFly
             this.tabUpdates.Text = "Updates";
             this.tabUpdates.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel8
+            // tableLayoutPanelUpdates
             // 
-            this.tableLayoutPanel8.ColumnCount = 3;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.Controls.Add(this.lblTextDaysPlugins, 2, 2);
-            this.tableLayoutPanel8.Controls.Add(this.numUpdateCheckPluginsDays, 1, 2);
-            this.tableLayoutPanel8.Controls.Add(this.lblTextCheckpluginsupdatesevery, 0, 2);
-            this.tableLayoutPanel8.Controls.Add(this.numUpdateCheckDays, 1, 1);
-            this.tableLayoutPanel8.Controls.Add(this.lblTextDayAtStartup, 2, 1);
-            this.tableLayoutPanel8.Controls.Add(this.lblTextCheckforupdatesevery, 0, 1);
-            this.tableLayoutPanel8.Controls.Add(this.chxCheckUpdates, 0, 0);
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(11, 24);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 3;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.74627F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.25373F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(402, 86);
-            this.tableLayoutPanel8.TabIndex = 37;
+            this.tableLayoutPanelUpdates.ColumnCount = 3;
+            this.tableLayoutPanelUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelUpdates.Controls.Add(this.lblLatestUpdateCheck, 1, 5);
+            this.tableLayoutPanelUpdates.Controls.Add(this.lblTextLatestUpdateCheck, 0, 5);
+            this.tableLayoutPanelUpdates.Controls.Add(this.lblTextDaysPlugins, 2, 2);
+            this.tableLayoutPanelUpdates.Controls.Add(this.numUpdateCheckPluginsDays, 1, 2);
+            this.tableLayoutPanelUpdates.Controls.Add(this.chxUpdateSilentInstall, 0, 3);
+            this.tableLayoutPanelUpdates.Controls.Add(this.lblTextCheckpluginsupdatesevery, 0, 2);
+            this.tableLayoutPanelUpdates.Controls.Add(this.numUpdateCheckDays, 1, 1);
+            this.tableLayoutPanelUpdates.Controls.Add(this.lblTextDayAtStartup, 2, 1);
+            this.tableLayoutPanelUpdates.Controls.Add(this.lblTextCheckforupdatesevery, 0, 1);
+            this.tableLayoutPanelUpdates.Controls.Add(this.chxCheckUpdates, 0, 0);
+            this.tableLayoutPanelUpdates.Location = new System.Drawing.Point(3, 24);
+            this.tableLayoutPanelUpdates.Name = "tableLayoutPanelUpdates";
+            this.tableLayoutPanelUpdates.RowCount = 6;
+            this.tableLayoutPanelUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanelUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelUpdates.Size = new System.Drawing.Size(445, 186);
+            this.tableLayoutPanelUpdates.TabIndex = 37;
             // 
             // lblTextDaysPlugins
             // 
             this.lblTextDaysPlugins.AutoSize = true;
             this.lblTextDaysPlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblTextDaysPlugins.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextDaysPlugins.Location = new System.Drawing.Point(278, 57);
+            this.lblTextDaysPlugins.Location = new System.Drawing.Point(335, 60);
             this.lblTextDaysPlugins.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextDaysPlugins.Name = "lblTextDaysPlugins";
             this.lblTextDaysPlugins.Size = new System.Drawing.Size(37, 20);
@@ -2435,7 +2368,7 @@ namespace NoteFly
             // 
             this.numUpdateCheckPluginsDays.Enabled = false;
             this.numUpdateCheckPluginsDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.numUpdateCheckPluginsDays.Location = new System.Drawing.Point(234, 55);
+            this.numUpdateCheckPluginsDays.Location = new System.Drawing.Point(269, 58);
             this.numUpdateCheckPluginsDays.Maximum = new decimal(new int[] {
             365,
             0,
@@ -2462,7 +2395,7 @@ namespace NoteFly
             this.lblTextCheckpluginsupdatesevery.AutoSize = true;
             this.lblTextCheckpluginsupdatesevery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblTextCheckpluginsupdatesevery.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextCheckpluginsupdatesevery.Location = new System.Drawing.Point(18, 57);
+            this.lblTextCheckpluginsupdatesevery.Location = new System.Drawing.Point(18, 60);
             this.lblTextCheckpluginsupdatesevery.Margin = new System.Windows.Forms.Padding(18, 5, 3, 0);
             this.lblTextCheckpluginsupdatesevery.Name = "lblTextCheckpluginsupdatesevery";
             this.lblTextCheckpluginsupdatesevery.Size = new System.Drawing.Size(184, 20);
@@ -2474,7 +2407,7 @@ namespace NoteFly
             // 
             this.numUpdateCheckDays.Enabled = false;
             this.numUpdateCheckDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.numUpdateCheckDays.Location = new System.Drawing.Point(234, 29);
+            this.numUpdateCheckDays.Location = new System.Drawing.Point(269, 30);
             this.numUpdateCheckDays.Maximum = new decimal(new int[] {
             365,
             0,
@@ -2501,7 +2434,7 @@ namespace NoteFly
             this.lblTextDayAtStartup.AutoSize = true;
             this.lblTextDayAtStartup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblTextDayAtStartup.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextDayAtStartup.Location = new System.Drawing.Point(278, 31);
+            this.lblTextDayAtStartup.Location = new System.Drawing.Point(335, 32);
             this.lblTextDayAtStartup.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextDayAtStartup.Name = "lblTextDayAtStartup";
             this.lblTextDayAtStartup.Size = new System.Drawing.Size(100, 20);
@@ -2514,7 +2447,7 @@ namespace NoteFly
             this.lblTextCheckforupdatesevery.AutoSize = true;
             this.lblTextCheckforupdatesevery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblTextCheckforupdatesevery.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextCheckforupdatesevery.Location = new System.Drawing.Point(18, 31);
+            this.lblTextCheckforupdatesevery.Location = new System.Drawing.Point(18, 32);
             this.lblTextCheckforupdatesevery.Margin = new System.Windows.Forms.Padding(18, 5, 3, 0);
             this.lblTextCheckforupdatesevery.Name = "lblTextCheckforupdatesevery";
             this.lblTextCheckforupdatesevery.Size = new System.Drawing.Size(210, 20);
@@ -2525,38 +2458,24 @@ namespace NoteFly
             // chxCheckUpdates
             // 
             this.chxCheckUpdates.AutoSize = true;
-            this.tableLayoutPanel8.SetColumnSpan(this.chxCheckUpdates, 3);
+            this.tableLayoutPanelUpdates.SetColumnSpan(this.chxCheckUpdates, 3);
             this.chxCheckUpdates.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxCheckUpdates.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chxCheckUpdates.Location = new System.Drawing.Point(3, 3);
             this.chxCheckUpdates.Name = "chxCheckUpdates";
-            this.chxCheckUpdates.Size = new System.Drawing.Size(132, 20);
+            this.chxCheckUpdates.Size = new System.Drawing.Size(132, 21);
             this.chxCheckUpdates.TabIndex = 26;
             this.chxCheckUpdates.Text = "Check for updates";
             this.chxCheckUpdates.UseCompatibleTextRendering = true;
             this.chxCheckUpdates.UseVisualStyleBackColor = true;
             this.chxCheckUpdates.CheckedChanged += new System.EventHandler(this.cbxCheckUpdates_CheckedChanged);
             // 
-            // tableLayoutPanel7
-            // 
-            this.tableLayoutPanel7.ColumnCount = 2;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel7.Controls.Add(this.lblTextLatestUpdateCheck, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.lblLatestUpdateCheck, 1, 0);
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(13, 187);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(402, 23);
-            this.tableLayoutPanel7.TabIndex = 36;
-            // 
             // lblTextLatestUpdateCheck
             // 
             this.lblTextLatestUpdateCheck.AutoSize = true;
             this.lblTextLatestUpdateCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblTextLatestUpdateCheck.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(3, 0);
+            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(3, 160);
             this.lblTextLatestUpdateCheck.Name = "lblTextLatestUpdateCheck";
             this.lblTextLatestUpdateCheck.Size = new System.Drawing.Size(213, 20);
             this.lblTextLatestUpdateCheck.TabIndex = 31;
@@ -2568,7 +2487,7 @@ namespace NoteFly
             this.lblLatestUpdateCheck.AutoSize = true;
             this.lblLatestUpdateCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblLatestUpdateCheck.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(222, 0);
+            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(269, 160);
             this.lblLatestUpdateCheck.Name = "lblLatestUpdateCheck";
             this.lblLatestUpdateCheck.Size = new System.Drawing.Size(60, 16);
             this.lblLatestUpdateCheck.TabIndex = 32;
@@ -2579,7 +2498,7 @@ namespace NoteFly
             this.chxUpdateSilentInstall.AutoSize = true;
             this.chxUpdateSilentInstall.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxUpdateSilentInstall.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxUpdateSilentInstall.Location = new System.Drawing.Point(14, 116);
+            this.chxUpdateSilentInstall.Location = new System.Drawing.Point(3, 86);
             this.chxUpdateSilentInstall.Name = "chxUpdateSilentInstall";
             this.chxUpdateSilentInstall.Size = new System.Drawing.Size(260, 21);
             this.chxUpdateSilentInstall.TabIndex = 35;
@@ -2624,7 +2543,7 @@ namespace NoteFly
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.52174F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.47826F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 154F));
             this.tableLayoutPanel10.Controls.Add(this.chxProxyEnabled, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.numProxyPort, 3, 1);
             this.tableLayoutPanel10.Controls.Add(this.lblTextAddress, 0, 1);
@@ -2657,7 +2576,7 @@ namespace NoteFly
             // numProxyPort
             // 
             this.numProxyPort.Enabled = false;
-            this.numProxyPort.Location = new System.Drawing.Point(274, 33);
+            this.numProxyPort.Location = new System.Drawing.Point(272, 33);
             this.numProxyPort.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2688,20 +2607,10 @@ namespace NoteFly
             this.lblTextAddress.TabIndex = 29;
             this.lblTextAddress.Text = "address:";
             // 
-            // iptbProxy
-            // 
-            this.iptbProxy.Enabled = false;
-            this.iptbProxy.Location = new System.Drawing.Point(75, 33);
-            this.iptbProxy.Name = "iptbProxy";
-            this.iptbProxy.Size = new System.Drawing.Size(151, 22);
-            this.iptbProxy.TabIndex = 26;
-            this.iptbProxy.UseIPv4addr = true;
-            this.iptbProxy.UseIPv6addr = true;
-            // 
             // lblTextPort
             // 
             this.lblTextPort.AutoSize = true;
-            this.lblTextPort.Location = new System.Drawing.Point(232, 35);
+            this.lblTextPort.Location = new System.Drawing.Point(230, 35);
             this.lblTextPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextPort.Name = "lblTextPort";
             this.lblTextPort.Size = new System.Drawing.Size(34, 16);
@@ -2810,10 +2719,7 @@ namespace NoteFly
             // 
             // tabPageGPG
             // 
-            this.tabPageGPG.Controls.Add(this.tbGPGPath);
-            this.tabPageGPG.Controls.Add(this.btnGPGPathBrowse);
-            this.tabPageGPG.Controls.Add(this.lblTextGPGPath);
-            this.tabPageGPG.Controls.Add(this.chxCheckUpdatesSignature);
+            this.tabPageGPG.Controls.Add(this.tableLayoutPanelLocationGPG);
             this.tabPageGPG.Location = new System.Drawing.Point(4, 25);
             this.tabPageGPG.Name = "tabPageGPG";
             this.tabPageGPG.Padding = new System.Windows.Forms.Padding(3);
@@ -2822,48 +2728,17 @@ namespace NoteFly
             this.tabPageGPG.Text = "GnuPG";
             this.tabPageGPG.UseVisualStyleBackColor = true;
             // 
-            // tbGPGPath
-            // 
-            this.tbGPGPath.Location = new System.Drawing.Point(123, 60);
-            this.tbGPGPath.Name = "tbGPGPath";
-            this.tbGPGPath.Size = new System.Drawing.Size(221, 22);
-            this.tbGPGPath.TabIndex = 38;
-            // 
-            // btnGPGPathBrowse
-            // 
-            this.btnGPGPathBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnGPGPathBrowse.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnGPGPathBrowse.Location = new System.Drawing.Point(350, 59);
-            this.btnGPGPathBrowse.Name = "btnGPGPathBrowse";
-            this.btnGPGPathBrowse.Size = new System.Drawing.Size(64, 25);
-            this.btnGPGPathBrowse.TabIndex = 36;
-            this.btnGPGPathBrowse.Text = "browse";
-            this.btnGPGPathBrowse.UseCompatibleTextRendering = true;
-            this.btnGPGPathBrowse.UseVisualStyleBackColor = false;
-            this.btnGPGPathBrowse.Click += new System.EventHandler(this.btnGPGPathBrowse_Click);
-            // 
-            // lblTextGPGPath
-            // 
-            this.lblTextGPGPath.AutoSize = true;
-            this.lblTextGPGPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.lblTextGPGPath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextGPGPath.Location = new System.Drawing.Point(7, 63);
-            this.lblTextGPGPath.Name = "lblTextGPGPath";
-            this.lblTextGPGPath.Size = new System.Drawing.Size(110, 20);
-            this.lblTextGPGPath.TabIndex = 37;
-            this.lblTextGPGPath.Text = "Location gpg.exe:";
-            this.lblTextGPGPath.UseCompatibleTextRendering = true;
-            // 
             // chxCheckUpdatesSignature
             // 
             this.chxCheckUpdatesSignature.AutoSize = true;
+            this.tableLayoutPanelLocationGPG.SetColumnSpan(this.chxCheckUpdatesSignature, 3);
             this.chxCheckUpdatesSignature.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxCheckUpdatesSignature.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(13, 34);
+            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(3, 3);
             this.chxCheckUpdatesSignature.Name = "chxCheckUpdatesSignature";
-            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(284, 21);
+            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(333, 21);
             this.chxCheckUpdatesSignature.TabIndex = 35;
-            this.chxCheckUpdatesSignature.Text = "Verify the signature of downloaded updates.";
+            this.chxCheckUpdatesSignature.Text = "Verify the GnuPG signature of downloaded updates.";
             this.chxCheckUpdatesSignature.UseCompatibleTextRendering = true;
             this.chxCheckUpdatesSignature.UseVisualStyleBackColor = true;
             this.chxCheckUpdatesSignature.CheckStateChanged += new System.EventHandler(this.chxCheckUpdatesSignature_CheckedChanged);
@@ -2901,7 +2776,7 @@ namespace NoteFly
             this.tableLayoutPanel11.ColumnCount = 3;
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.93631F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.0637F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
             this.tableLayoutPanel11.Controls.Add(this.btnResetSettings, 1, 1);
             this.tableLayoutPanel11.Controls.Add(this.btnOpenSettingsFolder, 1, 0);
             this.tableLayoutPanel11.Location = new System.Drawing.Point(23, 240);
@@ -2920,7 +2795,7 @@ namespace NoteFly
             this.btnResetSettings.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnResetSettings.Location = new System.Drawing.Point(93, 39);
             this.btnResetSettings.Name = "btnResetSettings";
-            this.btnResetSettings.Size = new System.Drawing.Size(206, 30);
+            this.btnResetSettings.Size = new System.Drawing.Size(204, 30);
             this.btnResetSettings.TabIndex = 21;
             this.btnResetSettings.Text = "&Reset all settings to default";
             this.btnResetSettings.UseCompatibleTextRendering = true;
@@ -2932,7 +2807,7 @@ namespace NoteFly
             this.btnOpenSettingsFolder.BackColor = System.Drawing.Color.LightGray;
             this.btnOpenSettingsFolder.Location = new System.Drawing.Point(93, 3);
             this.btnOpenSettingsFolder.Name = "btnOpenSettingsFolder";
-            this.btnOpenSettingsFolder.Size = new System.Drawing.Size(206, 30);
+            this.btnOpenSettingsFolder.Size = new System.Drawing.Size(204, 30);
             this.btnOpenSettingsFolder.TabIndex = 40;
             this.btnOpenSettingsFolder.Text = "open settings folder";
             this.btnOpenSettingsFolder.UseVisualStyleBackColor = false;
@@ -3104,13 +2979,6 @@ namespace NoteFly
             this.chxLogErrors.UseCompatibleTextRendering = true;
             this.chxLogErrors.UseVisualStyleBackColor = true;
             // 
-            // tbNotesSavePath
-            // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
-            this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
-            this.tbNotesSavePath.TabIndex = 39;
-            // 
             // chxSettingsExpertEnabled
             // 
             this.chxSettingsExpertEnabled.AccessibleDescription = "Show expert settings";
@@ -3138,6 +3006,124 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.DefaultExt = "exe";
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
+            // 
+            // shortcutTextBoxNotesToFront
+            // 
+            this.shortcutTextBoxNotesToFront.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxNotesToFront.Location = new System.Drawing.Point(152, 61);
+            this.shortcutTextBoxNotesToFront.Name = "shortcutTextBoxNotesToFront";
+            this.shortcutTextBoxNotesToFront.ShortcutKeyposition = 112;
+            this.shortcutTextBoxNotesToFront.Size = new System.Drawing.Size(202, 22);
+            this.shortcutTextBoxNotesToFront.TabIndex = 14;
+            this.shortcutTextBoxNotesToFront.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNotesToFront.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = false;
+            this.shortcutTextBoxNotesToFront.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxNotesToFront.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
+            // 
+            // shortcutTextBoxManageNotes
+            // 
+            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 32);
+            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
+            this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
+            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(202, 22);
+            this.shortcutTextBoxManageNotes.TabIndex = 12;
+            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
+            this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
+            // 
+            // shortcutTextBoxNewNote
+            // 
+            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(152, 3);
+            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
+            this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
+            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(202, 22);
+            this.shortcutTextBoxNewNote.TabIndex = 11;
+            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
+            this.shortcutTextBoxNewNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
+            // 
+            // tbDefaultEmail
+            // 
+            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
+            this.tbDefaultEmail.Enabled = false;
+            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
+            this.tbDefaultEmail.Name = "tbDefaultEmail";
+            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
+            this.tbDefaultEmail.TabIndex = 26;
+            // 
+            // iptbProxy
+            // 
+            this.iptbProxy.Enabled = false;
+            this.iptbProxy.Location = new System.Drawing.Point(74, 33);
+            this.iptbProxy.Name = "iptbProxy";
+            this.iptbProxy.Size = new System.Drawing.Size(150, 22);
+            this.iptbProxy.TabIndex = 26;
+            this.iptbProxy.UseIPv4addr = true;
+            this.iptbProxy.UseIPv6addr = true;
+            // 
+            // tbNotesSavePath
+            // 
+            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
+            this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
+            this.tbNotesSavePath.TabIndex = 39;
+            // 
+            // tableLayoutPanelLocationGPG
+            // 
+            this.tableLayoutPanelLocationGPG.ColumnCount = 3;
+            this.tableLayoutPanelLocationGPG.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.05556F));
+            this.tableLayoutPanelLocationGPG.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.94444F));
+            this.tableLayoutPanelLocationGPG.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tableLayoutPanelLocationGPG.Controls.Add(this.lblTextGPGPath, 0, 1);
+            this.tableLayoutPanelLocationGPG.Controls.Add(this.chxCheckUpdatesSignature, 0, 0);
+            this.tableLayoutPanelLocationGPG.Controls.Add(this.tbGPGPath, 1, 1);
+            this.tableLayoutPanelLocationGPG.Controls.Add(this.btnGPGPathBrowse, 2, 1);
+            this.tableLayoutPanelLocationGPG.Location = new System.Drawing.Point(6, 41);
+            this.tableLayoutPanelLocationGPG.Name = "tableLayoutPanelLocationGPG";
+            this.tableLayoutPanelLocationGPG.RowCount = 2;
+            this.tableLayoutPanelLocationGPG.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelLocationGPG.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelLocationGPG.Size = new System.Drawing.Size(442, 60);
+            this.tableLayoutPanelLocationGPG.TabIndex = 39;
+            // 
+            // btnGPGPathBrowse
+            // 
+            this.btnGPGPathBrowse.BackColor = System.Drawing.Color.LightGray;
+            this.btnGPGPathBrowse.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnGPGPathBrowse.Location = new System.Drawing.Point(372, 30);
+            this.btnGPGPathBrowse.Name = "btnGPGPathBrowse";
+            this.btnGPGPathBrowse.Size = new System.Drawing.Size(64, 25);
+            this.btnGPGPathBrowse.TabIndex = 36;
+            this.btnGPGPathBrowse.Text = "browse";
+            this.btnGPGPathBrowse.UseCompatibleTextRendering = true;
+            this.btnGPGPathBrowse.UseVisualStyleBackColor = false;
+            this.btnGPGPathBrowse.Click += new System.EventHandler(this.btnGPGPathBrowse_Click);
+            // 
+            // tbGPGPath
+            // 
+            this.tbGPGPath.Location = new System.Drawing.Point(125, 30);
+            this.tbGPGPath.Name = "tbGPGPath";
+            this.tbGPGPath.Size = new System.Drawing.Size(237, 22);
+            this.tbGPGPath.TabIndex = 38;
+            // 
+            // lblTextGPGPath
+            // 
+            this.lblTextGPGPath.AutoSize = true;
+            this.lblTextGPGPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextGPGPath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextGPGPath.Location = new System.Drawing.Point(3, 27);
+            this.lblTextGPGPath.Name = "lblTextGPGPath";
+            this.lblTextGPGPath.Size = new System.Drawing.Size(110, 20);
+            this.lblTextGPGPath.TabIndex = 37;
+            this.lblTextGPGPath.Text = "Location gpg.exe:";
+            this.lblTextGPGPath.UseCompatibleTextRendering = true;
             // 
             // FrmSettings
             // 
@@ -3203,12 +3189,10 @@ namespace NoteFly
             this.tabControlNetwork.ResumeLayout(false);
             this.tabUpdates.ResumeLayout(false);
             this.tabUpdates.PerformLayout();
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
+            this.tableLayoutPanelUpdates.ResumeLayout(false);
+            this.tableLayoutPanelUpdates.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckPluginsDays)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckDays)).EndInit();
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.tableLayoutPanel7.PerformLayout();
             this.tabProxy.ResumeLayout(false);
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
@@ -3217,7 +3201,6 @@ namespace NoteFly
             this.tableLayoutPanel9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).EndInit();
             this.tabPageGPG.ResumeLayout(false);
-            this.tabPageGPG.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
@@ -3226,6 +3209,8 @@ namespace NoteFly
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).EndInit();
+            this.tableLayoutPanelLocationGPG.ResumeLayout(false);
+            this.tableLayoutPanelLocationGPG.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3238,5 +3223,9 @@ namespace NoteFly
         private System.Windows.Forms.NumericUpDown numUpdateCheckPluginsDays;
         private System.Windows.Forms.Label lblTextCheckpluginsupdatesevery;
         private System.Windows.Forms.CheckBox chxLoadPlugins;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelLocationGPG;
+        private System.Windows.Forms.Label lblTextGPGPath;
+        private IOTextBox tbGPGPath;
+        private System.Windows.Forms.Button btnGPGPathBrowse;
     }
 }

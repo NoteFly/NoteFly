@@ -83,7 +83,7 @@
             this.lblTextSearch.Location = new System.Drawing.Point(0, 0);
             this.lblTextSearch.Margin = new System.Windows.Forms.Padding(0);
             this.lblTextSearch.Name = "lblTextSearch";
-            this.lblTextSearch.Padding = new System.Windows.Forms.Padding(1, 7, 1, 1);
+            this.lblTextSearch.Padding = new System.Windows.Forms.Padding(1, 6, 1, 1);
             this.lblTextSearch.Size = new System.Drawing.Size(54, 28);
             this.lblTextSearch.TabIndex = 1;
             this.lblTextSearch.Text = "search:";
@@ -100,8 +100,8 @@
             this.tableLayoutPnlSearchbox.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPnlSearchbox.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPnlSearchbox.Controls.Add(this.lblTextSearch, 0, 0);
-            this.tableLayoutPnlSearchbox.Controls.Add(this.btnKeywordClear, 2, 0);
             this.tableLayoutPnlSearchbox.Controls.Add(this.tbKeywords, 1, 0);
+            this.tableLayoutPnlSearchbox.Controls.Add(this.btnKeywordClear, 2, 0);
             this.tableLayoutPnlSearchbox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPnlSearchbox.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
             this.tableLayoutPnlSearchbox.Location = new System.Drawing.Point(0, 0);
@@ -114,12 +114,13 @@
             // btnKeywordClear
             // 
             this.btnKeywordClear.BackColor = System.Drawing.Color.White;
+            this.btnKeywordClear.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnKeywordClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnKeywordClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnKeywordClear.Location = new System.Drawing.Point(189, 3);
-            this.btnKeywordClear.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.btnKeywordClear.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnKeywordClear.Name = "btnKeywordClear";
-            this.btnKeywordClear.Size = new System.Drawing.Size(23, 22);
+            this.btnKeywordClear.Size = new System.Drawing.Size(30, 22);
             this.btnKeywordClear.TabIndex = 2;
             this.btnKeywordClear.Text = "X";
             this.btnKeywordClear.UseMnemonic = false;

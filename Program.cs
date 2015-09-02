@@ -234,23 +234,48 @@ namespace NoteFly
         /// <summary>
         /// If set ask the user if the want to load the link.
         /// </summary>
-        /// <param name="uri_text">The uniform resource location.</param>
-        /// <param name="allow_ask">Allow to ask user if it wants to visit a url.</param>
-        public static void LoadLink(string uri_text, bool allow_ask)
+        /// <param name="urlwithoutprotocolhandler">The uniform resource location.</param>
+        /// <param name="askforvisit">Allow to ask user if it wants to visit a url.</param>
+        public static void LoadLink(string url, bool askforvisit)
         {
-            if (Settings.ConfirmLinkclick && allow_ask)
-            {
-                string confirmlinkvisittext = Strings.T("Are you sure you want to visit: {0}", uri_text);
-                string confirmlinkvisittitle = Strings.T("Are you sure?");
-                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(confirmlinkvisittext, confirmlinkvisittitle, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
-                if (result == System.Windows.Forms.DialogResult.Yes)
+            String protocolhandler = "";
+            if (!url.Contains("://")) {
+                protocolhandler = "https:";
+                if (!Settings.ProgramHttpsLinks)
                 {
-                    Program.LoadURI(uri_text);
+                    protocolhandler = "http:";
                 }
             }
-            else
+
+            String fullurl = protocolhandler + url;
+            if (Settings.ConfirmLinkclick && askforvisit)
             {
-                Program.LoadURI(uri_text);
+                string confirmlinkvisittext = Strings.T("Are you sure you want to visit: {0} ?", fullurl);
+                string confirmlinkvisittitle = Strings.T("Are you sure?");
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(confirmlinkvisittext, confirmlinkvisittitle, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
+                if (result != System.Windows.Forms.DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
+            try
+            {
+                System.Diagnostics.ProcessStartInfo procstartinfo = new System.Diagnostics.ProcessStartInfo(url);
+                procstartinfo.ErrorDialog = true;
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.AppStarting;
+                try
+                {
+                    System.Diagnostics.Process.Start(procstartinfo);
+                }
+                catch (System.ComponentModel.Win32Exception w32exc)
+                {
+                    Log.Write(LogType.exception, w32exc.Message);
+                }
+            }
+            finally
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             }
         }
 
@@ -1142,49 +1167,6 @@ namespace NoteFly
             }
 
             return tempfolder;
-        }
-
-        /// <summary>
-        /// Actual loads the url.
-        /// Also provide some cursor feedback.
-        /// </summary>
-        /// <param name="uri_text">The uri to load</param>
-        private static void LoadURI(string uri_text)
-        {
-            try
-            {
-                UriBuilder uri = null;
-                try
-                {
-                    uri = new UriBuilder(uri_text);
-                }
-                catch (UriFormatException)
-                {
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(uri.Scheme))
-                {
-                    uri.Scheme = "http://";
-                }
-
-                System.Diagnostics.ProcessStartInfo procstartinfo = new System.Diagnostics.ProcessStartInfo(uri.Uri.AbsoluteUri.ToString());
-                procstartinfo.ErrorDialog = true;
-                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.AppStarting;
-                try
-                {
-                    System.Diagnostics.Process.Start(procstartinfo);
-                }
-                catch (System.ComponentModel.Win32Exception w32exc)
-                {
-                    Log.Write(LogType.exception, w32exc.Message);
-                    return;
-                }
-            }
-            finally
-            {
-                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-            }
         }
 
         // change working directory as dll search path
