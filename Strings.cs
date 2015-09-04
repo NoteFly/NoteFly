@@ -94,28 +94,28 @@ namespace NoteFly
         /// <summary>
         /// Looks up a localized string; used to mark string for translation as well.
         /// </summary>
-        /// <param name="t">The string to translate.</param>
+        /// <param name="text">The string to translate.</param>
         /// <returns>A translated string</returns>
-        public static string T(string t)
+        public static string T(string text)
         {
-            return T(null, t);
+            return T(null, text);
         }
 
         /// <summary>
         /// Looks up a localized string; used to mark string for translation as well.
         /// </summary>
-        /// <param name="info">CultureInfo object.</param>
-        /// <param name="t">The string to translate.</param>
+        /// <param name="cultureInfo">CultureInfo object.</param>
+        /// <param name="text">The string to translate.</param>
         /// <returns>An translated string.</returns>
-        public static string T(CultureInfo info, string t)
+        public static string T(CultureInfo cultureInfo, string text)
         {
-            if (string.IsNullOrEmpty(t))
+            if (string.IsNullOrEmpty(text))
             {
-                return t;
+                return text;
             }
 
-            string translated = ResourceManager.GetString(t, info ?? resourceCulture);
-            return string.IsNullOrEmpty(translated) ? t : translated;
+            string translated = ResourceManager.GetString(text, cultureInfo ?? resourceCulture);
+            return string.IsNullOrEmpty(translated) ? text : translated;
         }
 
         /// <summary>
@@ -133,27 +133,27 @@ namespace NoteFly
         /// Looks up a localized string and formats it with the parameters provided; used to mark string for translation as well.
         /// </summary>
         /// <param name="info">CultureInfo object.</param>
-        /// <param name="t">The string to translate.</param>
+        /// <param name="text">The string to translate.</param>
         /// <param name="parameters">Parameters in the string.</param>
         /// <returns>The translated string with orginal parameters.</returns>
-        public static string T(CultureInfo info, string t, params object[] parameters)
+        public static string T(CultureInfo info, string text, params object[] parameters)
         {
-            if (string.IsNullOrEmpty(t))
+            if (string.IsNullOrEmpty(text))
             {
-                return t;
+                return text;
             }
 
-            return string.Format(T(info, t), parameters);
+            return string.Format(T(info, text), parameters);
         }
 
         /// <summary>
         /// Marks a string for future translation, does not translate it now.
         /// </summary>
-        /// <param name="t">The string to mark for future translation</param>
+        /// <param name="text">The string to mark for future translation</param>
         /// <returns>Orignal string</returns>
-        public static string M(string t)
+        public static string M(string text)
         {
-            return t;
+            return text;
         }
 
         /// <summary>
@@ -190,34 +190,36 @@ namespace NoteFly
         /// <param name="controlnestedlevel">Depth level of the control on the form.</param>
         private static void TranslateControlCollection(System.Windows.Forms.Control.ControlCollection controlscollection, int controlnestedlevel)
         {
-            const int MAXNESTEDCONTROL = 16;
-            for (int i = 0; i < controlscollection.Count; i++)
+            const int MAXNESTEDCONTROL = 15;
+            for (int i = 0; i < controlscollection.Count; ++i)
             {
-                if (IsTranslatableControl(controlscollection[i]))
+                if (!IsTranslatableControl(controlscollection[i]))
                 {
-                    if (controlscollection[i].HasChildren)
-                    {
-                        if (controlscollection[i].GetType() == typeof(System.Windows.Forms.TabPage))
-                        {
-                            controlscollection[i].Text = GetTranslationControl(controlscollection[i].Text, controlscollection[i].Name);
-                        }
+                    continue;
+                }
 
-                        // Just in case: recusive method is going mad, throw an exception.
-                        if (controlnestedlevel > MAXNESTEDCONTROL)
-                        {
-                            string excnestedtoodeep = Strings.T("translating error: cannot translate controls more than {0} nested levels deep.", MAXNESTEDCONTROL);
-                            throw new ApplicationException(excnestedtoodeep);
-                        }
-                        else
-                        {
-                            controlnestedlevel++;
-                            TranslateControlCollection(controlscollection[i].Controls, controlnestedlevel);
-                        }
-                    }
-                    else
+                if (controlscollection[i].HasChildren)
+                {
+                    if (controlscollection[i].GetType() == typeof(System.Windows.Forms.TabPage))
                     {
                         controlscollection[i].Text = GetTranslationControl(controlscollection[i].Text, controlscollection[i].Name);
                     }
+
+                    // Just in case: recusive method is going mad, throw an exception.
+                    if (controlnestedlevel > MAXNESTEDCONTROL)
+                    {
+                        string excnestedtoodeep = Strings.T("translating error: cannot translate controls more than {0} nested levels deep.", MAXNESTEDCONTROL);
+                        throw new ApplicationException(excnestedtoodeep);
+                    }
+                    else
+                    {
+                        controlnestedlevel++;
+                        TranslateControlCollection(controlscollection[i].Controls, controlnestedlevel);
+                    }
+                }
+                else
+                {
+                    controlscollection[i].Text = GetTranslationControl(controlscollection[i].Text, controlscollection[i].Name);
                 }
             }
         }
@@ -225,46 +227,49 @@ namespace NoteFly
         /// <summary>
         /// Translate the toolstripitemcollection.
         /// </summary>
-        /// <param name="toolstripitemcollection">Collection of toolstripitems to translate.</param>
+        /// <param name="toolstripitemcollection">Collection of ToolStripItems to translate.</param>
         private static void TranslateToolStripItemCollection(System.Windows.Forms.ToolStripItemCollection toolstripitemcollection)
         {
-            for (int i = 0; i < toolstripitemcollection.Count; i++)
+            for (int i = 0; i < toolstripitemcollection.Count; ++i)
             {
-                System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)toolstripitemcollection[i];
-                if (menuitem.DropDownItems.Count > 0)
+                System.Windows.Forms.ToolStripMenuItem toolStripMenuItem = (System.Windows.Forms.ToolStripMenuItem)toolstripitemcollection[i];
+                toolStripMenuItem.Text = GetTranslationControl(toolstripitemcollection[i].Text, toolstripitemcollection[i].Name);
+                if (toolStripMenuItem.DropDownItems.Count > 0)
                 {
-                    for (int n = 0; n < menuitem.DropDownItems.Count; n++)
+                    // translate subitems:
+                    for (int n = 0; n < toolStripMenuItem.DropDownItems.Count; ++n)
                     {
-                        toolstripitemcollection[i].Text = GetTranslationControl(menuitem.DropDownItems[n].Text, menuitem.DropDownItems[n].Name);
+                        Log.Write(LogType.info, "found subitem: " + toolStripMenuItem.DropDownItems[n].Text);
+                        toolStripMenuItem.DropDownItems[n].Text = GetTranslationControl(toolStripMenuItem.DropDownItems[n].Text, toolStripMenuItem.DropDownItems[n].Name);
                     }
                 }
-
-                toolstripitemcollection[i].Text = GetTranslationControl(menuitem.Text, menuitem.Name);
             }
         }
 
         /// <summary>
         /// Get a translation for a particulair control.
         /// </summary>
-        /// <param name="text">Orginele text</param>
-        /// <param name="ctrlname">Control name</param>
+        /// <param name="untranslatedtext">Original text</param>
+        /// <param name="controlname">Control name</param>
         /// <returns>The text translation of the text properties of the control.</returns>
-        private static string GetTranslationControl(string text, string ctrlname)
+        private static string GetTranslationControl(string untranslatedtext, string controlname)
         {
-            if (!string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(untranslatedtext))
             {
-                text = text.Replace("\"", "\\\"");
-                string translation = Strings.T(text);
-#if DEBUG
-                AddToPOT(text, ctrlname);
-#endif
-                if (!string.IsNullOrEmpty(translation))
-                {
-                    return translation;
-                }
+                return untranslatedtext;
             }
 
-            return text;
+            //text = text.Replace("\"", "\\\""); // whats's the point of this again?
+            string translationtext = Strings.T(untranslatedtext);
+            if (string.IsNullOrEmpty(translationtext))
+            {
+                return untranslatedtext;
+            }
+
+#if DEBUG
+            AddToPOT(untranslatedtext, controlname);
+#endif
+            return translationtext;
         }
 
         /// <summary>
@@ -362,6 +367,7 @@ namespace NoteFly
                         potfilepart.AppendLine(controlname);
                         potfilepart.AppendLine(msgid);
                         potfilepart.AppendLine("msgstr \"\"");
+                        Log.Write(LogType.info, "POT add: " + msgid);
                         writer.Write(potfilepart.ToString());
                     }
                     finally
