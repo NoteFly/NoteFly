@@ -55,7 +55,17 @@ namespace NoteFly
         /// <returns></returns>
         public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings, string postdata)
         {
-            url = Program.ChangeUrlIPVersion(url);
+            String protocolhandler = "";
+            if (!url.Contains("://"))
+            {
+                protocolhandler = "https:";
+                if (!Settings.ProgramHttpsLinks)
+                {
+                    protocolhandler = "http:";
+                }
+            }
+
+            url = protocolhandler + url;
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
                 this.url = url;
@@ -127,8 +137,8 @@ namespace NoteFly
         /// and writing to memory in string.
         /// </summary>
         /// <param name="sender">The sender object</param>
-        /// <param name="e">DoWorkEvent arguments</param>
-        private void httpthread_DoWork(object sender, DoWorkEventArgs e)
+        /// <param name="doworkevtarg">DoWorkEvent arguments</param>
+        private void httpthread_DoWork(object sender, DoWorkEventArgs doworkevtarg)
         {
             HttpWebRequest request = this.CreateHttpWebRequest(this.url, this.cachesettings);
             if (request == null)
@@ -149,7 +159,7 @@ namespace NoteFly
                     }
                 }
 
-                e.Result = response;
+                doworkevtarg.Result = response;
             }
             catch (WebException webexc)
             {
@@ -172,11 +182,17 @@ namespace NoteFly
         /// <returns>A new httpwebrequest object.</returns>
         private HttpWebRequest CreateHttpWebRequest(string url, System.Net.Cache.RequestCacheLevel cachesettings)
         {
+            HttpWebRequest request = null;
+            if (String.IsNullOrEmpty(url))
+            {
+                Log.Write(LogType.exception, "Url is null or empty.");
+                return request;
+            }
+
             System.Net.ServicePointManager.Expect100Continue = false;
             System.Net.ServicePointManager.EnableDnsRoundRobin = true;
             System.Net.ServicePointManager.DnsRefreshTimeout = 3 * 60 * 1000; // 3 minutes
             System.Net.ServicePointManager.DefaultConnectionLimit = 8;
-            HttpWebRequest request = null;
             Log.Write(LogType.info, "Making request to '" + url + "'");
             try
             {

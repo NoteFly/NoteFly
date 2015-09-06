@@ -162,12 +162,12 @@ namespace NoteFly
         /// <summary>
         /// ToolStripMenuItem contentToolStripMenuItem
         /// </summary>
-        private System.Windows.Forms.ToolStripMenuItem contentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuPasteToContent;
         
         /// <summary>
         /// ToolStripMenuItem titleToolStripMenuItem
         /// </summary>
-        private System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuPasteToTitle;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -202,8 +202,8 @@ namespace NoteFly
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPasteTo = new System.Windows.Forms.ToolStripMenuItem();
-            this.contentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.titleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPasteToContent = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPasteToTitle = new System.Windows.Forms.ToolStripMenuItem();
             this.menuImportfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCancelNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.tbTitle = new System.Windows.Forms.TextBox();
@@ -307,28 +307,29 @@ namespace NoteFly
             // menuPasteTo
             // 
             this.menuPasteTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contentToolStripMenuItem,
-            this.titleToolStripMenuItem});
+            this.menuPasteToContent,
+            this.menuPasteToTitle});
             this.menuPasteTo.Name = "menuPasteTo";
             this.menuPasteTo.Size = new System.Drawing.Size(180, 22);
             this.menuPasteTo.Text = "&Paste to";
             // 
-            // contentToolStripMenuItem
+            // menuPasteToContent
             // 
-            this.contentToolStripMenuItem.Name = "contentToolStripMenuItem";
-            this.contentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.contentToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.contentToolStripMenuItem.Text = "content";
-            this.contentToolStripMenuItem.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
+            this.menuPasteToContent.Name = "menuPasteToContent";
+            this.menuPasteToContent.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded;
+            this.menuPasteToContent.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.menuPasteToContent.Size = new System.Drawing.Size(167, 22);
+            this.menuPasteToContent.Text = "content";
+            this.menuPasteToContent.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
             // 
-            // titleToolStripMenuItem
+            // menuPasteToTitle
             // 
-            this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
-            this.titleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.menuPasteToTitle.Name = "menuPasteToTitle";
+            this.menuPasteToTitle.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.V)));
-            this.titleToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.titleToolStripMenuItem.Text = "title";
-            this.titleToolStripMenuItem.Click += new System.EventHandler(this.titleToolStripMenuItem_Click);
+            this.menuPasteToTitle.Size = new System.Drawing.Size(167, 22);
+            this.menuPasteToTitle.Text = "title";
+            this.menuPasteToTitle.Click += new System.EventHandler(this.titleToolStripMenuItem_Click);
             // 
             // menuImportfile
             // 

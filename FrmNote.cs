@@ -322,7 +322,7 @@ namespace NoteFly
             {
                 this.menuNoteSkins.DropDownItems.Clear();
                 string[] skinnames = this.notes.GetSkinsNames();
-                for (int i = 0; i < skinnames.Length; i++)
+                for (int i = 0; i < skinnames.Length; ++i)
                 {
                     ToolStripMenuItem tsi = new ToolStripMenuItem();
                     tsi.Name = "menuSkin" + skinnames[i];
@@ -390,7 +390,7 @@ namespace NoteFly
         {
             if (PluginsManager.EnabledPlugins != null)
             {
-                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; ++i)
                 {
                     PluginsManager.EnabledPlugins[i].EditingNote(this.note.Filename);
                 }
@@ -408,25 +408,39 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void menuSendToEmail_Click(object sender, EventArgs e)
         {
+            string emailtitle = System.Web.HttpUtility.UrlEncode(this.lblNoteTitle.Text).Replace("+", " ");
             string emailnote = System.Web.HttpUtility.UrlEncode(this.rtbNote.Text).Replace("+", " ");
-            string emailtitle = System.Web.HttpUtility.UrlEncode(this.lblNoteTitle.Text);
+            if (string.IsNullOrEmpty(emailtitle) && string.IsNullOrEmpty(emailnote))
+            {
+                string note_msgnotitlecontent = Strings.T("Note has no title and no content.");
+                Log.Write(LogType.error, note_msgnotitlecontent);
+                MessageBox.Show(note_msgnotitlecontent);
+                return;
+            }
 
+            StringBuilder sburlemail = new StringBuilder("mailto:");
+            sburlemail.Append(Settings.SharingEmailDefaultadres);
             try
             {
-                if (!string.IsNullOrEmpty(emailtitle) && (!string.IsNullOrEmpty(emailnote)))
+                if (!string.IsNullOrEmpty(emailtitle))
                 {
-                    System.Diagnostics.Process.Start("mailto:" + Settings.SharingEmailDefaultadres + "?subject=" + this.lblNoteTitle.Text + "&body=" + emailnote);
+                    sburlemail.Append("?subject=").Append(emailtitle);
                 }
-                else if (!string.IsNullOrEmpty(emailtitle))
+
+                if (!string.IsNullOrEmpty(emailnote))
                 {
-                    System.Diagnostics.Process.Start("mailto:" + Settings.SharingEmailDefaultadres + "?subject=" + this.lblNoteTitle.Text);
+                    if (string.IsNullOrEmpty(emailtitle))
+                    {
+                        sburlemail.Append("?");
+                    } else
+                    {
+                        sburlemail.Append("&");
+                    }
+
+                    sburlemail.Append("body=").Append(emailnote);
                 }
-                else
-                {
-                    string note_msgnotitlecontent = Strings.T("Note has no title and no content.");
-                    Log.Write(LogType.error, note_msgnotitlecontent);
-                    MessageBox.Show(note_msgnotitlecontent);
-                }
+
+                System.Diagnostics.Process.Start(sburlemail.ToString());
             }
             catch (Win32Exception w32exc)
             {
@@ -538,12 +552,14 @@ namespace NoteFly
 
             if (PluginsManager.EnabledPlugins != null)
             {
-                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; ++p)
                 {
-                    if (PluginsManager.EnabledPlugins[p].InitFrmNoteMenu() != null)
+                    if (PluginsManager.EnabledPlugins[p].InitFrmNoteMenu() == null)
                     {
-                        this.menuFrmNoteOptions.Items.Add(PluginsManager.EnabledPlugins[p].InitFrmNoteMenu());
+                        continue;
                     }
+
+                    this.menuFrmNoteOptions.Items.Add(PluginsManager.EnabledPlugins[p].InitFrmNoteMenu());
                 }
             }
         }
@@ -894,21 +910,23 @@ namespace NoteFly
             sfdlg.Filter = sbfilter.ToString();
             if (PluginsManager.EnabledPlugins != null) 
             {
-                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; ++i)
                 {
                     string dlgfilter =  PluginsManager.EnabledPlugins[i].ExportNoteContentDlgFilter();
-                    if (dlgfilter != null)
+                    if (dlgfilter == null)
                     {
-                        try
-                        {
-                            sfdlg.Filter += dlgfilter;
-                        }
-                        catch (ArgumentException argexc)
-                        {
-                            string badpluginfilter = Strings.T("Bad plugin export notecontent filter selected.");
-                            MessageBox.Show(badpluginfilter);
-                            Log.Write(LogType.exception, badpluginfilter + argexc.StackTrace);
-                        }
+                        continue;
+                    }
+
+                    try
+                    {
+                        sfdlg.Filter += dlgfilter;
+                    }
+                    catch (ArgumentException argexc)
+                    {
+                        string badpluginfilter = Strings.T("Bad plugin export notecontent filter selected.");
+                        MessageBox.Show(badpluginfilter);
+                        Log.Write(LogType.exception, badpluginfilter + argexc.StackTrace);
                     }
                 }
             }
@@ -938,7 +956,7 @@ namespace NoteFly
                         if (PluginsManager.EnabledPlugins != null)
                         {
                             bool handled = false;
-                            for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                            for (int i = 0; i < PluginsManager.EnabledPlugins.Count; ++i)
                             {
                                 PluginsManager.EnabledPlugins[i].ExportNoteContent(this.rtbNote);
                                 handled = true;
@@ -978,15 +996,17 @@ namespace NoteFly
 
             if (PluginsManager.EnabledPlugins != null)
             {
-                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; ++i)
                 {
-                    if (PluginsManager.EnabledPlugins[i].InitFrmNoteShareMenu() != null)
+                    if (PluginsManager.EnabledPlugins[i].InitFrmNoteShareMenu() == null)
                     {
-                        ToolStripMenuItem menuitem = PluginsManager.EnabledPlugins[i].InitFrmNoteShareMenu();
-                        menuitem.Tag = i;
-                        menuitem.Click += new EventHandler(this.menuSharePluginClicked);
-                        this.menuActions.DropDownItems.Add(menuitem);
+                        continue;
                     }
+
+                    ToolStripMenuItem menuitem = PluginsManager.EnabledPlugins[i].InitFrmNoteShareMenu();
+                    menuitem.Tag = i;
+                    menuitem.Click += new EventHandler(this.menuSharePluginClicked);
+                    this.menuActions.DropDownItems.Add(menuitem);
                 }
             }
         }

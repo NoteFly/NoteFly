@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmPlugins.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2013  Tom
+//  Copyright (C) 2010-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -33,29 +33,29 @@ namespace NoteFly
     public partial class FrmPlugins : Form
     {
         /// <summary>
-        /// REST server domain
+        /// REST server domain.
         /// </summary>
-        private const string RESTAPIDOMAIN = "http://update.notefly.org";
+        private const string RESTAPIDOMAIN = "//www.notefly.org/REST/";
 
         /// <summary>
         /// REST url where to get a list of plugins.
         /// </summary>
-        private const string RESTAPIPLUGINSLIST = "/REST/plugins/list.php";
+        private const string RESTAPIPLUGINSLIST = "plugins/list.php";
 
         /// <summary>
         /// REST url where to get the detail of a partialer plugin 
         /// </summary>
-        private const string RESTAPIPLUGINDETAILS = "/REST/plugins/details.php?name=";
+        private const string RESTAPIPLUGINDETAILS = "plugins/details.php?name=";
 
         /// <summary>
         /// REST url where to get a list of matching pluginnames searched by a partialer keyword.
         /// </summary>
-        private const string RESTAPIPLUGINSSEARCH = "/REST/plugins/search.php?keyword=";
+        private const string RESTAPIPLUGINSSEARCH = "plugins/search.php?keyword=";
 
         /// <summary>
         /// REST url where to get several versions of plugins in xml (with a http POST request).
         /// </summary>
-        private const string RESTAPIPLUGINVERSION = "/REST/plugins/version.php";
+        private const string RESTAPIPLUGINVERSION = "plugins/version.php";
 
         /// <summary>
         /// 
@@ -241,15 +241,15 @@ namespace NoteFly
                 this.splitContainerAvailablePlugins.Panel2Collapsed = false;
                 this.btnPluginDownload.Visible = false;
                 string pluginname = this.lbxAvailablePlugins.SelectedItem.ToString();
-                if (pluginname == "Loading...")
-                {
-                    Log.Write(LogType.error, "Should not select plugin yet.");
-                    return;
-                }
-
                 if (string.IsNullOrEmpty(pluginname))
                 {
                     Log.Write(LogType.error, "Empty plugin name.");
+                    return;
+                }
+
+                if (pluginname.Equals("Loading...", StringComparison.Ordinal))
+                {
+                    Log.Write(LogType.error, "Should not select plugin yet.");
                     return;
                 }
 
@@ -640,11 +640,22 @@ namespace NoteFly
             XmlNodeList xmlnodelist = xmldoc.SelectNodes("/plugins/plugin");
             foreach (XmlNode xmlnode in xmlnodelist) 
             {
-                if (xmlnode.ChildNodes.Count > 1)
+                if (xmlnode.ChildNodes.Count == 1)
+                {
+                    const int MAXLENMESSAGE = 500;
+                    string errormessage = xmlnode.ChildNodes[0].InnerText;
+                    if (errormessage.Length > MAXLENMESSAGE)
+                    {
+                        errormessage = errormessage.Substring(0, MAXLENMESSAGE);
+                    }
+
+                    Log.Write(LogType.error, errormessage);
+                }
+                else if (xmlnode.ChildNodes.Count > 1)
                 {
                     bool minversionipluginokay = true;
                     DownloadDetailsPlugin downloaddetailsplugin = new DownloadDetailsPlugin();
-                    for (int i = 0; (i < xmlnode.ChildNodes.Count && minversionipluginokay); i++)
+                    for (int i = 0; (i < xmlnode.ChildNodes.Count && minversionipluginokay); ++i)
                     {
                         switch (xmlnode.ChildNodes[i].Name)
                         {
@@ -686,20 +697,6 @@ namespace NoteFly
                         {
                             this.updatableplugins.Add(downloaddetailsplugin);
                         }
-                    }
-                }
-                else
-                {
-                    if (xmlnode.ChildNodes.Count == 1)
-                    {
-                        const int MAXLENMESSAGE = 500;
-                        string errormessage = xmlnode.ChildNodes[0].InnerText;
-                        if (errormessage.Length > MAXLENMESSAGE)
-                        {
-                            errormessage = errormessage.Substring(0, MAXLENMESSAGE);
-                        }
-
-                        Log.Write(LogType.error, errormessage);
                     }
                 }
             }

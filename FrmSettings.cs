@@ -85,7 +85,6 @@ namespace NoteFly
             this.tabControlSettings_SelectedIndexChanged(null, null);
             this.LoadCbxLanguage();
             this.LoadCbxActionLeftclick();
-            this.LoadCbxNetworkIPversion();
             this.LoadCbxFonts();
             this.LoadCbxSkins();
             this.SetControlsBySettings();
@@ -181,17 +180,6 @@ namespace NoteFly
             this.cbxActionLeftclick.Items.Add(Strings.T("Do nothing"));
             this.cbxActionLeftclick.Items.Add(Strings.T("Bring notes to front"));
             this.cbxActionLeftclick.Items.Add(Strings.T("New note"));
-        }
-        
-        /// <summary>
-        /// Loads CbxNetworkIPversion
-        /// </summary>
-        private void LoadCbxNetworkIPversion()
-        {
-            this.cbxNetworkIPversion.Items.Clear();
-            this.cbxNetworkIPversion.Items.Add(Strings.T("Use IPv4 or IPv6"));
-            this.cbxNetworkIPversion.Items.Add(Strings.T("Force use IPv4"));
-            this.cbxNetworkIPversion.Items.Add(Strings.T("Force use IPv6"));
         }
 
         /// <summary>
@@ -293,7 +281,6 @@ namespace NoteFly
                 Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
                 Settings.NetworkProxyAddress = this.iptbProxy.GetIPAddress();
                 Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
-                Settings.NetworkIPversion = this.cbxNetworkIPversion.SelectedIndex; 
 
                 // tab: Network, GnuPG
                 Settings.UpdatecheckUseGPG = this.chxCheckUpdatesSignature.Checked;
@@ -798,7 +785,6 @@ namespace NoteFly
             this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;
             this.iptbProxy.Text = Settings.NetworkProxyAddress;
             this.SetUpDownSpinnerValue(this.numTimeout, Settings.NetworkConnectionTimeout);
-            this.SetComboBoxSelectedIndex(this.cbxNetworkIPversion, Settings.NetworkIPversion);
 
             // tab: Network, GnuPG
             this.chxCheckUpdatesSignature.Checked = Settings.UpdatecheckUseGPG;
@@ -1238,35 +1224,6 @@ namespace NoteFly
         {
             this.shortcutTextBoxNotesToFront.Enabled = this.chxHotkeyNotesFrontEnabled.Checked;
             this.lblTextHotkeyNotesToFront.Enabled = this.chxHotkeyNotesFrontEnabled.Checked;
-        }
-
-        /// <summary>
-        /// Check if iptbProxy is allowed to have a IPv4 and/or IPv6 address.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void cbxNetworkIPversion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (this.cbxNetworkIPversion.SelectedIndex)
-            {
-                case 0:
-                    this.iptbProxy.UseIPv4addr = true;
-                    this.iptbProxy.UseIPv6addr = true;
-                    break;
-                case 1:
-                    this.iptbProxy.UseIPv4addr = true;
-                    this.iptbProxy.UseIPv6addr = false;
-                    break;
-                case 2:
-                    this.iptbProxy.UseIPv4addr = false;
-                    this.iptbProxy.UseIPv6addr = true;
-                    break;
-            }
-
-            if (this.iptbProxy.Enabled)
-            {
-                this.iptbProxy.ValidateIP();
-            }
         }
 
         #endregion Methods

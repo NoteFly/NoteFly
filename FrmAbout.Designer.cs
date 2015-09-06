@@ -179,8 +179,8 @@ namespace NoteFly
             this.lblTextLicense.Name = "lblTextLicense";
             this.lblTextLicense.Size = new System.Drawing.Size(214, 57);
             this.lblTextLicense.TabIndex = 30;
-            this.lblTextLicense.Text = "This programme is released under the terms of Lesser GNU General Public License v" +
-    "ersion3\r\n";
+            this.lblTextLicense.Text = "This programme is released under the terms of the Lesser GNU General Public Licen" +
+    "se version3.\r\n\r\n";
             this.lblTextLicense.UseCompatibleTextRendering = true;
             // 
             // tmrUpdate
@@ -194,7 +194,7 @@ namespace NoteFly
             this.tableLayoutPanelAboutWindow.ColumnCount = 3;
             this.tableLayoutPanelAboutWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.66666F));
             this.tableLayoutPanelAboutWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.33333F));
-            this.tableLayoutPanelAboutWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.tableLayoutPanelAboutWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
             this.tableLayoutPanelAboutWindow.Controls.Add(this.lblTextLicense, 0, 3);
             this.tableLayoutPanelAboutWindow.Controls.Add(this.lblProductName, 0, 1);
             this.tableLayoutPanelAboutWindow.Controls.Add(this.btnCloseAbout, 1, 4);

@@ -498,35 +498,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Change the url to force the use of IPv4 or IPv6
-        /// by using only a A or AAAA record.
-        /// </summary>
-        /// <param name="url">The orginal url used for updating</param>
-        /// <returns>The new url used for updating, use  ipv4. alias for ipv4 only and use ipv6. alias for ipv6 only.</returns>
-        public static string ChangeUrlIPVersion(string url)
-        {
-            switch (Settings.NetworkIPversion)
-            {
-                case 1:
-                    // use dns IPv4 A record to force the use of IPv4.
-                    url = url.Replace("://update.", "://ipv4.");
-                    url = url.Replace("://ipv6.", "://ipv4.");
-                    break;
-                case 2:
-                    // use dns IPv6 AAAA record to force the use of IPv6.
-                    url = url.Replace("://update.", "://ipv6.");
-                    url = url.Replace("://ipv4.", "://ipv6.");
-                    break;
-                default:
-                    url = url.Replace("://ipv4.", "://update.");
-                    url = url.Replace("://ipv6.", "://update.");
-                    break;
-            }
-
-            return url;
-        }
-
-        /// <summary>
         /// Set the culture of this programme with a languagecode.
         /// Use english if languagecode is unknown.
         /// </summary>
@@ -979,24 +950,9 @@ namespace NoteFly
                 else
                 {
                     string networkerrortitle = Strings.T("Network error");
-                    if (Settings.NetworkIPversion == 1)
-                    {
-                        string noworkingipv4 = Strings.T("Network error, make sure you have a working {0} connection.", "IPv4");
-                        Log.Write(LogType.error, noworkingipv4);
-                        System.Windows.Forms.MessageBox.Show(noworkingipv4, networkerrortitle, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                    }
-                    else if (Settings.NetworkIPversion == 2)
-                    {
-                        string noworkingipv6 = Strings.T("Network error, make sure you have a working {0} connection.", "IPv6");
-                        Log.Write(LogType.error, noworkingipv6);
-                        System.Windows.Forms.MessageBox.Show(noworkingipv6, networkerrortitle, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        string downloadurlunset = Strings.T("Downloadurl is of new vesion is not set.");
-                        Log.Write(LogType.exception, downloadurlunset);
-                        System.Windows.Forms.MessageBox.Show(downloadurlunset, networkerrortitle, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                    }
+                    string downloadurlunset = Strings.T("Downloadurl is of new vesion is not set.");
+                    Log.Write(LogType.exception, downloadurlunset);
+                    System.Windows.Forms.MessageBox.Show(downloadurlunset, networkerrortitle, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 }
             }
             else

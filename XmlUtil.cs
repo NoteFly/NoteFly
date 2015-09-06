@@ -524,9 +524,6 @@ namespace NoteFly
                         case "NetworkConnectionTimeout":
                             Settings.NetworkConnectionTimeout = xmlread.ReadElementContentAsInt();
                             break;
-                        case "NetworkIPversion":
-                            Settings.NetworkIPversion = xmlread.ReadElementContentAsInt();
-                            break;
                         case "NetworkProxyPort":
                             Settings.NetworkProxyPort = xmlread.ReadElementContentAsInt();
                             break;
@@ -899,7 +896,6 @@ namespace NoteFly
             Settings.HotkeysNotesToFrontAltInsteadShift = true;
             Settings.HotkeysNotesToFrontKeycode = 70; // F
             Settings.NetworkConnectionTimeout = 8000;
-            Settings.NetworkIPversion = 0;
             Settings.NetworkProxyAddress = string.Empty;
             Settings.NetworkProxyEnabled = false;
             Settings.NotesTooltipsEnabled = true;
@@ -1125,7 +1121,6 @@ namespace NoteFly
                     xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
-                    xmlwrite.WriteElementString("NetworkIPversion", Settings.NetworkIPversion.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NetworkProxyPort", Settings.NetworkProxyPort.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));

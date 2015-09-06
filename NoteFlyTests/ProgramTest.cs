@@ -71,22 +71,6 @@ namespace NoteFlyTests
         #endregion
 
         [TestMethod]
-        public void ChangeUrlIPVersionTest()
-        {
-            string exceptedurl = "http://ipv4.test123.test";
-            NoteFly.Settings.NetworkIPversion = 1; // force IPv4
-            string currenturl = "http://update.test123.test";
-            currenturl = NoteFly.Program.ChangeUrlIPVersion(currenturl);
-            Assert.AreEqual(exceptedurl, currenturl);
-
-            exceptedurl = "http://ipv6.test123.test";
-            NoteFly.Settings.NetworkIPversion = 2; // force IPv6
-            currenturl = "http://update.test123.test";
-            currenturl = NoteFly.Program.ChangeUrlIPVersion(currenturl);
-            Assert.AreEqual(exceptedurl, currenturl);
-        }
-
-        [TestMethod]
         public void ParserVersionStringTest()
         {
             short[] exceptedversion = new short[3];

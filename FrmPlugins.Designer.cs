@@ -36,15 +36,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlugins));
             this.timerTextUpdaterLoading = new System.Windows.Forms.Timer(this.components);
             this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
-            this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
-            this.tabControlPlugins = new System.Windows.Forms.TabControl();
-            this.tabPagePluginsUpdates = new System.Windows.Forms.TabPage();
-            this.tableLayoutpnlPluginUpdates = new System.Windows.Forms.TableLayoutPanel();
-            this.chxlbxPluginUpdates = new System.Windows.Forms.CheckedListBox();
-            this.btnupdateplugins = new System.Windows.Forms.Button();
-            this.lbltextpluginupdates = new System.Windows.Forms.Label();
-            this.btnRestartProgram = new System.Windows.Forms.Button();
-            this.pluginGrid = new NoteFly.PluginGrid();
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.lbxAvailablePlugins = new System.Windows.Forms.ListBox();
@@ -55,14 +46,23 @@
             this.lblPluginName = new System.Windows.Forms.Label();
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
+            this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
+            this.pluginGrid = new NoteFly.PluginGrid();
+            this.tabControlPlugins = new System.Windows.Forms.TabControl();
+            this.tabPagePluginsUpdates = new System.Windows.Forms.TabPage();
+            this.tableLayoutpnlPluginUpdates = new System.Windows.Forms.TableLayoutPanel();
+            this.chxlbxPluginUpdates = new System.Windows.Forms.CheckedListBox();
+            this.btnupdateplugins = new System.Windows.Forms.Button();
+            this.lbltextpluginupdates = new System.Windows.Forms.Label();
+            this.btnRestartProgram = new System.Windows.Forms.Button();
             this.tabPagePluginsAvailable.SuspendLayout();
+            this.splitContainerAvailablePlugins.Panel1.SuspendLayout();
+            this.splitContainerAvailablePlugins.Panel2.SuspendLayout();
+            this.splitContainerAvailablePlugins.SuspendLayout();
             this.tabPagePluginsInstalled.SuspendLayout();
             this.tabControlPlugins.SuspendLayout();
             this.tabPagePluginsUpdates.SuspendLayout();
             this.tableLayoutpnlPluginUpdates.SuspendLayout();
-            this.splitContainerAvailablePlugins.Panel1.SuspendLayout();
-            this.splitContainerAvailablePlugins.Panel2.SuspendLayout();
-            this.splitContainerAvailablePlugins.SuspendLayout();
             this.SuspendLayout();
             // 
             // timerTextUpdaterLoading
@@ -81,127 +81,6 @@
             this.tabPagePluginsAvailable.TabIndex = 0;
             this.tabPagePluginsAvailable.Text = "available";
             this.tabPagePluginsAvailable.UseVisualStyleBackColor = true;
-            // 
-            // tabPagePluginsInstalled
-            // 
-            this.tabPagePluginsInstalled.Controls.Add(this.pluginGrid);
-            this.tabPagePluginsInstalled.Location = new System.Drawing.Point(4, 25);
-            this.tabPagePluginsInstalled.Margin = new System.Windows.Forms.Padding(53, 4, 53, 4);
-            this.tabPagePluginsInstalled.Name = "tabPagePluginsInstalled";
-            this.tabPagePluginsInstalled.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPagePluginsInstalled.Size = new System.Drawing.Size(480, 365);
-            this.tabPagePluginsInstalled.TabIndex = 1;
-            this.tabPagePluginsInstalled.Text = "Installed";
-            this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
-            // 
-            // tabControlPlugins
-            // 
-            this.tabControlPlugins.Controls.Add(this.tabPagePluginsInstalled);
-            this.tabControlPlugins.Controls.Add(this.tabPagePluginsAvailable);
-            this.tabControlPlugins.Controls.Add(this.tabPagePluginsUpdates);
-            this.tabControlPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControlPlugins.Location = new System.Drawing.Point(0, 0);
-            this.tabControlPlugins.Margin = new System.Windows.Forms.Padding(4);
-            this.tabControlPlugins.Name = "tabControlPlugins";
-            this.tabControlPlugins.SelectedIndex = 0;
-            this.tabControlPlugins.ShowToolTips = true;
-            this.tabControlPlugins.Size = new System.Drawing.Size(488, 394);
-            this.tabControlPlugins.TabIndex = 0;
-            this.tabControlPlugins.SelectedIndexChanged += new System.EventHandler(this.tabControlPlugins_SelectedIndexChanged);
-            // 
-            // tabPagePluginsUpdates
-            // 
-            this.tabPagePluginsUpdates.Controls.Add(this.tableLayoutpnlPluginUpdates);
-            this.tabPagePluginsUpdates.Location = new System.Drawing.Point(4, 25);
-            this.tabPagePluginsUpdates.Name = "tabPagePluginsUpdates";
-            this.tabPagePluginsUpdates.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePluginsUpdates.Size = new System.Drawing.Size(480, 365);
-            this.tabPagePluginsUpdates.TabIndex = 2;
-            this.tabPagePluginsUpdates.Text = "updates";
-            this.tabPagePluginsUpdates.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutpnlPluginUpdates
-            // 
-            this.tableLayoutpnlPluginUpdates.ColumnCount = 3;
-            this.tableLayoutpnlPluginUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.07173F));
-            this.tableLayoutpnlPluginUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.80169F));
-            this.tableLayoutpnlPluginUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.33755F));
-            this.tableLayoutpnlPluginUpdates.Controls.Add(this.chxlbxPluginUpdates, 1, 2);
-            this.tableLayoutpnlPluginUpdates.Controls.Add(this.btnupdateplugins, 1, 3);
-            this.tableLayoutpnlPluginUpdates.Controls.Add(this.lbltextpluginupdates, 1, 1);
-            this.tableLayoutpnlPluginUpdates.Controls.Add(this.btnRestartProgram, 1, 4);
-            this.tableLayoutpnlPluginUpdates.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutpnlPluginUpdates.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutpnlPluginUpdates.Name = "tableLayoutpnlPluginUpdates";
-            this.tableLayoutpnlPluginUpdates.RowCount = 6;
-            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.72727F));
-            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.27273F));
-            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 196F));
-            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutpnlPluginUpdates.Size = new System.Drawing.Size(474, 359);
-            this.tableLayoutpnlPluginUpdates.TabIndex = 2;
-            // 
-            // chxlbxPluginUpdates
-            // 
-            this.chxlbxPluginUpdates.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chxlbxPluginUpdates.FormattingEnabled = true;
-            this.chxlbxPluginUpdates.Location = new System.Drawing.Point(42, 47);
-            this.chxlbxPluginUpdates.Margin = new System.Windows.Forms.Padding(0);
-            this.chxlbxPluginUpdates.Name = "chxlbxPluginUpdates";
-            this.chxlbxPluginUpdates.Size = new System.Drawing.Size(382, 196);
-            this.chxlbxPluginUpdates.TabIndex = 0;
-            this.chxlbxPluginUpdates.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chxlbxPluginUpdates_ItemCheck);
-            // 
-            // btnupdateplugins
-            // 
-            this.btnupdateplugins.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnupdateplugins.Location = new System.Drawing.Point(45, 246);
-            this.btnupdateplugins.Name = "btnupdateplugins";
-            this.btnupdateplugins.Size = new System.Drawing.Size(376, 29);
-            this.btnupdateplugins.TabIndex = 1;
-            this.btnupdateplugins.Text = "&Update selected plugins";
-            this.btnupdateplugins.UseCompatibleTextRendering = true;
-            this.btnupdateplugins.UseVisualStyleBackColor = true;
-            this.btnupdateplugins.Click += new System.EventHandler(this.btnupdateplugins_Click);
-            // 
-            // lbltextpluginupdates
-            // 
-            this.lbltextpluginupdates.AutoSize = true;
-            this.lbltextpluginupdates.Location = new System.Drawing.Point(45, 25);
-            this.lbltextpluginupdates.Name = "lbltextpluginupdates";
-            this.lbltextpluginupdates.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.lbltextpluginupdates.Size = new System.Drawing.Size(159, 20);
-            this.lbltextpluginupdates.TabIndex = 2;
-            this.lbltextpluginupdates.Text = "Available plugin updates:";
-            // 
-            // btnRestartProgram
-            // 
-            this.btnRestartProgram.BackColor = System.Drawing.Color.Transparent;
-            this.btnRestartProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRestartProgram.Location = new System.Drawing.Point(45, 281);
-            this.btnRestartProgram.Name = "btnRestartProgram";
-            this.btnRestartProgram.Size = new System.Drawing.Size(376, 31);
-            this.btnRestartProgram.TabIndex = 3;
-            this.btnRestartProgram.Text = "&Restart";
-            this.btnRestartProgram.UseCompatibleTextRendering = true;
-            this.btnRestartProgram.UseVisualStyleBackColor = false;
-            this.btnRestartProgram.Visible = false;
-            this.btnRestartProgram.Click += new System.EventHandler(this.btnRestartProgram_Click);
-            // 
-            // pluginGrid
-            // 
-            this.pluginGrid.AutoScroll = true;
-            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
-            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
-            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
-            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
-            this.pluginGrid.TabIndex = 0;
             // 
             // splitContainerAvailablePlugins
             // 
@@ -328,6 +207,127 @@
             this.btnPluginDownload.Visible = false;
             this.btnPluginDownload.Click += new System.EventHandler(this.btnPluginDownload_Click);
             // 
+            // tabPagePluginsInstalled
+            // 
+            this.tabPagePluginsInstalled.Controls.Add(this.pluginGrid);
+            this.tabPagePluginsInstalled.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePluginsInstalled.Margin = new System.Windows.Forms.Padding(53, 4, 53, 4);
+            this.tabPagePluginsInstalled.Name = "tabPagePluginsInstalled";
+            this.tabPagePluginsInstalled.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPagePluginsInstalled.Size = new System.Drawing.Size(480, 365);
+            this.tabPagePluginsInstalled.TabIndex = 1;
+            this.tabPagePluginsInstalled.Text = "Installed";
+            this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
+            // 
+            // pluginGrid
+            // 
+            this.pluginGrid.AutoScroll = true;
+            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
+            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
+            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
+            this.pluginGrid.TabIndex = 0;
+            // 
+            // tabControlPlugins
+            // 
+            this.tabControlPlugins.Controls.Add(this.tabPagePluginsInstalled);
+            this.tabControlPlugins.Controls.Add(this.tabPagePluginsAvailable);
+            this.tabControlPlugins.Controls.Add(this.tabPagePluginsUpdates);
+            this.tabControlPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlPlugins.Location = new System.Drawing.Point(0, 0);
+            this.tabControlPlugins.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControlPlugins.Name = "tabControlPlugins";
+            this.tabControlPlugins.SelectedIndex = 0;
+            this.tabControlPlugins.ShowToolTips = true;
+            this.tabControlPlugins.Size = new System.Drawing.Size(488, 394);
+            this.tabControlPlugins.TabIndex = 0;
+            this.tabControlPlugins.SelectedIndexChanged += new System.EventHandler(this.tabControlPlugins_SelectedIndexChanged);
+            // 
+            // tabPagePluginsUpdates
+            // 
+            this.tabPagePluginsUpdates.Controls.Add(this.tableLayoutpnlPluginUpdates);
+            this.tabPagePluginsUpdates.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePluginsUpdates.Name = "tabPagePluginsUpdates";
+            this.tabPagePluginsUpdates.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePluginsUpdates.Size = new System.Drawing.Size(480, 365);
+            this.tabPagePluginsUpdates.TabIndex = 2;
+            this.tabPagePluginsUpdates.Text = "updates";
+            this.tabPagePluginsUpdates.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutpnlPluginUpdates
+            // 
+            this.tableLayoutpnlPluginUpdates.ColumnCount = 3;
+            this.tableLayoutpnlPluginUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.07173F));
+            this.tableLayoutpnlPluginUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.80169F));
+            this.tableLayoutpnlPluginUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.33755F));
+            this.tableLayoutpnlPluginUpdates.Controls.Add(this.chxlbxPluginUpdates, 1, 2);
+            this.tableLayoutpnlPluginUpdates.Controls.Add(this.btnupdateplugins, 1, 3);
+            this.tableLayoutpnlPluginUpdates.Controls.Add(this.lbltextpluginupdates, 1, 1);
+            this.tableLayoutpnlPluginUpdates.Controls.Add(this.btnRestartProgram, 1, 4);
+            this.tableLayoutpnlPluginUpdates.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutpnlPluginUpdates.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutpnlPluginUpdates.Name = "tableLayoutpnlPluginUpdates";
+            this.tableLayoutpnlPluginUpdates.RowCount = 6;
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.72727F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.27273F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 196F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutpnlPluginUpdates.Size = new System.Drawing.Size(474, 359);
+            this.tableLayoutpnlPluginUpdates.TabIndex = 2;
+            // 
+            // chxlbxPluginUpdates
+            // 
+            this.chxlbxPluginUpdates.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chxlbxPluginUpdates.FormattingEnabled = true;
+            this.chxlbxPluginUpdates.Location = new System.Drawing.Point(42, 47);
+            this.chxlbxPluginUpdates.Margin = new System.Windows.Forms.Padding(0);
+            this.chxlbxPluginUpdates.Name = "chxlbxPluginUpdates";
+            this.chxlbxPluginUpdates.Size = new System.Drawing.Size(382, 196);
+            this.chxlbxPluginUpdates.TabIndex = 0;
+            this.chxlbxPluginUpdates.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chxlbxPluginUpdates_ItemCheck);
+            // 
+            // btnupdateplugins
+            // 
+            this.btnupdateplugins.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnupdateplugins.Location = new System.Drawing.Point(45, 246);
+            this.btnupdateplugins.Name = "btnupdateplugins";
+            this.btnupdateplugins.Size = new System.Drawing.Size(376, 29);
+            this.btnupdateplugins.TabIndex = 1;
+            this.btnupdateplugins.Text = "&Update selected plugins";
+            this.btnupdateplugins.UseCompatibleTextRendering = true;
+            this.btnupdateplugins.UseVisualStyleBackColor = true;
+            this.btnupdateplugins.Click += new System.EventHandler(this.btnupdateplugins_Click);
+            // 
+            // lbltextpluginupdates
+            // 
+            this.lbltextpluginupdates.AutoSize = true;
+            this.lbltextpluginupdates.Location = new System.Drawing.Point(45, 25);
+            this.lbltextpluginupdates.Name = "lbltextpluginupdates";
+            this.lbltextpluginupdates.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lbltextpluginupdates.Size = new System.Drawing.Size(159, 20);
+            this.lbltextpluginupdates.TabIndex = 2;
+            this.lbltextpluginupdates.Text = "Available plugin updates:";
+            // 
+            // btnRestartProgram
+            // 
+            this.btnRestartProgram.BackColor = System.Drawing.Color.Transparent;
+            this.btnRestartProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRestartProgram.Location = new System.Drawing.Point(45, 281);
+            this.btnRestartProgram.Name = "btnRestartProgram";
+            this.btnRestartProgram.Size = new System.Drawing.Size(376, 31);
+            this.btnRestartProgram.TabIndex = 3;
+            this.btnRestartProgram.Text = "&Restart";
+            this.btnRestartProgram.UseCompatibleTextRendering = true;
+            this.btnRestartProgram.UseVisualStyleBackColor = false;
+            this.btnRestartProgram.Visible = false;
+            this.btnRestartProgram.Click += new System.EventHandler(this.btnRestartProgram_Click);
+            // 
             // FrmPlugins
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -344,20 +344,20 @@
             this.MinimizeBox = false;
             this.Name = "FrmPlugins";
             this.tabPagePluginsAvailable.ResumeLayout(false);
+            this.splitContainerAvailablePlugins.Panel1.ResumeLayout(false);
+            this.splitContainerAvailablePlugins.Panel2.ResumeLayout(false);
+            this.splitContainerAvailablePlugins.Panel2.PerformLayout();
+            this.splitContainerAvailablePlugins.ResumeLayout(false);
             this.tabPagePluginsInstalled.ResumeLayout(false);
             this.tabControlPlugins.ResumeLayout(false);
             this.tabPagePluginsUpdates.ResumeLayout(false);
             this.tableLayoutpnlPluginUpdates.ResumeLayout(false);
             this.tableLayoutpnlPluginUpdates.PerformLayout();
-            this.splitContainerAvailablePlugins.Panel1.ResumeLayout(false);
-            this.splitContainerAvailablePlugins.Panel2.ResumeLayout(false);
-            this.splitContainerAvailablePlugins.Panel2.PerformLayout();
-            this.splitContainerAvailablePlugins.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
-        #endregion        
+        #endregion
 
         private System.Windows.Forms.Timer timerTextUpdaterLoading;
         private System.Windows.Forms.TabPage tabPagePluginsAvailable;

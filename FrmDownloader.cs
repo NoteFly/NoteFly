@@ -135,8 +135,7 @@ namespace NoteFly
 
             this.downloads = downloads;
             this.numdownloadscompleet = 0;
-            string downloadurl = Program.ChangeUrlIPVersion(downloads[0]);
-            Uri firstdownload = new Uri(downloadurl);
+            Uri firstdownload = new Uri(downloads[0]);
             return this.WebclientDownload(firstdownload);
         }
 
@@ -352,8 +351,7 @@ namespace NoteFly
                     this.numdownloadscompleet++;
                     if (this.numdownloadscompleet < this.downloads.Length)
                     {
-                        string downloadurl = Program.ChangeUrlIPVersion(this.downloads[this.numdownloadscompleet]);
-                        Uri download = new Uri(downloadurl);
+                        Uri download = new Uri(this.downloads[this.numdownloadscompleet]);
                         this.CreateWebclient();
                         this.WebclientDownload(download);
                     }

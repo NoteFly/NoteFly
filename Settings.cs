@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="Settings.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2013  Tom
+//  Copyright (C) 2010-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -383,14 +383,6 @@ namespace NoteFly
         /// The time a connection is considered not working.
         /// </summary>
         public static int NetworkConnectionTimeout = 8000;
-
-        /// <summary>
-        /// The prefered IP version used.
-        /// 0 for automatically IPv6 or IPv4.
-        /// 1 for force the use of IPv4
-        /// 2 for force the use of IPv6
-        /// </summary>
-        public static int NetworkIPversion = 0;
 
         /// <summary>
         /// Connect via a proxy.
