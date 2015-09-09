@@ -193,6 +193,12 @@ namespace NoteFly
             System.Net.ServicePointManager.EnableDnsRoundRobin = true;
             System.Net.ServicePointManager.DnsRefreshTimeout = 3 * 60 * 1000; // 180000 ms = 180 s = 3 minutes
             System.Net.ServicePointManager.DefaultConnectionLimit = 8;
+
+            // .NET framework 3.5 and lower do not have TLS 1.1 and TLS 1.2 support only vulnerable TLS 1.0 and SSL 3.0.
+            // .NET framework 4.0 has TLS 1.1 and TLS 1.2 support but has no enum available for it.
+            // SSL 3.0 and TLS 1.0 are vulnerable and should be avoided.
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
+            System.Net.ServicePointManager.CheckCertificateRevocationList = true;
             Log.Write(LogType.info, "Making request to '" + url + "'");
             try
             {
@@ -207,7 +213,7 @@ namespace NoteFly
                 }
                 
                 request.ContentType = "text/xml";
-                request.ProtocolVersion = HttpVersion.Version11; // HTTP 1.1 is required, required sending host header for notefly.org
+                request.ProtocolVersion = HttpVersion.Version11; // HTTP 1.1>= is required, required sending host: header for notefly.org
                 request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
                 request.AllowAutoRedirect = false;
                 request.Timeout = Settings.NetworkConnectionTimeout;
@@ -221,7 +227,6 @@ namespace NoteFly
                 {
                     // set proxy to nothing, otherwise HttpWebRequest has issues, details: https://holyhoehle.wordpress.com/2010/01/12/webrequest-slow/ 
                     request.Proxy = null;
-                    ////request.Proxy = GlobalProxySelection.GetEmptyWebProxy();
                 }
 
                 if (Settings.NetworkUseGzip)

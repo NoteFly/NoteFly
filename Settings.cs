@@ -385,9 +385,9 @@ namespace NoteFly
         public static string SharingEmailDefaultadres = string.Empty;
 
         /// <summary>
-        /// The time a connection is considered not working.
+        /// The time in miliseconds a connection is considered not working.
         /// </summary>
-        public static int NetworkConnectionTimeout = 8000;
+        public static int NetworkConnectionTimeout = 16000;
 
         /// <summary>
         /// Connect via a proxy.
