@@ -1021,6 +1021,19 @@ namespace NoteFly
             this.CreateSkinsMenu(false);
         }
 
+        /// <summary>
+        /// There is double clicked on the pnlHead or lblNoteTitle.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void pnlHead_DoubleClick(object sender, EventArgs e)
+        {
+            if (Settings.NotesDoubleclickRollup)
+            {
+                this.menuRollUp_Click(sender, e);
+            }
+        }
+
         #endregion Methods
     }
 }

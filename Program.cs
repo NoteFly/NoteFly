@@ -713,139 +713,141 @@ namespace NoteFly
         /// <summary>
         /// Parser the programme arguments
         /// </summary>
-        /// <param name="args">An array of arguments the check</param>
+        /// <param name="arguments">An array of arguments the check</param>
         /// <param name="visualstyle">Use XP visual styles on windows.</param>
         /// <param name="resetpositions">Should all visual notes position get reset.</param>
-        private static void ParserArguments(string[] args, out bool visualstyle, out bool resetpositions, out bool newnote, out string newnotetitle, out string newnotecontent)
+        private static void ParserArguments(string[] arguments, out bool visualstyle, out bool resetpositions, out bool newnote, out string newnotetitle, out string newnotecontent)
         {
             visualstyle = true;
             resetpositions = false;
             newnote = false;
             newnotetitle = string.Empty;
             newnotecontent = string.Empty;
+            if (System.Environment.GetCommandLineArgs().Length <= 1)
+            {
+                return;
+            }
+
             bool setnewnotetitle = false;
             bool setnewnotecontent = false;
             bool setprogramlanguage = false;
             // override settings with supported parameters
-            if (System.Environment.GetCommandLineArgs().Length > 1)
+            foreach (string argument in arguments)
             {
-                foreach (string arg in args)
+                if (setnewnotetitle)
                 {
-                    if (setnewnotetitle)
-                    {
-                        newnotetitle = arg;
-                        setnewnotetitle = false;
-                        continue;
-                    }
-                    else if (setnewnotecontent)
-                    {
-                        newnotecontent = arg;
-                        setnewnotecontent = false;
-                        continue;
-                    }
-                    else if (setprogramlanguage)
-                    {
-                        Program.SetCulture(arg);
-                        continue;
-                    }
+                    newnotetitle = argument;
+                    setnewnotetitle = false;
+                    continue;
+                }
+                else if (setnewnotecontent)
+                {
+                    newnotecontent = argument;
+                    setnewnotecontent = false;
+                    continue;
+                }
+                else if (setprogramlanguage)
+                {
+                    Program.SetCulture(argument);
+                    continue;
+                }
 
-                    switch (arg)
-                    {
-                        // Forces the programme to setup the first run notefly info again.
-                        case "-forcefirstrun":
-                            Settings.ProgramFirstrunned = false;
-                            break;
+                switch (argument)
+                {
+                    // Forces the programme to setup the first run notefly info again.
+                    case "-forcefirstrun":
+                        Settings.ProgramFirstrunned = false;
+                        break;
 
-                        // disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
-                        // because transparency is on by default.
-                        case "-disabletransparency":
-                            Settings.NotesTransparencyEnabled = false;
-                            break;
+                    // disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
+                    // because transparency is on by default.
+                    case "-disabletransparency":
+                        Settings.NotesTransparencyEnabled = false;
+                        break;
 
-                        // Turn off all highlighting functions in case highlighting was turned on and it let NoteFly crash on startup.
-                        case "-disablehighlighting":
-                            Settings.HighlightHyperlinks = false;
-                            Settings.HighlightHTML = false;
-                            Settings.HighlightPHP = false;
-                            Settings.HighlightSQL = false;
-                            break;
+                    // Turn off all highlighting functions in case highlighting was turned on and it let NoteFly crash on startup.
+                    case "-disablehighlighting":
+                        Settings.HighlightHyperlinks = false;
+                        Settings.HighlightHTML = false;
+                        Settings.HighlightPHP = false;
+                        Settings.HighlightSQL = false;
+                        break;
 
-                        // Turn off loading of plugins
-                        case "-disableplugins":
-                            Settings.ProgramPluginsAllEnabled = false;
-                            break;
+                    // Turn off loading of plugins
+                    case "-disableplugins":
+                        Settings.ProgramPluginsAllEnabled = false;
+                        break;
 
-                        // Turn all logging features on at startup. 
-                        // Handy in case NoteFly crashes at startup and logging was turned off.
-                        case "-logall":
-                            Settings.ProgramLogException = true;
-                            Settings.ProgramLogError = true;
-                            Settings.ProgramLogInfo = true;
-                            break;
+                    // Turn all logging features on at startup. 
+                    // Handy in case NoteFly crashes at startup and logging was turned off.
+                    case "-logall":
+                        Settings.ProgramLogException = true;
+                        Settings.ProgramLogError = true;
+                        Settings.ProgramLogInfo = true;
+                        break;
 
-                        // Turn all logging features off at startup.
-                        case "-lognone":
-                            Settings.ProgramLogException = false;
-                            Settings.ProgramLogError = false;
-                            Settings.ProgramLogInfo = false;
-                            break;
+                    // Turn all logging features off at startup.
+                    case "-lognone":
+                        Settings.ProgramLogException = false;
+                        Settings.ProgramLogError = false;
+                        Settings.ProgramLogInfo = false;
+                        break;
 
-                        // Override the fontsize of the trayicon, managenotes and default size in note content to 14 pt.
-                        case "-bigfonts":
-                            Settings.TrayiconFontsize = 14;
-                            Settings.ManagenotesFontsize = 14;
-                            Settings.FontContentSize = 14;
-                            Settings.FontTitleSize = 18;
-                            break;
+                    // Override the fontsize of the trayicon, managenotes and default size in note content to 14 pt.
+                    case "-bigfonts":
+                        Settings.TrayiconFontsize = 14;
+                        Settings.ManagenotesFontsize = 14;
+                        Settings.FontContentSize = 14;
+                        Settings.FontTitleSize = 18;
+                        break;
 
-                        // turn off xp visual style.
-                        case "-disablevisualstyles":
-                            visualstyle = false; // about ~400ms slower on my system on display time notes.
-                            break;
+                    // turn off xp visual style.
+                    case "-disablevisualstyles":
+                        visualstyle = false; // about ~400ms slower on my system on display time notes.
+                        break;
 
-                        // rescue option for notes loading out of screen.
-                        case "-resetpositions":
-                            resetpositions = true;
-                            break;
+                    // rescue option for notes loading out of screen.
+                    case "-resetpositions":
+                        resetpositions = true;
+                        break;
 
-                        case "-disablegpg":
-                            Settings.UpdatecheckUseGPG = false;
-                            break;
+                    case "-disablegpg":
+                        Settings.UpdatecheckUseGPG = false;
+                        break;
 
-                        // don't show a warning if notefly is running with administrator priveledges
-                        case "-suspressadminwarn":
-                            Settings.ProgramSuspressWarnAdmin = true;
-                            break;
+                    // don't show a warning if notefly is running with administrator priveledges
+                    case "-suspressadminwarn":
+                        Settings.ProgramSuspressWarnAdmin = true;
+                        break;
 
-                        // overwrite settings file with default settings.
-                        case "-resetsettings":
-                            xmlUtil.WriteDefaultSettings();
-                            break;
+                    // overwrite settings file with default settings.
+                    case "-resetsettings":
+                        xmlUtil.WriteDefaultSettings();
+                        break;
 
-                        case "-disableupdatecheck":
-                            Settings.UpdatecheckEverydays = 0;
-                            break;
+                    case "-disableupdatecheck":
+                        Settings.UpdatecheckEverydays = 0;
+                        break;
 
-                        case "-setlanguage":
-                            setprogramlanguage = true;
-                            break;
+                    case "-setlanguage":
+                        setprogramlanguage = true;
+                        break;
 
-                        case "-newnote":
-                            newnote = true;
-                            break;
+                    case "-newnote":
+                        newnote = true;
+                        break;
 
-                        case "-title":
-                            setnewnotetitle = true;
-                            break;
+                    case "-title":
+                        setnewnotetitle = true;
+                        break;
 
-                        case "-content":
-                            setnewnotecontent = true;
-                            break;
+                    case "-content":
+                        setnewnotecontent = true;
+                        break;
 
-                        case "-?":
-                            ShowParametersHelp();
-                            break;
-                    }
+                    case "-?":
+                        ShowParametersHelp();
+                        break;
                 }
             }
         }

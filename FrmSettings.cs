@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmSettings.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2013  Tom
+//  Copyright (C) 2010-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -213,27 +213,28 @@ namespace NoteFly
                 Settings.HotkeysNotesToFrontAltInsteadShift = this.shortcutTextBoxNotesToFront.UseAltInsteadofShift;
                 Settings.HotkeysNotesToFrontKeycode = this.shortcutTextBoxNotesToFront.ShortcutKeyposition;
 
-                // tab: Appearance, notes
+                // tab: Appearance, Overall
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
                 Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
                 Settings.NotesTooltipsEnabled = this.chxShowTooltips.Checked;
 
-                // tab: Appearance, new note
+                // tab: Appearance, New note
                 Settings.NotesDefaultRandomSkin = this.chxUseRandomDefaultNote.Checked;
                 Settings.NotesDefaultSkinnr = this.cbxDefaultSkin.SelectedIndex;
                 Settings.NotesDefaultWidth = Convert.ToInt32(this.numNotesDefaultWidth.Value);
                 Settings.NotesDefaultHeight = Convert.ToInt32(this.numNotesDefaultHeight.Value);
                 Settings.NotesDefaultTitleDate = this.chxUseDateAsDefaultTitle.Checked;
 
-                // tab: Appearance, fonts
+                // tab: Appearance, Notes
                 Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();
                 Settings.FontContentSize = (float)this.numFontSizeContent.Value;
                 Settings.FontTitleStylebold = this.cbxFontNoteTitleBold.Checked;
                 Settings.FontTitleFamily = this.cbxFontNoteTitle.SelectedItem.ToString();
                 Settings.FontTitleSize = (float)this.numFontSizeTitle.Value;
                 Settings.FontTextdirection = this.cbxTextDirection.SelectedIndex;
+                Settings.NotesDoubleclickRollup = this.chxNotesDoubleclickRollup.Checked;
 
-                // tab: Appearance, trayicon
+                // tab: Appearance, Trayicon
                 Settings.FontTrayicon = this.cbxFontTrayicon.SelectedItem.ToString();
                 Settings.TrayiconFontsize = (float)this.numTrayiconFontsize.Value;
                 Settings.TrayiconCreatenotebold = this.chxTrayiconBoldNewnote.Checked;
@@ -242,7 +243,7 @@ namespace NoteFly
                 Settings.TrayiconExitbold = this.chxTrayiconBoldExit.Checked;
                 Settings.TrayiconAlternateIcon = this.chxUseAlternativeTrayicon.Checked;
 
-                // tab: Appearance, manage notes
+                // tab: Appearance, Manage notes
                 Settings.ManagenotesSkinnr = this.cbxManageNotesSkin.SelectedIndex;
                 Settings.ManagenotesTooltip = this.chxManagenotesTooltipContent.Checked;
                 Settings.ManagenotesFontsize = (float)this.numManagenotesFont.Value;
@@ -256,7 +257,7 @@ namespace NoteFly
                 Settings.HighlightSQL = this.chxHighlightSQL.Checked;
                 Settings.HighlightClearLexiconMemory = this.chxLexiconMemory.Checked;
 
-                // tab: Actions
+                // tab: Actions, E-mail
                 Settings.SharingEmailEnabled = this.chxActionsEmailEnabled.Checked;
                 Settings.SharingEmailDefaultadres = string.Empty;
                 if (this.chxActionsEmailDefaultaddressSet.Checked)

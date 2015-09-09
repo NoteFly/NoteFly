@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="XmlUtil.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2013  Tom
+//  Copyright (C) 2010-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -422,6 +422,9 @@ namespace NoteFly
                             break;
                         case "NotesClosebtnHidenotepermanently":
                             Settings.NotesClosebtnHidenotepermanently = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "NotesDoubleclickRollup":
+                            Settings.NotesDoubleclickRollup = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "NotesDefaultRandomSkin":
                             Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
@@ -1089,6 +1092,7 @@ namespace NoteFly
                     WriteXMLBool(xmlwrite, "NetworkProxyEnabled", Settings.NetworkProxyEnabled);
                     WriteXMLBool(xmlwrite, "NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
                     WriteXMLBool(xmlwrite, "NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
+                    WriteXMLBool(xmlwrite, "NotesDoubleclickRollup", Settings.NotesDoubleclickRollup);
                     WriteXMLBool(xmlwrite, "NotesDeleteRecyclebin", Settings.NotesDeleteRecyclebin);
                     WriteXMLBool(xmlwrite, "NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
                     WriteXMLBool(xmlwrite, "NotesTransparentRTB", Settings.NotesTransparentRTB);
@@ -1193,27 +1197,6 @@ namespace NoteFly
         {
             // HEX color
             return System.Drawing.ColorTranslator.FromHtml(colorstring);
-            // DECIMAL color, commented out in favor of HEX notation for speed.
-            ////string[] parts = new string[3];
-            ////parts = colorstring.Split(',');
-            ////try
-            ////{
-            ////    UInt8 redchannel = Convert.ToUInt16(parts[0].Trim());
-            ////    UInt8 greenchannel = Convert.ToUInt16(parts[1].Trim());
-            ////    UInt8 bluechannel = Convert.ToUInt16(parts[2].Trim());
-            ////    return System.Drawing.Color.FromArgb(redchannel, greenchannel, bluechannel);
-            ////}
-            ////catch
-            ////{
-            ////    if (colorstring.Length < 100)
-            ////    {
-            ////        throw new ApplicationException("Cannot parser: " + colorstring);
-            ////    }
-            ////    else
-            ////    {
-            ////        throw new ApplicationException("Cannot parser: " + colorstring.Substring(0, 100)+" ..");
-            ////    }
-            ////}
         }
 
         /// <summary>

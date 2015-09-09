@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="Log.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2013  Tom
+//  Copyright (C) 2010-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -93,7 +93,8 @@ namespace NoteFly
                 prevmessagehashcode = message.GetHashCode();
             }
 
-            StringBuilder line = new StringBuilder(DateTime.Now.ToString());
+            const string DATETIMEW3CFORMAT = "yyyy-MM-dd hh:mm:ss";
+            StringBuilder line = new StringBuilder(DateTime.Now.ToString(DATETIMEW3CFORMAT));
             while (line.Length < 19)
             {
                 line.Append(" ");

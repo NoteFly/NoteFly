@@ -118,6 +118,11 @@ namespace NoteFly
         public static bool NotesClosebtnHidenotepermanently = true;
 
         /// <summary>
+        /// If double clicking on note title(pnlHead) should roll up or roll down the note.
+        /// </summary>
+        public static bool NotesDoubleclickRollup = true;
+
+        /// <summary>
         /// Move notes to recycle bin on delete.
         /// </summary>
         public static bool NotesDeleteRecyclebin = false;

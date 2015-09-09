@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="HttpUtil.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2012-2013  Tom
+//  Copyright (C) 2012-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -150,7 +150,7 @@ namespace NoteFly
             string response = null;
             try
             {
-                webresponse = request.GetResponse();
+                webresponse = (WebResponse)request.GetResponse();
                 using (BufferedStream bufferedstream = new BufferedStream(webresponse.GetResponseStream()))
                 {
                     using (StreamReader streamreader = new StreamReader(bufferedstream, System.Text.Encoding.UTF8))
@@ -163,7 +163,7 @@ namespace NoteFly
             }
             catch (WebException webexc)
             {
-                Log.Write(LogType.exception, webexc.Message);
+                Log.Write(LogType.exception, webexc.Message + webexc.StackTrace);
             }
             finally
             {
@@ -191,7 +191,7 @@ namespace NoteFly
 
             System.Net.ServicePointManager.Expect100Continue = false;
             System.Net.ServicePointManager.EnableDnsRoundRobin = true;
-            System.Net.ServicePointManager.DnsRefreshTimeout = 3 * 60 * 1000; // 3 minutes
+            System.Net.ServicePointManager.DnsRefreshTimeout = 3 * 60 * 1000; // 180000 ms = 180 s = 3 minutes
             System.Net.ServicePointManager.DefaultConnectionLimit = 8;
             Log.Write(LogType.info, "Making request to '" + url + "'");
             try
@@ -236,15 +236,15 @@ namespace NoteFly
                 if (this.postdata != null)
                 {
                     request.ContentType = "application/x-www-form-urlencoded";
-                    byte[] data = System.Text.Encoding.UTF8.GetBytes(this.postdata); // utf-8 on server.
-                    request.ContentLength = data.Length;
+                    byte[] dataenc = System.Text.Encoding.UTF8.GetBytes(this.postdata); // utf-8 on server.
+                    request.ContentLength = dataenc.Length;
                     Stream stream = request.GetRequestStream();
-                    stream.Write(data, 0, data.Length);
+                    stream.Write(dataenc, 0, dataenc.Length);
                 }
             }
             catch (System.Net.WebException webexc)
             {
-                Log.Write(LogType.exception, webexc.Message);
+                Log.Write(LogType.exception, webexc.Message + webexc.StackTrace);
             }
 
             return request;
