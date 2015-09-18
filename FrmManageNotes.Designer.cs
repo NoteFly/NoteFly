@@ -160,8 +160,8 @@ namespace NoteFly
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlHead.BackColor = System.Drawing.Color.Orange;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHead.Controls.Add(this.lbTextWindowTitle);
             this.pnlHead.Controls.Add(this.btnClose);
+            this.pnlHead.Controls.Add(this.lbTextWindowTitle);
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
             this.pnlHead.Size = new System.Drawing.Size(600, 32);
@@ -172,11 +172,12 @@ namespace NoteFly
             // 
             // lbTextWindowTitle
             // 
-            this.lbTextWindowTitle.AutoSize = true;
+            this.lbTextWindowTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbTextWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lbTextWindowTitle.Location = new System.Drawing.Point(8, 5);
+            this.lbTextWindowTitle.Location = new System.Drawing.Point(0, 0);
             this.lbTextWindowTitle.Name = "lbTextWindowTitle";
-            this.lbTextWindowTitle.Size = new System.Drawing.Size(111, 20);
+            this.lbTextWindowTitle.Padding = new System.Windows.Forms.Padding(4, 4, 50, 4);
+            this.lbTextWindowTitle.Size = new System.Drawing.Size(598, 30);
             this.lbTextWindowTitle.TabIndex = 1;
             this.lbTextWindowTitle.Text = "Manage notes";
             this.lbTextWindowTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
@@ -411,7 +412,6 @@ namespace NoteFly
             this.Activated += new System.EventHandler(this.frmManageNotes_Activated);
             this.Deactivate += new System.EventHandler(this.frmManageNotes_Deactivate);
             this.pnlHead.ResumeLayout(false);
-            this.pnlHead.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotes)).EndInit();
             this.pnlContent.ResumeLayout(false);

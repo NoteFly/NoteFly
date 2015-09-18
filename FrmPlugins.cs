@@ -133,6 +133,7 @@ namespace NoteFly
         /// </summary>
         private void SetFormTitle()
         {
+            this.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             this.Text = Strings.T("Plugins") + " - " + Program.AssemblyTitle;
         }
 
@@ -451,7 +452,7 @@ namespace NoteFly
 
             if (this.chxlbxPluginUpdates.Items.Count > 0)
             {
-                this.btnupdateplugins.Enabled = true;
+                this.btnUpdatePlugins.Enabled = true;
             }
 
             this.chxlbxPluginUpdates.Enabled = true;
@@ -720,7 +721,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnupdateplugins_Click(object sender, EventArgs e)
         {
-            this.btnupdateplugins.Enabled = false;
+            this.btnUpdatePlugins.Enabled = false;
             this.updatedplugins = new List<int>();
             this.frmdownloader = new FrmDownloader(Strings.T("Updating plugins.."));
             this.chxlbxPluginUpdates.Enabled = false;
@@ -838,7 +839,7 @@ namespace NoteFly
         {
             if (e.NewValue == CheckState.Checked)
             {
-                this.btnupdateplugins.Enabled = true;
+                this.btnUpdatePlugins.Enabled = true;
             } 
             else 
             {
@@ -852,7 +853,7 @@ namespace NoteFly
                     }
                 }
 
-                this.btnupdateplugins.Enabled = anychecked;
+                this.btnUpdatePlugins.Enabled = anychecked;
             }
         }
 

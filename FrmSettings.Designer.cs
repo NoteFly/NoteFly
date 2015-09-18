@@ -205,16 +205,6 @@ namespace NoteFly
         private System.Windows.Forms.Label lblTextFontTitleFamily;
 
         /// <summary>
-        /// Label lblTextDirection
-        /// </summary>
-        private System.Windows.Forms.Label lblTextDirection;
-
-        /// <summary>
-        /// ComboBox cbxTextDirection
-        /// </summary>
-        private System.Windows.Forms.ComboBox cbxTextDirection;
-
-        /// <summary>
         /// Label lblTextFontContentPoints
         /// </summary>
         private System.Windows.Forms.Label lblTextFontContentPoints;
@@ -242,7 +232,7 @@ namespace NoteFly
         /// <summary>
         /// CheckBox cbxFontNoteTitleBold
         /// </summary>
-        private System.Windows.Forms.CheckBox cbxFontNoteTitleBold;
+        private System.Windows.Forms.CheckBox chxFontNoteTitleBold;
 
         /// <summary>
         /// Label lblTextLogging
@@ -338,11 +328,6 @@ namespace NoteFly
         /// CheckBox chxUpdateSilentInstall
         /// </summary>
         private System.Windows.Forms.CheckBox chxUpdateSilentInstall;
-
-        /// <summary>
-        /// CheckBox chxUseAlternativeTrayicon
-        /// </summary>
-        private System.Windows.Forms.CheckBox chxUseAlternativeTrayicon;
 
         /// <summary>
         /// Label lblTextMiliseconds
@@ -743,14 +728,16 @@ namespace NoteFly
             this.tabControlAppearance = new System.Windows.Forms.TabControl();
             this.tabAppearanceOverall = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelOverall = new System.Windows.Forms.TableLayoutPanel();
+            this.lblTextDirection = new System.Windows.Forms.Label();
             this.chxTransparecy = new System.Windows.Forms.CheckBox();
             this.chxShowTooltips = new System.Windows.Forms.CheckBox();
             this.numProcTransparency = new System.Windows.Forms.NumericUpDown();
             this.lblTextTransparentProcVisible = new System.Windows.Forms.Label();
+            this.cbxTextDirection = new System.Windows.Forms.ComboBox();
             this.tabPageNewNote = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelNewNote = new System.Windows.Forms.TableLayoutPanel();
-            this.lblTextDefaultsizenewnote = new System.Windows.Forms.Label();
             this.lblTextWidth = new System.Windows.Forms.Label();
+            this.lblTextDefaultsizenewnote = new System.Windows.Forms.Label();
             this.chxUseRandomDefaultNote = new System.Windows.Forms.CheckBox();
             this.lblDefaultNewNoteColor = new System.Windows.Forms.Label();
             this.cbxDefaultSkin = new System.Windows.Forms.ComboBox();
@@ -765,18 +752,17 @@ namespace NoteFly
             this.lblTextFontContentSize = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.lblTextNoteFont = new System.Windows.Forms.Label();
-            this.cbxFontNoteTitleBold = new System.Windows.Forms.CheckBox();
+            this.chxFontNoteTitleBold = new System.Windows.Forms.CheckBox();
             this.lblTextFontTitlePoints = new System.Windows.Forms.Label();
             this.numFontSizeTitle = new System.Windows.Forms.NumericUpDown();
             this.lblTextFontTitleSize = new System.Windows.Forms.Label();
             this.cbxFontNoteTitle = new System.Windows.Forms.ComboBox();
             this.lblTextFontTitleFamily = new System.Windows.Forms.Label();
-            this.lblTextDirection = new System.Windows.Forms.Label();
-            this.cbxTextDirection = new System.Windows.Forms.ComboBox();
+            this.chxNotesDoubleclickRollup = new System.Windows.Forms.CheckBox();
             this.tabPageTrayicon = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelTrayicon = new System.Windows.Forms.TableLayoutPanel();
-            this.lblTextTrayiconFont = new System.Windows.Forms.Label();
             this.chxUseAlternativeTrayicon = new System.Windows.Forms.CheckBox();
+            this.lblTextTrayiconFont = new System.Windows.Forms.Label();
             this.chxTrayiconBoldExit = new System.Windows.Forms.CheckBox();
             this.numTrayiconFontsize = new System.Windows.Forms.NumericUpDown();
             this.chxTrayiconBoldSettings = new System.Windows.Forms.CheckBox();
@@ -855,7 +841,6 @@ namespace NoteFly
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
-            this.chxNotesDoubleclickRollup = new System.Windows.Forms.CheckBox();
             this.shortcutTextBoxNotesToFront = new NoteFly.ShortcutTextBox();
             this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
             this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
@@ -980,10 +965,9 @@ namespace NoteFly
             // 
             // tableLayoutPanelTabGeneral
             // 
-            this.tableLayoutPanelTabGeneral.ColumnCount = 3;
+            this.tableLayoutPanelTabGeneral.ColumnCount = 2;
             this.tableLayoutPanelTabGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelTabGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelTabGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
             this.tableLayoutPanelTabGeneral.Controls.Add(this.chxNotesDeleteRecyclebin, 0, 3);
             this.tableLayoutPanelTabGeneral.Controls.Add(this.chxLoadPlugins, 0, 4);
             this.tableLayoutPanelTabGeneral.Controls.Add(this.lblTextActionLeftClicktTrayicon, 0, 6);
@@ -998,14 +982,14 @@ namespace NoteFly
             this.tableLayoutPanelTabGeneral.Name = "tableLayoutPanelTabGeneral";
             this.tableLayoutPanelTabGeneral.Padding = new System.Windows.Forms.Padding(12);
             this.tableLayoutPanelTabGeneral.RowCount = 8;
-            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
             this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelTabGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelTabGeneral.Size = new System.Drawing.Size(462, 331);
             this.tableLayoutPanelTabGeneral.TabIndex = 33;
             // 
@@ -1015,9 +999,9 @@ namespace NoteFly
             this.tableLayoutPanelTabGeneral.SetColumnSpan(this.chxNotesDeleteRecyclebin, 2);
             this.chxNotesDeleteRecyclebin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxNotesDeleteRecyclebin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(15, 87);
+            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(15, 99);
             this.chxNotesDeleteRecyclebin.Name = "chxNotesDeleteRecyclebin";
-            this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(226, 18);
+            this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(226, 21);
             this.chxNotesDeleteRecyclebin.TabIndex = 35;
             this.chxNotesDeleteRecyclebin.Text = "Move deleted notes to recycle bin.";
             this.chxNotesDeleteRecyclebin.UseCompatibleTextRendering = true;
@@ -1031,9 +1015,9 @@ namespace NoteFly
             this.chxLoadPlugins.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tableLayoutPanelTabGeneral.SetColumnSpan(this.chxLoadPlugins, 2);
             this.chxLoadPlugins.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxLoadPlugins.Location = new System.Drawing.Point(15, 111);
+            this.chxLoadPlugins.Location = new System.Drawing.Point(15, 127);
             this.chxLoadPlugins.Name = "chxLoadPlugins";
-            this.chxLoadPlugins.Size = new System.Drawing.Size(146, 18);
+            this.chxLoadPlugins.Size = new System.Drawing.Size(146, 21);
             this.chxLoadPlugins.TabIndex = 25;
             this.chxLoadPlugins.Text = "Allow to load plugins";
             this.chxLoadPlugins.UseCompatibleTextRendering = true;
@@ -1044,7 +1028,7 @@ namespace NoteFly
             this.lblTextActionLeftClicktTrayicon.AutoSize = true;
             this.lblTextActionLeftClicktTrayicon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblTextActionLeftClicktTrayicon.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(15, 165);
+            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(15, 185);
             this.lblTextActionLeftClicktTrayicon.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextActionLeftClicktTrayicon.Name = "lblTextActionLeftClicktTrayicon";
             this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(148, 20);
@@ -1060,9 +1044,9 @@ namespace NoteFly
             this.tableLayoutPanelTabGeneral.SetColumnSpan(this.chxConfirmDeletenote, 2);
             this.chxConfirmDeletenote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxConfirmDeletenote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxConfirmDeletenote.Location = new System.Drawing.Point(15, 63);
+            this.chxConfirmDeletenote.Location = new System.Drawing.Point(15, 71);
             this.chxConfirmDeletenote.Name = "chxConfirmDeletenote";
-            this.chxConfirmDeletenote.Size = new System.Drawing.Size(161, 18);
+            this.chxConfirmDeletenote.Size = new System.Drawing.Size(161, 21);
             this.chxConfirmDeletenote.TabIndex = 34;
             this.chxConfirmDeletenote.Text = "Confirm deleting notes.";
             this.chxConfirmDeletenote.UseCompatibleTextRendering = true;
@@ -1072,7 +1056,7 @@ namespace NoteFly
             // 
             this.cbxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxLanguage.FormattingEnabled = true;
-            this.cbxLanguage.Location = new System.Drawing.Point(169, 192);
+            this.cbxLanguage.Location = new System.Drawing.Point(169, 211);
             this.cbxLanguage.Name = "cbxLanguage";
             this.cbxLanguage.Size = new System.Drawing.Size(199, 24);
             this.cbxLanguage.TabIndex = 26;
@@ -1086,7 +1070,7 @@ namespace NoteFly
             this.chxStartOnLogin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chxStartOnLogin.Location = new System.Drawing.Point(15, 15);
             this.chxStartOnLogin.Name = "chxStartOnLogin";
-            this.chxStartOnLogin.Size = new System.Drawing.Size(111, 18);
+            this.chxStartOnLogin.Size = new System.Drawing.Size(111, 21);
             this.chxStartOnLogin.TabIndex = 31;
             this.chxStartOnLogin.Text = "Start on logon.";
             this.chxStartOnLogin.UseCompatibleTextRendering = true;
@@ -1095,7 +1079,7 @@ namespace NoteFly
             // lblTextLanguage
             // 
             this.lblTextLanguage.AutoSize = true;
-            this.lblTextLanguage.Location = new System.Drawing.Point(15, 194);
+            this.lblTextLanguage.Location = new System.Drawing.Point(15, 213);
             this.lblTextLanguage.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextLanguage.Name = "lblTextLanguage";
             this.lblTextLanguage.Size = new System.Drawing.Size(145, 16);
@@ -1108,9 +1092,9 @@ namespace NoteFly
             this.tableLayoutPanelTabGeneral.SetColumnSpan(this.chxConfirmExit, 2);
             this.chxConfirmExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxConfirmExit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxConfirmExit.Location = new System.Drawing.Point(15, 39);
+            this.chxConfirmExit.Location = new System.Drawing.Point(15, 43);
             this.chxConfirmExit.Name = "chxConfirmExit";
-            this.chxConfirmExit.Size = new System.Drawing.Size(173, 18);
+            this.chxConfirmExit.Size = new System.Drawing.Size(173, 21);
             this.chxConfirmExit.TabIndex = 32;
             this.chxConfirmExit.Text = "Ask to confirm shutdown.";
             this.chxConfirmExit.UseCompatibleTextRendering = true;
@@ -1126,7 +1110,7 @@ namespace NoteFly
             this.cbxActionLeftclick.CausesValidation = false;
             this.cbxActionLeftclick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxActionLeftclick.FormattingEnabled = true;
-            this.cbxActionLeftclick.Location = new System.Drawing.Point(169, 163);
+            this.cbxActionLeftclick.Location = new System.Drawing.Point(169, 183);
             this.cbxActionLeftclick.Name = "cbxActionLeftclick";
             this.cbxActionLeftclick.Size = new System.Drawing.Size(199, 24);
             this.cbxActionLeftclick.TabIndex = 16;
@@ -1147,8 +1131,7 @@ namespace NoteFly
             this.tableLayoutPanelHotkeys.ColumnCount = 3;
             this.tableLayoutPanelHotkeys.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelHotkeys.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelHotkeys.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
-            this.tableLayoutPanelHotkeys.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelHotkeys.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanelHotkeys.Controls.Add(this.shortcutTextBoxNotesToFront, 1, 2);
             this.tableLayoutPanelHotkeys.Controls.Add(this.lblTextHotkeyNotesToFront, 0, 2);
             this.tableLayoutPanelHotkeys.Controls.Add(this.shortcutTextBoxManageNotes, 1, 1);
@@ -1163,16 +1146,16 @@ namespace NoteFly
             this.tableLayoutPanelHotkeys.Name = "tableLayoutPanelHotkeys";
             this.tableLayoutPanelHotkeys.Padding = new System.Windows.Forms.Padding(12);
             this.tableLayoutPanelHotkeys.RowCount = 3;
-            this.tableLayoutPanelHotkeys.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.3871F));
-            this.tableLayoutPanelHotkeys.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.6129F));
-            this.tableLayoutPanelHotkeys.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 244F));
+            this.tableLayoutPanelHotkeys.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelHotkeys.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelHotkeys.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelHotkeys.Size = new System.Drawing.Size(462, 331);
             this.tableLayoutPanelHotkeys.TabIndex = 16;
             // 
             // lblTextHotkeyNotesToFront
             // 
             this.lblTextHotkeyNotesToFront.AutoSize = true;
-            this.lblTextHotkeyNotesToFront.Location = new System.Drawing.Point(15, 79);
+            this.lblTextHotkeyNotesToFront.Location = new System.Drawing.Point(15, 73);
             this.lblTextHotkeyNotesToFront.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextHotkeyNotesToFront.Name = "lblTextHotkeyNotesToFront";
             this.lblTextHotkeyNotesToFront.Size = new System.Drawing.Size(132, 16);
@@ -1192,7 +1175,7 @@ namespace NoteFly
             // lblTextHotkeyManageNotes
             // 
             this.lblTextHotkeyManageNotes.AutoSize = true;
-            this.lblTextHotkeyManageNotes.Location = new System.Drawing.Point(15, 47);
+            this.lblTextHotkeyManageNotes.Location = new System.Drawing.Point(15, 45);
             this.lblTextHotkeyManageNotes.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextHotkeyManageNotes.Name = "lblTextHotkeyManageNotes";
             this.lblTextHotkeyManageNotes.Size = new System.Drawing.Size(143, 16);
@@ -1206,7 +1189,7 @@ namespace NoteFly
             this.chxHotkeyNewNoteEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxHotkeyNewNoteEnabled.Location = new System.Drawing.Point(372, 15);
             this.chxHotkeyNewNoteEnabled.Name = "chxHotkeyNewNoteEnabled";
-            this.chxHotkeyNewNoteEnabled.Size = new System.Drawing.Size(77, 20);
+            this.chxHotkeyNewNoteEnabled.Size = new System.Drawing.Size(75, 20);
             this.chxHotkeyNewNoteEnabled.TabIndex = 15;
             this.chxHotkeyNewNoteEnabled.Text = "enabled";
             this.chxHotkeyNewNoteEnabled.UseVisualStyleBackColor = true;
@@ -1217,9 +1200,9 @@ namespace NoteFly
             this.chxHotkeyManageNotesEnabled.AutoSize = true;
             this.chxHotkeyManageNotesEnabled.Checked = true;
             this.chxHotkeyManageNotesEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxHotkeyManageNotesEnabled.Location = new System.Drawing.Point(372, 45);
+            this.chxHotkeyManageNotesEnabled.Location = new System.Drawing.Point(372, 43);
             this.chxHotkeyManageNotesEnabled.Name = "chxHotkeyManageNotesEnabled";
-            this.chxHotkeyManageNotesEnabled.Size = new System.Drawing.Size(77, 20);
+            this.chxHotkeyManageNotesEnabled.Size = new System.Drawing.Size(75, 20);
             this.chxHotkeyManageNotesEnabled.TabIndex = 16;
             this.chxHotkeyManageNotesEnabled.Text = "enabled";
             this.chxHotkeyManageNotesEnabled.UseVisualStyleBackColor = true;
@@ -1230,9 +1213,9 @@ namespace NoteFly
             this.chxHotkeyNotesFrontEnabled.AutoSize = true;
             this.chxHotkeyNotesFrontEnabled.Checked = true;
             this.chxHotkeyNotesFrontEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxHotkeyNotesFrontEnabled.Location = new System.Drawing.Point(372, 77);
+            this.chxHotkeyNotesFrontEnabled.Location = new System.Drawing.Point(372, 71);
             this.chxHotkeyNotesFrontEnabled.Name = "chxHotkeyNotesFrontEnabled";
-            this.chxHotkeyNotesFrontEnabled.Size = new System.Drawing.Size(77, 20);
+            this.chxHotkeyNotesFrontEnabled.Size = new System.Drawing.Size(75, 20);
             this.chxHotkeyNotesFrontEnabled.TabIndex = 17;
             this.chxHotkeyNotesFrontEnabled.Text = "enabled";
             this.chxHotkeyNotesFrontEnabled.UseVisualStyleBackColor = true;
@@ -1287,15 +1270,33 @@ namespace NoteFly
             this.tableLayoutPanelOverall.Controls.Add(this.chxShowTooltips, 0, 1);
             this.tableLayoutPanelOverall.Controls.Add(this.numProcTransparency, 1, 0);
             this.tableLayoutPanelOverall.Controls.Add(this.lblTextTransparentProcVisible, 2, 0);
+            this.tableLayoutPanelOverall.Controls.Add(this.lblTextDirection, 0, 3);
+            this.tableLayoutPanelOverall.Controls.Add(this.cbxTextDirection, 1, 3);
             this.tableLayoutPanelOverall.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelOverall.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelOverall.Name = "tableLayoutPanelOverall";
             this.tableLayoutPanelOverall.Padding = new System.Windows.Forms.Padding(12);
-            this.tableLayoutPanelOverall.RowCount = 2;
+            this.tableLayoutPanelOverall.RowCount = 4;
+            this.tableLayoutPanelOverall.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelOverall.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelOverall.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelOverall.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelOverall.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelOverall.Size = new System.Drawing.Size(448, 296);
             this.tableLayoutPanelOverall.TabIndex = 14;
+            // 
+            // lblTextDirection
+            // 
+            this.lblTextDirection.AccessibleDescription = "";
+            this.lblTextDirection.AutoSize = true;
+            this.lblTextDirection.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextDirection.Location = new System.Drawing.Point(15, 101);
+            this.lblTextDirection.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblTextDirection.Name = "lblTextDirection";
+            this.lblTextDirection.Size = new System.Drawing.Size(125, 20);
+            this.lblTextDirection.TabIndex = 36;
+            this.lblTextDirection.Text = "Text direction notes:";
+            this.lblTextDirection.UseCompatibleTextRendering = true;
             // 
             // chxTransparecy
             // 
@@ -1372,6 +1373,23 @@ namespace NoteFly
             this.lblTextTransparentProcVisible.Text = "% visible";
             this.lblTextTransparentProcVisible.UseCompatibleTextRendering = true;
             // 
+            // cbxTextDirection
+            // 
+            this.cbxTextDirection.AccessibleDescription = "Text direction";
+            this.cbxTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
+            this.cbxTextDirection.CausesValidation = false;
+            this.tableLayoutPanelOverall.SetColumnSpan(this.cbxTextDirection, 2);
+            this.cbxTextDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTextDirection.FormattingEnabled = true;
+            this.cbxTextDirection.Items.AddRange(new object[] {
+            "Left to right",
+            "Right to left"});
+            this.cbxTextDirection.Location = new System.Drawing.Point(181, 99);
+            this.cbxTextDirection.Name = "cbxTextDirection";
+            this.cbxTextDirection.Size = new System.Drawing.Size(200, 24);
+            this.cbxTextDirection.TabIndex = 35;
+            this.cbxTextDirection.SelectionChangeCommitted += new System.EventHandler(this.cbxTextDirection_SelectionChangeCommitted);
+            // 
             // tabPageNewNote
             // 
             this.tabPageNewNote.Controls.Add(this.tableLayoutPanelNewNote);
@@ -1414,18 +1432,6 @@ namespace NoteFly
             this.tableLayoutPanelNewNote.Size = new System.Drawing.Size(448, 296);
             this.tableLayoutPanelNewNote.TabIndex = 24;
             // 
-            // lblTextDefaultsizenewnote
-            // 
-            this.lblTextDefaultsizenewnote.AutoSize = true;
-            this.tableLayoutPanelNewNote.SetColumnSpan(this.lblTextDefaultsizenewnote, 3);
-            this.lblTextDefaultsizenewnote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextDefaultsizenewnote.Location = new System.Drawing.Point(15, 152);
-            this.lblTextDefaultsizenewnote.Name = "lblTextDefaultsizenewnote";
-            this.lblTextDefaultsizenewnote.Size = new System.Drawing.Size(136, 20);
-            this.lblTextDefaultsizenewnote.TabIndex = 18;
-            this.lblTextDefaultsizenewnote.Text = "Default size new note:";
-            this.lblTextDefaultsizenewnote.UseCompatibleTextRendering = true;
-            // 
             // lblTextWidth
             // 
             this.lblTextWidth.AutoSize = true;
@@ -1437,6 +1443,18 @@ namespace NoteFly
             this.lblTextWidth.TabIndex = 25;
             this.lblTextWidth.Text = "Width:";
             this.lblTextWidth.UseCompatibleTextRendering = true;
+            // 
+            // lblTextDefaultsizenewnote
+            // 
+            this.lblTextDefaultsizenewnote.AutoSize = true;
+            this.tableLayoutPanelNewNote.SetColumnSpan(this.lblTextDefaultsizenewnote, 3);
+            this.lblTextDefaultsizenewnote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextDefaultsizenewnote.Location = new System.Drawing.Point(15, 152);
+            this.lblTextDefaultsizenewnote.Name = "lblTextDefaultsizenewnote";
+            this.lblTextDefaultsizenewnote.Size = new System.Drawing.Size(136, 20);
+            this.lblTextDefaultsizenewnote.TabIndex = 18;
+            this.lblTextDefaultsizenewnote.Text = "Default size new note:";
+            this.lblTextDefaultsizenewnote.UseCompatibleTextRendering = true;
             // 
             // chxUseRandomDefaultNote
             // 
@@ -1587,22 +1605,18 @@ namespace NoteFly
             this.tableLayoutPanelNotes.Controls.Add(this.lblTextFontContentSize, 0, 4);
             this.tableLayoutPanelNotes.Controls.Add(this.cbxFontNoteContent, 1, 3);
             this.tableLayoutPanelNotes.Controls.Add(this.lblTextNoteFont, 0, 3);
-            this.tableLayoutPanelNotes.Controls.Add(this.cbxFontNoteTitleBold, 3, 1);
+            this.tableLayoutPanelNotes.Controls.Add(this.chxFontNoteTitleBold, 3, 1);
             this.tableLayoutPanelNotes.Controls.Add(this.lblTextFontTitlePoints, 2, 1);
             this.tableLayoutPanelNotes.Controls.Add(this.numFontSizeTitle, 1, 1);
             this.tableLayoutPanelNotes.Controls.Add(this.lblTextFontTitleSize, 0, 1);
             this.tableLayoutPanelNotes.Controls.Add(this.cbxFontNoteTitle, 1, 0);
             this.tableLayoutPanelNotes.Controls.Add(this.lblTextFontTitleFamily, 0, 0);
-            this.tableLayoutPanelNotes.Controls.Add(this.lblTextDirection, 0, 6);
-            this.tableLayoutPanelNotes.Controls.Add(this.cbxTextDirection, 1, 6);
-            this.tableLayoutPanelNotes.Controls.Add(this.chxNotesDoubleclickRollup, 1, 8);
+            this.tableLayoutPanelNotes.Controls.Add(this.chxNotesDoubleclickRollup, 1, 6);
             this.tableLayoutPanelNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelNotes.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelNotes.Name = "tableLayoutPanelNotes";
             this.tableLayoutPanelNotes.Padding = new System.Windows.Forms.Padding(12);
-            this.tableLayoutPanelNotes.RowCount = 9;
-            this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelNotes.RowCount = 7;
             this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
@@ -1610,6 +1624,8 @@ namespace NoteFly
             this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelNotes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelNotes.Size = new System.Drawing.Size(448, 296);
             this.tableLayoutPanelNotes.TabIndex = 43;
             // 
@@ -1688,20 +1704,20 @@ namespace NoteFly
             this.lblTextNoteFont.Text = "Font note content:";
             this.lblTextNoteFont.UseCompatibleTextRendering = true;
             // 
-            // cbxFontNoteTitleBold
+            // chxFontNoteTitleBold
             // 
-            this.cbxFontNoteTitleBold.AutoSize = true;
-            this.cbxFontNoteTitleBold.Checked = true;
-            this.cbxFontNoteTitleBold.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxFontNoteTitleBold.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbxFontNoteTitleBold.Location = new System.Drawing.Point(231, 45);
-            this.cbxFontNoteTitleBold.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.cbxFontNoteTitleBold.Name = "cbxFontNoteTitleBold";
-            this.cbxFontNoteTitleBold.Size = new System.Drawing.Size(49, 20);
-            this.cbxFontNoteTitleBold.TabIndex = 40;
-            this.cbxFontNoteTitleBold.Text = "bold";
-            this.cbxFontNoteTitleBold.UseCompatibleTextRendering = true;
-            this.cbxFontNoteTitleBold.UseVisualStyleBackColor = true;
+            this.chxFontNoteTitleBold.AutoSize = true;
+            this.chxFontNoteTitleBold.Checked = true;
+            this.chxFontNoteTitleBold.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxFontNoteTitleBold.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxFontNoteTitleBold.Location = new System.Drawing.Point(231, 45);
+            this.chxFontNoteTitleBold.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.chxFontNoteTitleBold.Name = "chxFontNoteTitleBold";
+            this.chxFontNoteTitleBold.Size = new System.Drawing.Size(49, 20);
+            this.chxFontNoteTitleBold.TabIndex = 40;
+            this.chxFontNoteTitleBold.Text = "bold";
+            this.chxFontNoteTitleBold.UseCompatibleTextRendering = true;
+            this.chxFontNoteTitleBold.UseVisualStyleBackColor = true;
             // 
             // lblTextFontTitlePoints
             // 
@@ -1778,35 +1794,16 @@ namespace NoteFly
             this.lblTextFontTitleFamily.Text = "Font note title:";
             this.lblTextFontTitleFamily.UseCompatibleTextRendering = true;
             // 
-            // lblTextDirection
+            // chxNotesDoubleclickRollup
             // 
-            this.lblTextDirection.AccessibleDescription = "";
-            this.lblTextDirection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTextDirection.AutoSize = true;
-            this.lblTextDirection.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextDirection.Location = new System.Drawing.Point(30, 185);
-            this.lblTextDirection.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.lblTextDirection.Name = "lblTextDirection";
-            this.lblTextDirection.Size = new System.Drawing.Size(125, 20);
-            this.lblTextDirection.TabIndex = 34;
-            this.lblTextDirection.Text = "Text direction notes:";
-            this.lblTextDirection.UseCompatibleTextRendering = true;
-            // 
-            // cbxTextDirection
-            // 
-            this.cbxTextDirection.AccessibleDescription = "Text direction";
-            this.cbxTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
-            this.cbxTextDirection.CausesValidation = false;
-            this.tableLayoutPanelNotes.SetColumnSpan(this.cbxTextDirection, 3);
-            this.cbxTextDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTextDirection.FormattingEnabled = true;
-            this.cbxTextDirection.Items.AddRange(new object[] {
-            "Left to right",
-            "Right to left"});
-            this.cbxTextDirection.Location = new System.Drawing.Point(161, 183);
-            this.cbxTextDirection.Name = "cbxTextDirection";
-            this.cbxTextDirection.Size = new System.Drawing.Size(223, 24);
-            this.cbxTextDirection.TabIndex = 33;
+            this.chxNotesDoubleclickRollup.AutoSize = true;
+            this.tableLayoutPanelNotes.SetColumnSpan(this.chxNotesDoubleclickRollup, 3);
+            this.chxNotesDoubleclickRollup.Location = new System.Drawing.Point(161, 183);
+            this.chxNotesDoubleclickRollup.Name = "chxNotesDoubleclickRollup";
+            this.chxNotesDoubleclickRollup.Size = new System.Drawing.Size(260, 20);
+            this.chxNotesDoubleclickRollup.TabIndex = 41;
+            this.chxNotesDoubleclickRollup.Text = "Roll up/down notes on double click title.";
+            this.chxNotesDoubleclickRollup.UseVisualStyleBackColor = true;
             // 
             // tabPageTrayicon
             // 
@@ -1824,9 +1821,9 @@ namespace NoteFly
             this.tableLayoutPanelTrayicon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelTrayicon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelTrayicon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelTrayicon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tableLayoutPanelTrayicon.Controls.Add(this.lblTextTrayiconFont, 0, 1);
+            this.tableLayoutPanelTrayicon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanelTrayicon.Controls.Add(this.chxUseAlternativeTrayicon, 0, 8);
+            this.tableLayoutPanelTrayicon.Controls.Add(this.lblTextTrayiconFont, 0, 1);
             this.tableLayoutPanelTrayicon.Controls.Add(this.chxTrayiconBoldExit, 0, 6);
             this.tableLayoutPanelTrayicon.Controls.Add(this.numTrayiconFontsize, 1, 0);
             this.tableLayoutPanelTrayicon.Controls.Add(this.chxTrayiconBoldSettings, 0, 5);
@@ -1852,6 +1849,19 @@ namespace NoteFly
             this.tableLayoutPanelTrayicon.Size = new System.Drawing.Size(454, 302);
             this.tableLayoutPanelTrayicon.TabIndex = 8;
             // 
+            // chxUseAlternativeTrayicon
+            // 
+            this.chxUseAlternativeTrayicon.AutoSize = true;
+            this.tableLayoutPanelTrayicon.SetColumnSpan(this.chxUseAlternativeTrayicon, 4);
+            this.chxUseAlternativeTrayicon.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxUseAlternativeTrayicon.Location = new System.Drawing.Point(15, 239);
+            this.chxUseAlternativeTrayicon.Name = "chxUseAlternativeTrayicon";
+            this.chxUseAlternativeTrayicon.Size = new System.Drawing.Size(202, 21);
+            this.chxUseAlternativeTrayicon.TabIndex = 38;
+            this.chxUseAlternativeTrayicon.Text = "Use alternative white trayicon.";
+            this.chxUseAlternativeTrayicon.UseCompatibleTextRendering = true;
+            this.chxUseAlternativeTrayicon.UseVisualStyleBackColor = true;
+            // 
             // lblTextTrayiconFont
             // 
             this.lblTextTrayiconFont.AutoSize = true;
@@ -1864,19 +1874,6 @@ namespace NoteFly
             this.lblTextTrayiconFont.Text = "Trayicon menu font:";
             this.lblTextTrayiconFont.UseCompatibleTextRendering = true;
             // 
-            // chxUseAlternativeTrayicon
-            // 
-            this.chxUseAlternativeTrayicon.AutoSize = true;
-            this.tableLayoutPanelTrayicon.SetColumnSpan(this.chxUseAlternativeTrayicon, 4);
-            this.chxUseAlternativeTrayicon.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxUseAlternativeTrayicon.Location = new System.Drawing.Point(15, 239);
-            this.chxUseAlternativeTrayicon.Name = "chxUseAlternativeTrayicon";
-            this.chxUseAlternativeTrayicon.Size = new System.Drawing.Size(202, 21);
-            this.chxUseAlternativeTrayicon.TabIndex = 7;
-            this.chxUseAlternativeTrayicon.Text = "Use alternative white trayicon.";
-            this.chxUseAlternativeTrayicon.UseCompatibleTextRendering = true;
-            this.chxUseAlternativeTrayicon.UseVisualStyleBackColor = true;
-            // 
             // chxTrayiconBoldExit
             // 
             this.chxTrayiconBoldExit.AutoSize = true;
@@ -1884,9 +1881,9 @@ namespace NoteFly
             this.chxTrayiconBoldExit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chxTrayiconBoldExit.Location = new System.Drawing.Point(15, 183);
             this.chxTrayiconBoldExit.Name = "chxTrayiconBoldExit";
-            this.chxTrayiconBoldExit.Size = new System.Drawing.Size(150, 21);
+            this.chxTrayiconBoldExit.Size = new System.Drawing.Size(146, 21);
             this.chxTrayiconBoldExit.TabIndex = 3;
-            this.chxTrayiconBoldExit.Text = "Display \"Exit\" in bold.";
+            this.chxTrayiconBoldExit.Text = "Display \'Exit\' in bold.";
             this.chxTrayiconBoldExit.UseCompatibleTextRendering = true;
             this.chxTrayiconBoldExit.UseVisualStyleBackColor = true;
             // 
@@ -1921,9 +1918,9 @@ namespace NoteFly
             this.chxTrayiconBoldSettings.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chxTrayiconBoldSettings.Location = new System.Drawing.Point(15, 155);
             this.chxTrayiconBoldSettings.Name = "chxTrayiconBoldSettings";
-            this.chxTrayiconBoldSettings.Size = new System.Drawing.Size(176, 21);
+            this.chxTrayiconBoldSettings.Size = new System.Drawing.Size(172, 21);
             this.chxTrayiconBoldSettings.TabIndex = 2;
-            this.chxTrayiconBoldSettings.Text = "Display \"Settings\" in bold.";
+            this.chxTrayiconBoldSettings.Text = "Display \'Settings\' in bold.";
             this.chxTrayiconBoldSettings.UseCompatibleTextRendering = true;
             this.chxTrayiconBoldSettings.UseVisualStyleBackColor = true;
             // 
@@ -1946,9 +1943,9 @@ namespace NoteFly
             this.chxTrayiconBoldManagenotes.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chxTrayiconBoldManagenotes.Location = new System.Drawing.Point(15, 127);
             this.chxTrayiconBoldManagenotes.Name = "chxTrayiconBoldManagenotes";
-            this.chxTrayiconBoldManagenotes.Size = new System.Drawing.Size(212, 21);
+            this.chxTrayiconBoldManagenotes.Size = new System.Drawing.Size(208, 21);
             this.chxTrayiconBoldManagenotes.TabIndex = 1;
-            this.chxTrayiconBoldManagenotes.Text = "Display \"Manage notes\" in bold.";
+            this.chxTrayiconBoldManagenotes.Text = "Display \'Manage notes\' in bold.";
             this.chxTrayiconBoldManagenotes.UseCompatibleTextRendering = true;
             this.chxTrayiconBoldManagenotes.UseVisualStyleBackColor = true;
             // 
@@ -1974,9 +1971,9 @@ namespace NoteFly
             this.chxTrayiconBoldNewnote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chxTrayiconBoldNewnote.Location = new System.Drawing.Point(15, 99);
             this.chxTrayiconBoldNewnote.Name = "chxTrayiconBoldNewnote";
-            this.chxTrayiconBoldNewnote.Size = new System.Drawing.Size(184, 21);
+            this.chxTrayiconBoldNewnote.Size = new System.Drawing.Size(180, 21);
             this.chxTrayiconBoldNewnote.TabIndex = 0;
-            this.chxTrayiconBoldNewnote.Text = "Display \"New note\" in bold.";
+            this.chxTrayiconBoldNewnote.Text = "Display \'New note\' in bold.";
             this.chxTrayiconBoldNewnote.UseCompatibleTextRendering = true;
             this.chxTrayiconBoldNewnote.UseVisualStyleBackColor = true;
             // 
@@ -2575,11 +2572,11 @@ namespace NoteFly
             // tableLayoutPanelProxy
             // 
             this.tableLayoutPanelProxy.ColumnCount = 5;
-            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.63014F));
-            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.36986F));
-            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76F));
-            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 41F));
-            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147F));
+            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelProxy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelProxy.Controls.Add(this.numTimeout, 2, 3);
             this.tableLayoutPanelProxy.Controls.Add(this.lblTextNetworkTimeout, 0, 3);
             this.tableLayoutPanelProxy.Controls.Add(this.chxProxyEnabled, 0, 0);
@@ -2597,7 +2594,7 @@ namespace NoteFly
             this.tableLayoutPanelProxy.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelProxy.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelProxy.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelProxy.Size = new System.Drawing.Size(448, 299);
+            this.tableLayoutPanelProxy.Size = new System.Drawing.Size(448, 296);
             this.tableLayoutPanelProxy.TabIndex = 32;
             // 
             // numTimeout
@@ -2608,7 +2605,7 @@ namespace NoteFly
             0,
             0,
             0});
-            this.numTimeout.Location = new System.Drawing.Point(174, 99);
+            this.numTimeout.Location = new System.Drawing.Point(164, 99);
             this.numTimeout.Maximum = new decimal(new int[] {
             30000,
             0,
@@ -2621,7 +2618,7 @@ namespace NoteFly
             0});
             this.numTimeout.Name = "numTimeout";
             this.numTimeout.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.numTimeout.Size = new System.Drawing.Size(70, 22);
+            this.numTimeout.Size = new System.Drawing.Size(66, 22);
             this.numTimeout.TabIndex = 23;
             this.numTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numTimeout.Value = new decimal(new int[] {
@@ -2639,9 +2636,9 @@ namespace NoteFly
             this.lblTextNetworkTimeout.Location = new System.Drawing.Point(15, 101);
             this.lblTextNetworkTimeout.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextNetworkTimeout.Name = "lblTextNetworkTimeout";
-            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(150, 20);
+            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(121, 20);
             this.lblTextNetworkTimeout.TabIndex = 24;
-            this.lblTextNetworkTimeout.Text = "connection timeout time:";
+            this.lblTextNetworkTimeout.Text = "connection timeout:";
             this.lblTextNetworkTimeout.UseCompatibleTextRendering = true;
             // 
             // chxProxyEnabled
@@ -2672,7 +2669,7 @@ namespace NoteFly
             // numProxyPort
             // 
             this.numProxyPort.Enabled = false;
-            this.numProxyPort.Location = new System.Drawing.Point(291, 43);
+            this.numProxyPort.Location = new System.Drawing.Point(276, 43);
             this.numProxyPort.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2698,7 +2695,7 @@ namespace NoteFly
             this.lblTextMiliseconds.AccessibleDescription = "Miliseconds";
             this.lblTextMiliseconds.AutoSize = true;
             this.lblTextMiliseconds.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextMiliseconds.Location = new System.Drawing.Point(250, 101);
+            this.lblTextMiliseconds.Location = new System.Drawing.Point(236, 101);
             this.lblTextMiliseconds.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextMiliseconds.Name = "lblTextMiliseconds";
             this.lblTextMiliseconds.Size = new System.Drawing.Size(23, 20);
@@ -2710,7 +2707,7 @@ namespace NoteFly
             // 
             this.lblTextPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTextPort.AutoSize = true;
-            this.lblTextPort.Location = new System.Drawing.Point(251, 45);
+            this.lblTextPort.Location = new System.Drawing.Point(236, 45);
             this.lblTextPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextPort.Name = "lblTextPort";
             this.lblTextPort.Size = new System.Drawing.Size(34, 16);
@@ -2731,9 +2728,9 @@ namespace NoteFly
             // tableLayoutPanelGnuPG
             // 
             this.tableLayoutPanelGnuPG.ColumnCount = 3;
-            this.tableLayoutPanelGnuPG.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.44315F));
-            this.tableLayoutPanelGnuPG.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.55685F));
-            this.tableLayoutPanelGnuPG.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanelGnuPG.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelGnuPG.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelGnuPG.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelGnuPG.Controls.Add(this.lblTextGPGPath, 0, 1);
             this.tableLayoutPanelGnuPG.Controls.Add(this.chxCheckUpdatesSignature, 0, 0);
             this.tableLayoutPanelGnuPG.Controls.Add(this.tbGPGPath, 1, 1);
@@ -2745,7 +2742,7 @@ namespace NoteFly
             this.tableLayoutPanelGnuPG.RowCount = 2;
             this.tableLayoutPanelGnuPG.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelGnuPG.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelGnuPG.Size = new System.Drawing.Size(448, 299);
+            this.tableLayoutPanelGnuPG.Size = new System.Drawing.Size(448, 296);
             this.tableLayoutPanelGnuPG.TabIndex = 39;
             // 
             // lblTextGPGPath
@@ -2779,7 +2776,7 @@ namespace NoteFly
             // 
             this.btnGPGPathBrowse.BackColor = System.Drawing.Color.LightGray;
             this.btnGPGPathBrowse.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnGPGPathBrowse.Location = new System.Drawing.Point(338, 43);
+            this.btnGPGPathBrowse.Location = new System.Drawing.Point(331, 43);
             this.btnGPGPathBrowse.Name = "btnGPGPathBrowse";
             this.btnGPGPathBrowse.Size = new System.Drawing.Size(80, 25);
             this.btnGPGPathBrowse.TabIndex = 36;
@@ -3063,21 +3060,10 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
-            // chxNotesDoubleclickRollup
-            // 
-            this.chxNotesDoubleclickRollup.AutoSize = true;
-            this.tableLayoutPanelNotes.SetColumnSpan(this.chxNotesDoubleclickRollup, 3);
-            this.chxNotesDoubleclickRollup.Location = new System.Drawing.Point(161, 239);
-            this.chxNotesDoubleclickRollup.Name = "chxNotesDoubleclickRollup";
-            this.chxNotesDoubleclickRollup.Size = new System.Drawing.Size(278, 20);
-            this.chxNotesDoubleclickRollup.TabIndex = 41;
-            this.chxNotesDoubleclickRollup.Text = "Roll up/down notes on double click on title.";
-            this.chxNotesDoubleclickRollup.UseVisualStyleBackColor = true;
-            // 
             // shortcutTextBoxNotesToFront
             // 
             this.shortcutTextBoxNotesToFront.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxNotesToFront.Location = new System.Drawing.Point(164, 77);
+            this.shortcutTextBoxNotesToFront.Location = new System.Drawing.Point(164, 71);
             this.shortcutTextBoxNotesToFront.Name = "shortcutTextBoxNotesToFront";
             this.shortcutTextBoxNotesToFront.ShortcutKeyposition = 112;
             this.shortcutTextBoxNotesToFront.Size = new System.Drawing.Size(202, 22);
@@ -3091,7 +3077,7 @@ namespace NoteFly
             // shortcutTextBoxManageNotes
             // 
             this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(164, 45);
+            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(164, 43);
             this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
             this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
             this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(202, 22);
@@ -3130,18 +3116,18 @@ namespace NoteFly
             // 
             this.tableLayoutPanelProxy.SetColumnSpan(this.iptbProxy, 2);
             this.iptbProxy.Enabled = false;
-            this.iptbProxy.Location = new System.Drawing.Point(92, 43);
+            this.iptbProxy.Location = new System.Drawing.Point(82, 43);
             this.iptbProxy.Name = "iptbProxy";
-            this.iptbProxy.Size = new System.Drawing.Size(152, 22);
+            this.iptbProxy.Size = new System.Drawing.Size(148, 22);
             this.iptbProxy.TabIndex = 26;
             this.iptbProxy.UseIPv4addr = true;
             this.iptbProxy.UseIPv6addr = true;
             // 
             // tbGPGPath
             // 
-            this.tbGPGPath.Location = new System.Drawing.Point(133, 43);
+            this.tbGPGPath.Location = new System.Drawing.Point(131, 43);
             this.tbGPGPath.Name = "tbGPGPath";
-            this.tbGPGPath.Size = new System.Drawing.Size(199, 22);
+            this.tbGPGPath.Size = new System.Drawing.Size(194, 22);
             this.tbGPGPath.TabIndex = 38;
             // 
             // tbNotesSavePath
@@ -3250,5 +3236,8 @@ namespace NoteFly
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelHighlight;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEmail;
         private System.Windows.Forms.CheckBox chxNotesDoubleclickRollup;
+        private System.Windows.Forms.Label lblTextDirection;
+        private System.Windows.Forms.ComboBox cbxTextDirection;
+        private System.Windows.Forms.CheckBox chxUseAlternativeTrayicon;
     }
 }

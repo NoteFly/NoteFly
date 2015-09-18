@@ -177,10 +177,11 @@ namespace NoteFly
             this.lblTextLicense.Location = new System.Drawing.Point(8, 178);
             this.lblTextLicense.Margin = new System.Windows.Forms.Padding(8, 0, 3, 0);
             this.lblTextLicense.Name = "lblTextLicense";
+            this.lblTextLicense.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lblTextLicense.Size = new System.Drawing.Size(214, 57);
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of the Lesser GNU General Public Licen" +
-    "se version3.\r\n\r\n";
+    "se version3.";
             this.lblTextLicense.UseCompatibleTextRendering = true;
             // 
             // tmrUpdate
@@ -233,12 +234,14 @@ namespace NoteFly
             // 
             // lbTextWindowTitle
             // 
-            this.lbTextWindowTitle.AutoSize = true;
+            this.lbTextWindowTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbTextWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTextWindowTitle.Location = new System.Drawing.Point(11, 8);
+            this.lbTextWindowTitle.Location = new System.Drawing.Point(0, 0);
             this.lbTextWindowTitle.Name = "lbTextWindowTitle";
-            this.lbTextWindowTitle.Size = new System.Drawing.Size(0, 20);
+            this.lbTextWindowTitle.Padding = new System.Windows.Forms.Padding(6);
+            this.lbTextWindowTitle.Size = new System.Drawing.Size(336, 38);
             this.lbTextWindowTitle.TabIndex = 0;
+            this.lbTextWindowTitle.UseCompatibleTextRendering = true;
             // 
             // pnlAuthors
             // 
@@ -267,7 +270,6 @@ namespace NoteFly
             this.tableLayoutPanelAboutWindow.ResumeLayout(false);
             this.tableLayoutPanelAboutWindow.PerformLayout();
             this.pnlHead.ResumeLayout(false);
-            this.pnlHead.PerformLayout();
             this.ResumeLayout(false);
 
         }

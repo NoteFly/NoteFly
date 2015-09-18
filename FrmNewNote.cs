@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNewNote.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2013  Tom
+//  Copyright (C) 2010-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -154,6 +154,7 @@ namespace NoteFly
         /// <param name="editnote">True if this form is used for note editing and not creating a new note.</param>
         private void SetFormTitle(bool editnote)
         {
+            this.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             StringBuilder sbtitle = new StringBuilder();
             if (editnote)
             {
@@ -392,7 +393,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnTextBold_Click(object sender, EventArgs e)
         {
-            if (this.checksellen())
+            if (this.IsTextSelected())
             {
                 int pos = this.rtbNewNote.SelectionStart;
                 int len = this.rtbNewNote.SelectionLength;
@@ -421,7 +422,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnTextItalic_Click(object sender, EventArgs e)
         {
-            if (this.checksellen())
+            if (this.IsTextSelected())
             {
                 int pos = this.rtbNewNote.SelectionStart;
                 int len = this.rtbNewNote.SelectionLength;
@@ -450,7 +451,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnTextStriketrough_Click(object sender, EventArgs e)
         {
-            if (this.checksellen())
+            if (this.IsTextSelected())
             {
                 int pos = this.rtbNewNote.SelectionStart;
                 int len = this.rtbNewNote.SelectionLength;
@@ -479,7 +480,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnTextUnderline_Click(object sender, EventArgs e)
         {
-            if (this.checksellen())
+            if (this.IsTextSelected())
             {
                 int pos = this.rtbNewNote.SelectionStart;
                 int len = this.rtbNewNote.SelectionLength;
@@ -508,11 +509,18 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnFontBigger_Click(object sender, EventArgs e)
         {
-            if (this.checksellen())
+            if (!this.IsTextSelected())
             {
-                this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints + 1);
+                return;
             }
 
+            if (this.rtbNewNote.SelectionFont == null)
+            {
+                Log.Write(LogType.exception, "Text has no font.");
+                return;
+            }
+
+            this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints + 1);
             this.rtbNewNote.Focus();
         }
 
@@ -523,11 +531,18 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnFontSmaller_Click(object sender, EventArgs e)
         {
-            if (this.checksellen())
+            if (!this.IsTextSelected())
             {
-                this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints - 1);
+                return;
             }
 
+            if (this.rtbNewNote.SelectionFont == null)
+            {
+                Log.Write(LogType.exception, "Text has no font.");
+                return;
+            }
+
+            this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints - 1);
             this.rtbNewNote.Focus();
         }
 
@@ -551,7 +566,7 @@ namespace NoteFly
         /// Check if selection length of rtbNote is larger than zero.
         /// </summary>
         /// <returns>true if length is larger than 0.</returns>
-        private bool checksellen()
+        private bool IsTextSelected()
         {
             if (this.rtbNewNote.SelectedText.Length > 0 && this.rtbNewNote.SelectionStart >= 0)
             {
@@ -1064,7 +1079,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnTextBulletlist_Click(object sender, EventArgs e)
         {
-            if (this.checksellen())
+            if (this.IsTextSelected())
             {
                 this.rtbNewNote.SelectionBullet = !this.rtbNewNote.SelectionBullet;
             }

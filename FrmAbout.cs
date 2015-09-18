@@ -56,8 +56,11 @@ namespace NoteFly
         {
             this.InitializeComponent();
             this.SetFormTitle();
+            this.lblProductName.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             this.lblProductName.Text = Program.AssemblyTitle;
+            this.lblProductVersion.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             this.lblProductVersion.Text = Strings.T("Version {0}",  Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+            this.lblTextLicense.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             Strings.TranslateForm(this);
             this.movinglabels = new MovingAuthorLabel[] {
                  new MovingAuthorLabel(Strings.T("Developed\nby") + " D9ping", 100),
@@ -69,7 +72,7 @@ namespace NoteFly
             for (int i = 0; i < this.movinglabels.Length; ++i)
             {
                 this.pnlAuthors.Controls.Add(this.movinglabels[i]);
-            }           
+            }
         }
 
         #endregion Constructors 
@@ -81,7 +84,9 @@ namespace NoteFly
         /// </summary>
         private void SetFormTitle()
         {
+            this.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             this.Text = Strings.T("About") + " - " + Program.AssemblyTitle;
+            this.lbTextWindowTitle.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             this.lbTextWindowTitle.Text = Strings.T("About");
         }
 

@@ -292,7 +292,6 @@ namespace NoteFly
             // menuCopyContent
             // 
             this.menuCopyContent.Name = "menuCopyContent";
-            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.menuCopyContent.Size = new System.Drawing.Size(168, 22);
             this.menuCopyContent.Text = "content";
             // 
@@ -317,7 +316,6 @@ namespace NoteFly
             // 
             this.menuPasteToContent.Name = "menuPasteToContent";
             this.menuPasteToContent.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded;
-            this.menuPasteToContent.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.menuPasteToContent.Size = new System.Drawing.Size(167, 22);
             this.menuPasteToContent.Text = "content";
             this.menuPasteToContent.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);

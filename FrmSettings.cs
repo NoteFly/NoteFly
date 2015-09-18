@@ -156,6 +156,7 @@ namespace NoteFly
         /// <param name="expertsettings">Is showing expert settings enabled.</param>
         private void SetFormTitle(bool expertsettings)
         {
+            this.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             StringBuilder sbtitle = new StringBuilder();
             if (expertsettings)
             {
@@ -228,7 +229,7 @@ namespace NoteFly
                 // tab: Appearance, Notes
                 Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();
                 Settings.FontContentSize = (float)this.numFontSizeContent.Value;
-                Settings.FontTitleStylebold = this.cbxFontNoteTitleBold.Checked;
+                Settings.FontTitleStylebold = this.chxFontNoteTitleBold.Checked;
                 Settings.FontTitleFamily = this.cbxFontNoteTitle.SelectedItem.ToString();
                 Settings.FontTitleSize = (float)this.numFontSizeTitle.Value;
                 Settings.FontTextdirection = this.cbxTextDirection.SelectedIndex;
@@ -711,7 +712,7 @@ namespace NoteFly
             this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = Settings.HotkeysNotesToFrontAltInsteadShift;
             this.shortcutTextBoxNotesToFront.ShortcutKeyposition = Settings.HotkeysNotesToFrontKeycode;
 
-            // tab: Appearance, notes
+            // tab: Appearance, overall
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
             this.SetUpDownSpinnerValue(this.numProcTransparency, Settings.NotesTransparencyLevel * 100);
             this.chxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
@@ -723,13 +724,14 @@ namespace NoteFly
             this.SetUpDownSpinnerValue(this.numNotesDefaultHeight, Settings.NotesDefaultHeight);
             this.chxUseDateAsDefaultTitle.Checked = Settings.NotesDefaultTitleDate;
 
-            // tab: Appearance, fonts
+            // tab: Appearance, notes
             this.SetUpDownSpinnerValue(this.numFontSizeTitle, Settings.FontTitleSize);
             this.SetUpDownSpinnerValue(this.numFontSizeContent, Settings.FontContentSize);
             this.SetComboBoxSelectedIndex(this.cbxTextDirection, Settings.FontTextdirection);
             this.cbxFontNoteContent.Text = Settings.FontContentFamily;
             this.cbxFontNoteTitle.Text = Settings.FontTitleFamily;
-            this.cbxFontNoteTitleBold.Checked = Settings.FontTitleStylebold;
+            this.chxFontNoteTitleBold.Checked = Settings.FontTitleStylebold;
+            this.chxNotesDoubleclickRollup.Checked = Settings.NotesDoubleclickRollup;
 
             // tab: Appearance, trayicon
             this.SetUpDownSpinnerValue(this.numTrayiconFontsize, Settings.TrayiconFontsize);
@@ -800,7 +802,7 @@ namespace NoteFly
             this.chxLogErrors.Checked = Settings.ProgramLogError;
             this.chxLogExceptions.Checked = Settings.ProgramLogException;
 
-            // set last tab as active
+            // Set last used tab as active.
             this.tabControlSettings.SelectedIndex = Settings.SettingsLastTab;
         }
 
@@ -938,7 +940,7 @@ namespace NoteFly
             this.numTimeout.Visible = expertsettings;
             this.lblTextMiliseconds.Visible = expertsettings;
             this.lblTextNetworkMiliseconds.Visible = expertsettings;
-            this.cbxFontNoteTitleBold.Visible = expertsettings;
+            this.chxFontNoteTitleBold.Visible = expertsettings;
             this.lblTextTotalNotesWarnLimit.Visible = expertsettings;
             this.numWarnLimitTotal.Visible = expertsettings;
             this.lblTextVisibleNotesWarnLimit.Visible = expertsettings;
@@ -1225,6 +1227,16 @@ namespace NoteFly
         {
             this.shortcutTextBoxNotesToFront.Enabled = this.chxHotkeyNotesFrontEnabled.Checked;
             this.lblTextHotkeyNotesToFront.Enabled = this.chxHotkeyNotesFrontEnabled.Checked;
+        }
+
+        /// <summary>
+        /// Directly after selecting text direction view the change in the FrmSettings window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbxTextDirection_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            this.RightToLeft = (RightToLeft)this.cbxTextDirection.SelectedIndex;
         }
 
         #endregion Methods

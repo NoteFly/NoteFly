@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="Strings.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2012-2013  Tom
+//  Copyright (C) 2012-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -81,8 +81,8 @@ namespace NoteFly
                         if (object.ReferenceEquals(resourceMan, null))
                         {
                             string directory = RESOURCESDIR;
-                            global::Gettext.Cs.GettextResourceManager mgr = new global::Gettext.Cs.GettextResourceManager(ResourceName, directory, FILEFORMAT);
-                            resourceMan = mgr;
+                            global::Gettext.Cs.GettextResourceManager gettextresourcemgr = new global::Gettext.Cs.GettextResourceManager(ResourceName, directory, FILEFORMAT);
+                            resourceMan = gettextresourcemgr;
                         }
                     }
                 }
@@ -121,12 +121,12 @@ namespace NoteFly
         /// <summary>
         /// Looks up a localized string and formats it with the parameters provided; used to mark string for translation as well.
         /// </summary>
-        /// <param name="t">The string to translate.</param>
+        /// <param name="text">The string to translate.</param>
         /// <param name="parameters">Parameters to be placed in the string.</param>
         /// <returns>An translated string.</returns>
-        public static string T(string t, params object[] parameters)
+        public static string T(string text, params object[] parameters)
         {
-            return T(null, t, parameters);
+            return T(null, text, parameters);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace NoteFly
                     // translate subitems:
                     for (int n = 0; n < toolStripMenuItem.DropDownItems.Count; ++n)
                     {
-                        Log.Write(LogType.info, "found subitem: " + toolStripMenuItem.DropDownItems[n].Text);
+                        ////Log.Write(LogType.info, "found subitem: " + toolStripMenuItem.DropDownItems[n].Text);
                         toolStripMenuItem.DropDownItems[n].Text = GetTranslationControl(toolStripMenuItem.DropDownItems[n].Text, toolStripMenuItem.DropDownItems[n].Name);
                     }
                 }
@@ -259,7 +259,6 @@ namespace NoteFly
                 return untranslatedtext;
             }
 
-            //text = text.Replace("\"", "\\\""); // whats's the point of this again?
             string translationtext = Strings.T(untranslatedtext);
             if (string.IsNullOrEmpty(translationtext))
             {

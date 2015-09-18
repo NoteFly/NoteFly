@@ -77,6 +77,7 @@ namespace NoteFly
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             this.SetFormTitle(title);
+            this.lblStatusUpdate.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             if (!this.CreateWebclient())
             {
                 Log.Write(LogType.exception, "Cannot create webclient");
@@ -320,6 +321,7 @@ namespace NoteFly
         /// <param name="title">The new title prefix of this form</param>
         private void SetFormTitle(string title)
         {
+            this.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             StringBuilder sbtitle = new StringBuilder(title);
             sbtitle.Append(" - ");
             sbtitle.Append(Program.AssemblyTitle);

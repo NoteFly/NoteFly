@@ -172,17 +172,8 @@ namespace NoteFly
                     this.lblNoteTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
                 }
 
-                if (Settings.FontTextdirection == 0)
-                {
-                    this.lblNoteTitle.RightToLeft = RightToLeft.No;
-                    this.rtbNote.RightToLeft = RightToLeft.No;
-                }
-                else if (Settings.FontTextdirection == 1)
-                {
-                    this.lblNoteTitle.RightToLeft = RightToLeft.Yes;
-                    this.rtbNote.RightToLeft = RightToLeft.Yes;
-                }
-
+                this.lblNoteTitle.RightToLeft = (RightToLeft)Settings.FontTextdirection;
+                this.rtbNote.RightToLeft = (RightToLeft)Settings.FontTextdirection;
                 this.menuSendToEmail.Enabled = Settings.SharingEmailEnabled;
             }
             else

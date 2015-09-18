@@ -46,6 +46,7 @@ namespace NoteFly
             this.InitializeComponent();
             this.Text = Strings.T("Oh no.. {0} crashed.", Program.AssemblyTitle);
             const string SEPERATORTEXTANDCONTENT = ": ";
+            excstacktrace = excstacktrace.Trim();
             StringBuilder sbexc = new StringBuilder(excmgs);
             sbexc.AppendLine();
             sbexc.AppendLine("Stacktrace" + SEPERATORTEXTANDCONTENT);

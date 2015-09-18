@@ -104,6 +104,7 @@ namespace NoteFly
             this.InitializeComponent();
             this.SetFormTitle();
             this.SetFormTooltips();
+            this.lbTextWindowTitle.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             Strings.TranslateForm(this);
             this.notes = notes;
             this.SetSkin();
@@ -270,6 +271,7 @@ namespace NoteFly
         /// </summary>
         private void SetFormTitle()
         {
+            this.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             this.Text = Strings.T("Manage notes") + " - " + Program.AssemblyTitle;
         }
 

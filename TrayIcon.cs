@@ -103,6 +103,7 @@ namespace NoteFly
             this.menuTrayIcon = new System.Windows.Forms.ContextMenuStrip (this.components);
             this.menuTrayIcon.Opening += new System.ComponentModel.CancelEventHandler (menuTrayIcon_Opening);
             this.menuTrayIcon.AllowDrop = false;
+            this.menuTrayIcon.RightToLeft = (RightToLeft)Settings.FontTextdirection;
             this.menuNewNote = new System.Windows.Forms.ToolStripMenuItem ();
             this.menuNewNoteClipboard = new System.Windows.Forms.ToolStripMenuItem ();
             this.menuManageNotes = new System.Windows.Forms.ToolStripMenuItem ();

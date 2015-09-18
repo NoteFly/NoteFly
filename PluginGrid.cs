@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="PluginGrid.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2011-2012  Tom
+//  Copyright (C) 2011-2015  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -145,9 +145,9 @@ namespace NoteFly
             this.tlpnlPlugins[pluginpos].Padding = new Padding(0);
             this.tlpnlPlugins[pluginpos].Margin = new Padding(0);
             this.tlpnlPlugins[pluginpos].ColumnCount = 3;
-            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.0000F));
-            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.0000F));
-            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0000F));
+            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.0000F));
+            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.0000F));
+            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.0000F));
             this.tlpnlPlugins[pluginpos].Controls.Add(lblPluginTitle, 0, 0);
             this.tlpnlPlugins[pluginpos].Controls.Add(this.btnPluginsStatus[pluginpos], 1, 0);
             this.tlpnlPlugins[pluginpos].Controls.Add(lblTextPluginVersion, 0, 1);
@@ -172,8 +172,9 @@ namespace NoteFly
             lblPluginTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.00F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, (byte)0);
             lblPluginTitle.Location = new System.Drawing.Point(3, 0);
             lblPluginTitle.Name = "lblPluginTitle";
-            lblPluginTitle.Size = new System.Drawing.Size(232, 25);
+            lblPluginTitle.Size = new System.Drawing.Size(240, 25);
             lblPluginTitle.TabIndex = 1;
+            lblPluginTitle.UseCompatibleTextRendering = true;
             if (pluginassembly != null)
             {
                 lblPluginTitle.Text = PluginsManager.GetPluginName(pluginassembly);
@@ -189,6 +190,7 @@ namespace NoteFly
             lblTextPluginVersion.Name = "lblTextPluginVersion";
             lblTextPluginVersion.Size = new System.Drawing.Size(44, 13);
             lblTextPluginVersion.TabIndex = 6;
+            lblTextPluginVersion.UseCompatibleTextRendering = true;
             lblTextPluginVersion.Text = Strings.T("version:");
 
             // lblPluginVersion
@@ -197,6 +199,7 @@ namespace NoteFly
             lblPluginVersion.Location = new System.Drawing.Point(102, 37);
             lblPluginVersion.Name = "lblPluginVersion";
             lblPluginVersion.TabIndex = 7;
+            lblTextPluginVersion.UseCompatibleTextRendering = true;
             if (pluginassembly != null)
             {
                 lblPluginVersion.Text = PluginsManager.GetPluginVersion(pluginassembly);
@@ -213,6 +216,7 @@ namespace NoteFly
             lblTextPluginAuthor.Name = "lblTextPluginAuthor";
             lblTextPluginAuthor.Size = new System.Drawing.Size(40, 13);
             lblTextPluginAuthor.TabIndex = 8;
+            lblTextPluginAuthor.UseCompatibleTextRendering = true;
             lblTextPluginAuthor.Text = Strings.T("author:");
 
             // lblPluginAuthor
@@ -221,6 +225,7 @@ namespace NoteFly
             lblPluginAuthor.Location = new System.Drawing.Point(102, 53);
             lblPluginAuthor.Name = "lblPluginAuthor";
             lblPluginAuthor.TabIndex = 9;
+            lblPluginAuthor.UseCompatibleTextRendering = true;
             if (pluginassembly != null)
             {
                 lblPluginAuthor.Text = PluginsManager.GetPluginAuthor(pluginassembly);
@@ -232,6 +237,7 @@ namespace NoteFly
             lblTextPluginDescription.Name = "lblTextPluginDescription";
             lblTextPluginDescription.Size = new System.Drawing.Size(68, 13);
             lblTextPluginDescription.TabIndex = 10;
+            lblTextPluginDescription.UseCompatibleTextRendering = true;
             lblTextPluginDescription.Text = Strings.T("description:");
 
             // lblPluginDescription
@@ -240,6 +246,7 @@ namespace NoteFly
             lblPluginDescription.Location = new System.Drawing.Point(102, 70);
             lblPluginDescription.Name = "lblPluginDescription";
             lblPluginDescription.TabIndex = 11;
+            lblPluginDescription.UseCompatibleTextRendering = true;
             if (pluginassembly != null)
             {
                 lblPluginDescription.Text = PluginsManager.GetPluginDescription(pluginassembly);

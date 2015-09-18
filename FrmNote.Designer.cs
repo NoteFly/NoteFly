@@ -194,14 +194,13 @@ namespace NoteFly
             // 
             this.lblNoteTitle.AccessibleDescription = "Note title";
             this.lblNoteTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.lblNoteTitle.AutoSize = true;
             this.lblNoteTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblNoteTitle.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
             this.lblNoteTitle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.lblNoteTitle.Location = new System.Drawing.Point(0, 0);
             this.lblNoteTitle.Name = "lblNoteTitle";
-            this.lblNoteTitle.Padding = new System.Windows.Forms.Padding(3, 5, 60, 0);
-            this.lblNoteTitle.Size = new System.Drawing.Size(78, 30);
+            this.lblNoteTitle.Padding = new System.Windows.Forms.Padding(3, 5, 50, 0);
+            this.lblNoteTitle.Size = new System.Drawing.Size(238, 30);
             this.lblNoteTitle.TabIndex = 0;
             this.lblNoteTitle.Text = "?";
             this.lblNoteTitle.UseCompatibleTextRendering = true;
@@ -474,7 +473,6 @@ namespace NoteFly
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmNote_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmNote_FormClosed);
             this.pnlHead.ResumeLayout(false);
-            this.pnlHead.PerformLayout();
             this.menuFrmNoteOptions.ResumeLayout(false);
             this.pnlNote.ResumeLayout(false);
             this.pnlNote.PerformLayout();
