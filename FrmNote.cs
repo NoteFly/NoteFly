@@ -173,6 +173,7 @@ namespace NoteFly
                 }
 
                 this.lblNoteTitle.RightToLeft = (RightToLeft)Settings.FontTextdirection;
+                this.RightToLeft = (RightToLeft)Settings.FontTextdirection;
                 this.rtbNote.RightToLeft = (RightToLeft)Settings.FontTextdirection;
                 this.menuSendToEmail.Enabled = Settings.SharingEmailEnabled;
             }
@@ -317,6 +318,7 @@ namespace NoteFly
                 {
                     ToolStripMenuItem tsi = new ToolStripMenuItem();
                     tsi.Name = "menuSkin" + skinnames[i];
+                    tsi.RightToLeft = (RightToLeft)Settings.FontTextdirection;
                     tsi.Text = skinnames[i];
                     if (this.note.SkinNr == i)
                     {

@@ -183,24 +183,28 @@ namespace NoteFly
             this.pnlNote = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.saveWorker = new System.ComponentModel.BackgroundWorker();
+            this.tableLayoutPanelHead = new System.Windows.Forms.TableLayoutPanel();
             this.rtbNote = new NoteFly.TransparentRichTextBox();
             this.pnlHead.SuspendLayout();
             this.menuFrmNoteOptions.SuspendLayout();
             this.pnlNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
+            this.tableLayoutPanelHead.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblNoteTitle
             // 
             this.lblNoteTitle.AccessibleDescription = "Note title";
             this.lblNoteTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.lblNoteTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblNoteTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNoteTitle.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
             this.lblNoteTitle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblNoteTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblNoteTitle.Location = new System.Drawing.Point(3, 0);
             this.lblNoteTitle.Name = "lblNoteTitle";
-            this.lblNoteTitle.Padding = new System.Windows.Forms.Padding(3, 5, 50, 0);
-            this.lblNoteTitle.Size = new System.Drawing.Size(238, 30);
+            this.lblNoteTitle.Padding = new System.Windows.Forms.Padding(4);
+            this.lblNoteTitle.Size = new System.Drawing.Size(193, 31);
             this.lblNoteTitle.TabIndex = 0;
             this.lblNoteTitle.Text = "?";
             this.lblNoteTitle.UseCompatibleTextRendering = true;
@@ -214,8 +218,7 @@ namespace NoteFly
             this.pnlHead.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlHead.ContextMenuStrip = this.menuFrmNoteOptions;
-            this.pnlHead.Controls.Add(this.btnHideNote);
-            this.pnlHead.Controls.Add(this.lblNoteTitle);
+            this.pnlHead.Controls.Add(this.tableLayoutPanelHead);
             this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
@@ -373,8 +376,8 @@ namespace NoteFly
             this.btnHideNote.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.btnHideNote.ForeColor = System.Drawing.Color.Black;
             this.btnHideNote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnHideNote.Location = new System.Drawing.Point(198, 4);
-            this.btnHideNote.Margin = new System.Windows.Forms.Padding(1);
+            this.btnHideNote.Location = new System.Drawing.Point(203, 4);
+            this.btnHideNote.Margin = new System.Windows.Forms.Padding(4);
             this.btnHideNote.Name = "btnHideNote";
             this.btnHideNote.Size = new System.Drawing.Size(31, 23);
             this.btnHideNote.TabIndex = 1;
@@ -417,6 +420,21 @@ namespace NoteFly
             // saveWorker
             // 
             this.saveWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
+            // 
+            // tableLayoutPanelHead
+            // 
+            this.tableLayoutPanelHead.ColumnCount = 2;
+            this.tableLayoutPanelHead.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelHead.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelHead.Controls.Add(this.lblNoteTitle, 0, 0);
+            this.tableLayoutPanelHead.Controls.Add(this.btnHideNote, 1, 0);
+            this.tableLayoutPanelHead.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelHead.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelHead.Name = "tableLayoutPanelHead";
+            this.tableLayoutPanelHead.RowCount = 1;
+            this.tableLayoutPanelHead.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelHead.Size = new System.Drawing.Size(238, 30);
+            this.tableLayoutPanelHead.TabIndex = 5;
             // 
             // rtbNote
             // 
@@ -477,10 +495,13 @@ namespace NoteFly
             this.pnlNote.ResumeLayout(false);
             this.pnlNote.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
+            this.tableLayoutPanelHead.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelHead;
     }
 }

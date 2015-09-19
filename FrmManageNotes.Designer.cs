@@ -128,25 +128,26 @@ namespace NoteFly
             this.dataGridViewNotes = new System.Windows.Forms.DataGridView();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.tableLayoutPanelButtons = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelHead = new System.Windows.Forms.TableLayoutPanel();
             this.searchTextBoxNotes = new NoteFly.SearchTextBox();
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotes)).BeginInit();
             this.pnlContent.SuspendLayout();
             this.tableLayoutPanelButtons.SuspendLayout();
+            this.tableLayoutPanelHead.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
             // 
             this.btnClose.AccessibleName = "close";
-            this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(564, 3);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClose.Location = new System.Drawing.Point(563, 3);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(32, 23);
+            this.btnClose.Size = new System.Drawing.Size(32, 22);
             this.btnClose.TabIndex = 0;
             this.btnClose.Text = "X";
             this.btnClose.UseCompatibleTextRendering = true;
@@ -156,15 +157,14 @@ namespace NoteFly
             // 
             // pnlHead
             // 
-            this.pnlHead.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlHead.BackColor = System.Drawing.Color.Orange;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHead.Controls.Add(this.btnClose);
-            this.pnlHead.Controls.Add(this.lbTextWindowTitle);
+            this.pnlHead.Controls.Add(this.tableLayoutPanelHead);
+            this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
+            this.pnlHead.Margin = new System.Windows.Forms.Padding(0);
             this.pnlHead.Name = "pnlHead";
-            this.pnlHead.Size = new System.Drawing.Size(600, 32);
+            this.pnlHead.Size = new System.Drawing.Size(600, 30);
             this.pnlHead.TabIndex = 8;
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
@@ -172,12 +172,15 @@ namespace NoteFly
             // 
             // lbTextWindowTitle
             // 
-            this.lbTextWindowTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbTextWindowTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbTextWindowTitle.AutoSize = true;
             this.lbTextWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lbTextWindowTitle.Location = new System.Drawing.Point(0, 0);
+            this.lbTextWindowTitle.Location = new System.Drawing.Point(3, 0);
             this.lbTextWindowTitle.Name = "lbTextWindowTitle";
-            this.lbTextWindowTitle.Padding = new System.Windows.Forms.Padding(4, 4, 50, 4);
-            this.lbTextWindowTitle.Size = new System.Drawing.Size(598, 30);
+            this.lbTextWindowTitle.Padding = new System.Windows.Forms.Padding(4);
+            this.lbTextWindowTitle.Size = new System.Drawing.Size(119, 28);
             this.lbTextWindowTitle.TabIndex = 1;
             this.lbTextWindowTitle.Text = "Manage notes";
             this.lbTextWindowTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
@@ -380,6 +383,21 @@ namespace NoteFly
             this.tableLayoutPanelButtons.Size = new System.Drawing.Size(599, 34);
             this.tableLayoutPanelButtons.TabIndex = 21;
             // 
+            // tableLayoutPanelHead
+            // 
+            this.tableLayoutPanelHead.ColumnCount = 2;
+            this.tableLayoutPanelHead.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelHead.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelHead.Controls.Add(this.lbTextWindowTitle, 0, 0);
+            this.tableLayoutPanelHead.Controls.Add(this.btnClose, 1, 0);
+            this.tableLayoutPanelHead.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelHead.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelHead.Name = "tableLayoutPanelHead";
+            this.tableLayoutPanelHead.RowCount = 1;
+            this.tableLayoutPanelHead.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelHead.Size = new System.Drawing.Size(598, 28);
+            this.tableLayoutPanelHead.TabIndex = 0;
+            // 
             // searchTextBoxNotes
             // 
             this.searchTextBoxNotes.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -416,11 +434,14 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotes)).EndInit();
             this.pnlContent.ResumeLayout(false);
             this.tableLayoutPanelButtons.ResumeLayout(false);
+            this.tableLayoutPanelHead.ResumeLayout(false);
+            this.tableLayoutPanelHead.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelHead;
     }
 }
