@@ -119,6 +119,7 @@ namespace NoteFly
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmManageNotes));
             this.btnClose = new System.Windows.Forms.Button();
             this.pnlHead = new System.Windows.Forms.Panel();
+            this.tableLayoutPanelHead = new System.Windows.Forms.TableLayoutPanel();
             this.lbTextWindowTitle = new System.Windows.Forms.Label();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.btnRestoreAllNotes = new System.Windows.Forms.Button();
@@ -128,14 +129,13 @@ namespace NoteFly
             this.dataGridViewNotes = new System.Windows.Forms.DataGridView();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.tableLayoutPanelButtons = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanelHead = new System.Windows.Forms.TableLayoutPanel();
             this.searchTextBoxNotes = new NoteFly.SearchTextBox();
             this.pnlHead.SuspendLayout();
+            this.tableLayoutPanelHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotes)).BeginInit();
             this.pnlContent.SuspendLayout();
             this.tableLayoutPanelButtons.SuspendLayout();
-            this.tableLayoutPanelHead.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
@@ -170,17 +170,31 @@ namespace NoteFly
             this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
+            // tableLayoutPanelHead
+            // 
+            this.tableLayoutPanelHead.ColumnCount = 2;
+            this.tableLayoutPanelHead.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelHead.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelHead.Controls.Add(this.lbTextWindowTitle, 0, 0);
+            this.tableLayoutPanelHead.Controls.Add(this.btnClose, 1, 0);
+            this.tableLayoutPanelHead.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelHead.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelHead.Name = "tableLayoutPanelHead";
+            this.tableLayoutPanelHead.RowCount = 1;
+            this.tableLayoutPanelHead.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelHead.Size = new System.Drawing.Size(598, 28);
+            this.tableLayoutPanelHead.TabIndex = 0;
+            // 
             // lbTextWindowTitle
             // 
             this.lbTextWindowTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbTextWindowTitle.AutoSize = true;
             this.lbTextWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.lbTextWindowTitle.Location = new System.Drawing.Point(3, 0);
             this.lbTextWindowTitle.Name = "lbTextWindowTitle";
             this.lbTextWindowTitle.Padding = new System.Windows.Forms.Padding(4);
-            this.lbTextWindowTitle.Size = new System.Drawing.Size(119, 28);
+            this.lbTextWindowTitle.Size = new System.Drawing.Size(554, 28);
             this.lbTextWindowTitle.TabIndex = 1;
             this.lbTextWindowTitle.Text = "Manage notes";
             this.lbTextWindowTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
@@ -383,21 +397,6 @@ namespace NoteFly
             this.tableLayoutPanelButtons.Size = new System.Drawing.Size(599, 34);
             this.tableLayoutPanelButtons.TabIndex = 21;
             // 
-            // tableLayoutPanelHead
-            // 
-            this.tableLayoutPanelHead.ColumnCount = 2;
-            this.tableLayoutPanelHead.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelHead.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelHead.Controls.Add(this.lbTextWindowTitle, 0, 0);
-            this.tableLayoutPanelHead.Controls.Add(this.btnClose, 1, 0);
-            this.tableLayoutPanelHead.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelHead.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanelHead.Name = "tableLayoutPanelHead";
-            this.tableLayoutPanelHead.RowCount = 1;
-            this.tableLayoutPanelHead.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelHead.Size = new System.Drawing.Size(598, 28);
-            this.tableLayoutPanelHead.TabIndex = 0;
-            // 
             // searchTextBoxNotes
             // 
             this.searchTextBoxNotes.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -430,12 +429,11 @@ namespace NoteFly
             this.Activated += new System.EventHandler(this.frmManageNotes_Activated);
             this.Deactivate += new System.EventHandler(this.frmManageNotes_Deactivate);
             this.pnlHead.ResumeLayout(false);
+            this.tableLayoutPanelHead.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotes)).EndInit();
             this.pnlContent.ResumeLayout(false);
             this.tableLayoutPanelButtons.ResumeLayout(false);
-            this.tableLayoutPanelHead.ResumeLayout(false);
-            this.tableLayoutPanelHead.PerformLayout();
             this.ResumeLayout(false);
 
         }

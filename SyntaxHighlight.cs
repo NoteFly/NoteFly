@@ -185,7 +185,7 @@ namespace NoteFly
                     lang.PosDocumentEnd = int.MaxValue;
                 }
 
-                for (int curpos = 0; curpos < maxpos; curpos++)
+                for (int curpos = 0; curpos < maxpos; ++curpos)
                 {
                     // curpos == rtb.TextLength - 1 for checking last part
                     if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || rtb.Text[curpos] == '\r' || rtb.Text[curpos] == '\t' || curpos == rtb.TextLength - 1)
@@ -246,7 +246,7 @@ namespace NoteFly
             // check if highlighting is enabled at all.
             if (langs.Count > 0)
             {
-                for (int i = 0; i < langs.Count; i++)
+                for (int i = 0; i < langs.Count; ++i)
                 {
                     langs[i].PosDocumentStart = int.MaxValue;
                     langs[i].PosDocumentEnd = int.MaxValue;
@@ -326,7 +326,7 @@ namespace NoteFly
         /// <returns>The new RTF text syntax highlighted.</returns>
         private static string CheckSyntaxPart(RichTextBox rtb, string rtf, string part, int curpos, int lastpos)
         {
-            for (int i = 0; i < langs.Count; i++)
+            for (int i = 0; i < langs.Count; ++i)
             {
                 langs[i].CheckSetDocumentPos(part, curpos);
                 if (curpos >= langs[i].PosDocumentStart && curpos <= langs[i].PosDocumentEnd)
@@ -396,6 +396,7 @@ namespace NoteFly
             htmlstringpart = false;
             phpstringpart = false;
             currentstringquote = '"';
+            //Log.Write(LogType.info, "rtb.TextLength=" + rtb.TextLength); // debug
             return rtfdirectedit.SetColorAllRTF(rtf, notes.GetTextClr(skinnr), rtb.TextLength);
         }
 
@@ -416,7 +417,6 @@ namespace NoteFly
             int attrstartpos = posstartpart;
             int attrlen = 0;
             bool attrstartposset = false;
-
             if (ishtml.StartsWith(langhtml.Commentstart, StringComparison.Ordinal))
             {
                 comment = true;
@@ -428,7 +428,7 @@ namespace NoteFly
 
             if (!comment)
             {
-                for (int c = 0; c < ishtml.Length; c++)
+                for (int c = 0; c < ishtml.Length; ++c)
                 {
                     if (htmlstringpart)
                     {
@@ -482,7 +482,6 @@ namespace NoteFly
                                 }
 
                                 attrlen++;
-
                                 if (c == ishtml.Length - 1)
                                 {
                                     attributes.Add(rtb.Text.Substring(attrstartpos, attrlen));
@@ -495,7 +494,7 @@ namespace NoteFly
 
                 for (int nattr = 0; nattr < attributes.Count; nattr++)
                 {
-                    for (int i = 0; i < nattr; i++)
+                    for (int i = 0; i < nattr; ++i)
                     {
                         attrstartpos += attributes[i].Length;
                     }
