@@ -157,8 +157,14 @@ namespace NoteFly
             this.icon.ContextMenuStrip.Items.Add(this.menuNewNote);
 
             this.menuNewNoteClipboard.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            //this.menuNewNoteClipboard.Enabled = Clipboard.ContainsText();
-            this.menuNewNoteClipboard.Visible = Clipboard.ContainsText();
+            try
+            {
+                this.menuNewNoteClipboard.Visible = Clipboard.ContainsText();
+            } catch (Exception)
+            {
+                // Accessing to clipboard causes crash on windows pincode login (issue #0000205)
+            }
+
             this.menuNewNoteClipboard.Name = "MenuNewNoteClipboard";
             this.menuNewNoteClipboard.Size = new Size(144, 22);
             this.menuNewNoteClipboard.Text = Strings.T("&New note from clipboard");
@@ -300,8 +306,14 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void menuTrayIcon_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //this.menuNewNoteClipboard.Enabled = Clipboard.ContainsText();
-            this.menuNewNoteClipboard.Visible = Clipboard.ContainsText();
+            try
+            {
+                this.menuNewNoteClipboard.Visible = Clipboard.ContainsText();
+            }
+            catch (Exception ex)
+            {
+                // Accessing to clipboard causes crash on pincode windows login (issue #0000205)
+            }
         }
 
         /// <summary>
